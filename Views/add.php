@@ -1,8 +1,8 @@
-<?php if (!empty($_SESSION['warning'])): ?>
-    <?php echo '<p class="msg"> ' . nl2br($_SESSION['warning']) . ' </p>'; ?>
-    <?php unset($_SESSION['warning']); ?>
-<?php endif; ?>
 <div class="container">
+    <?php if (!empty($_SESSION['warning'])): ?>
+        <?php echo '<p class="msg"> ' . nl2br($_SESSION['warning']) . ' </p>'; ?>
+        <?php unset($_SESSION['warning']); ?>
+    <?php endif; ?>
     <h1>Registration</h1>
     <form action="" method="post">
         <div class="row">
