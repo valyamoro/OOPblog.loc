@@ -16,4 +16,5 @@ class UserController extends Controller
 
         return $this->view->render($view, $params);
     }
+
 }
