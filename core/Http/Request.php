@@ -6,7 +6,13 @@ class Request
 {
     public function getPost(): array
     {
-        return $_POST;
+        $result = [];
+
+        foreach ($_POST as $key => $value) {
+            $result[$key] = \htmlspecialchars(strip_tags(trim($value)));
+        }
+
+        return $result;
     }
 
 }
