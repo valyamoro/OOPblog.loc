@@ -3,8 +3,7 @@
     <?php unset($_SESSION['warning']); ?>
 <?php else: ?>
     <?php foreach ($articles as $article): ?>
-        <?php echo $article['title']; ?> <br>
-        <?php echo $article['content']; ?> <br>
+        <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
         <br>
     <?php endforeach; ?>
     <nav aria-label="Пример навигации по страницам">
@@ -23,4 +22,3 @@
         </ul>
     </nav>
 <?php endif; ?>
-
