@@ -6,7 +6,7 @@ use app\core\Controller;
 
 class ArticleController extends Controller
 {
-    public function index(string $view, string $layout = '', array $params = []): string
+    public function show(string $view, string $layout = '', array $params = []): string
     {
         $request = $this->request->getGET();
 
