@@ -14,7 +14,7 @@ class Validator
     public const RULE_LETTERS = 'letter';
 
     private array $rules;
-    public array $errors;
+    public array $errors = [];
 
     public function setRules($value): void
     {
