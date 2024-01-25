@@ -8,7 +8,8 @@ class Paginator
         private readonly int $totalItems,
         private readonly int $itemsPerPage,
         private readonly int $currentPage,
-    ) {}
+    ) {
+    }
 
     public function calculateTotalPages(): int
     {
@@ -17,14 +18,14 @@ class Paginator
 
     public function moveLeft(): string
     {
-        $currentPage = (int)$this->currentPage - 1;
+        $currentPage = $this->currentPage - 1;
 
         return "?page={$currentPage}";
     }
 
     public function moveRight(): string
     {
-        $currentPage = (int)$this->currentPage + 1;
+        $currentPage = $this->currentPage + 1;
 
         return "?page={$currentPage}";
     }

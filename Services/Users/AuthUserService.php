@@ -10,6 +10,11 @@ class AuthUserService extends BaseService
 {
     public function auth(array $data): array
     {
+        if (!empty($_SESSION['user'])) {
+            $_SESSION['message'] = 'You already authorized!' . "\n";
+            \header('Location: /home');
+        }
+
         $messages = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

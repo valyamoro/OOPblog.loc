@@ -26,11 +26,11 @@ class AddUserService extends BaseService
                     $phoneNumber = '7' . $phoneNumber;
                 }
                 $data = [
-                    'firstName' => $data['firstName'], // 48
-                    'lastName' => $data['lastName'], // 48
-                    'patronymic' => $data['patronymic'], // 48
-                    'email' => $data['email'], // 64
-                    'phone' => (int)$phoneNumber, // 11
+                    'firstName' => $data['firstName'],
+                    'lastName' => $data['lastName'],
+                    'patronymic' => $data['patronymic'],
+                    'email' => $data['email'],
+                    'phone' => (int)$phoneNumber,
                     'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
                     'is_bann' => 0,
                     'created_at' => $now,
