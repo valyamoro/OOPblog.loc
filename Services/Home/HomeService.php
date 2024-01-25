@@ -11,8 +11,8 @@ class HomeService extends BaseService
     public function getAll(): array
     {
         $totalItems = $this->repository->getCount();
-        $currentPage = (int)$_GET['page'] ?? 1;
         $itemsPerPage = 5;
+        $currentPage = (int)$_GET['page'] ?? 1;
 
         $result['paginator'] = new Paginator($totalItems, $itemsPerPage, $currentPage);
 
@@ -26,7 +26,9 @@ class HomeService extends BaseService
         }
 
         $offset = ($currentPage - 1) * $itemsPerPage;
-        $result['articles'] = $this->repository->getAll($itemsPerPage, $offset);
+
+        $mode = $_GET['mode'] ?? 'desc';
+        $result['articles'] = $this->repository->getAll($itemsPerPage, $offset, $mode);
 
         if (empty($result['articles'])) {
             $_SESSION['warning'] = 'There are no articles on the site' . "\n";

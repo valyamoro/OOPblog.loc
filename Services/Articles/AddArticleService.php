@@ -13,15 +13,15 @@ class AddArticleService extends BaseService
 
         if (empty($_SESSION['user'])) {
             $_SESSION['warning'] = 'You are not logged in, please log in.' . "\n";
-             \header('Location: /users/auth');
+            \header('Location: /users/auth');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $article = new ArticleModel(...$data);
-            $article->validator->setRules($article->rules());
+            $model = new ArticleModel(...$data);
+            $model->validator->setRules($model->rules());
 
-            if (!$article->validator->validate($article)) {
-                $_SESSION['validate'] = $article->validator->errors;
+            if (!$model->validator->validate($model)) {
+                $messages = $model->validator->errors;
             } else {
                 $now = \date('Y-m-d H:i:s');
                 $data = [
@@ -34,7 +34,7 @@ class AddArticleService extends BaseService
                 ];
 
                 if (!$this->repository->add($data)) {
-                    $messages = 'Article was not added, please try more' . "\n";
+                    $_SESSION['message'] = 'Article was not added, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was added!' . "\n";
                     \header('Location: /home');

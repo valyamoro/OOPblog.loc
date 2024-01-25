@@ -7,9 +7,9 @@ use app\Services\BaseRepository;
 
 class HomeRepository extends BaseRepository
 {
-    public function getAll(int $limit, int $offset): array
+    public function getAll(int $limit, int $offset, string $mode): array
     {
-        $query = 'select * from articles limit ' . $limit . ' offset ' . $offset;
+        $query = 'select * from articles order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
 
         $this->connection->prepare($query)->execute();
 

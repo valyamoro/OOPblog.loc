@@ -17,6 +17,11 @@
         <br>
     <?php endforeach; ?>
 <?php endif; ?>
+
+ФИЛЬТР: <br>
+<a href="<?php echo "?page={$_GET['page']}&mode=asc" ?>">Сначала новые</a> <br>
+<a href="<?php echo "?page={$_GET['page']}&mode=desc" ?>">Сначала старые</a> <br>
+
 <?php if ($paginator->calculateTotalPages() > 1): ?>
     <nav aria-label="navigation">
         <ul class="pagination">
