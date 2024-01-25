@@ -24,4 +24,14 @@ class ArticleController extends Controller
         return $this->view->render($view, $layout, $params);
     }
 
+    public function edit(string $view, string $layout = '', array $params = []): string
+    {
+        $request['get'] = $this->request->getGET();
+        $request['post'] = $this->request->getPost();
+
+        $this->service->edit($request);
+
+        return $this->view->render($view, $layout, $params);
+    }
+
 }
