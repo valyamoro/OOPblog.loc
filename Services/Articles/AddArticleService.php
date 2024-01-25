@@ -33,7 +33,7 @@ class AddArticleService extends BaseService
                     'updated_at' => $now,
                 ];
 
-                if (!$this->repository->add($data)) {
+                if (!$this->repository->addItems($data)) {
                     $_SESSION['message'] = 'Article was not added, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was added!' . "\n";
