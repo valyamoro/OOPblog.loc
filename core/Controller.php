@@ -19,9 +19,9 @@ abstract class Controller
         $this->view = new View();
     }
 
-    public function index(string $view, array $params = []): string
+    public function index(string $view, string $layout = '', array $params = []): string
     {
-        return $this->view->render($view, $params);
+        return $this->view->render($view, $layout, $params);
     }
 
 }

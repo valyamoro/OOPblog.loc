@@ -15,4 +15,15 @@ class Request
         return $result;
     }
 
+    public function getGET(): array
+    {
+        $result = [];
+
+        foreach ($_GET as $key => $value) {
+            $result[$key] = \htmlspecialchars(strip_tags(trim($value)));
+        }
+
+        return $result;
+    }
+
 }

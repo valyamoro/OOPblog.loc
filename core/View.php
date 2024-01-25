@@ -5,18 +5,18 @@ namespace app\core;
 
 class View
 {
-    public function render(string $view, $params = []): string
+    public function render(string $view, string $layout, $params = []): string
     {
         $layoutContent = $this->layoutContent();
-        $viewContent = $this->renderOnlyView($view, $params);
+        $viewContent = $this->renderOnlyView($view, $layout, $params);
         return \str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
-    protected function renderOnlyView(string $view, $params): string
+    protected function renderOnlyView(string $view, string $layout, $params): string
     {
         \extract($params);
         \ob_start();
-        require_once __DIR__ . "/../Views/{$view}.php";
+        require_once __DIR__ . "/../Views/{$layout}/{$view}.php";
         return \ob_get_clean();
     }
 

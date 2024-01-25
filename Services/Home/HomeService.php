@@ -10,7 +10,6 @@ class HomeService extends BaseService
 {
     public function getAll(): array
     {
-
         $totalItems = $this->repository->getCount();
         $currentPage = (int)$_GET['page'] ?? 1;
         $itemsPerPage = 5;

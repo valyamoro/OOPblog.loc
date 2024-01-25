@@ -29,20 +29,8 @@ class Router
         if ($segments === 'Home') {
             $class = $namespace . $segments;
         } else {
+            $params = [$segments[0], $segments[0]];
             $class = $namespace . \rtrim($segments[0], 's');
-
-            if (\count($segments) === 3) {
-                $method = $segments[1];
-                $params = $segments[0];
-            } elseif (\count($segments) === 4) {
-                $method = $segments[1];
-                $params = [];
-                $params['tableName'] = $segments[2];
-                $params['id'] = $segments[3];
-                $params['view'] = $segments[1];
-            } else {
-                $params = $segments[0];
-            }
         }
 
         $connectionDB = $this->connectionDB();
@@ -55,14 +43,14 @@ class Router
                 $repository = new ("{$namespace}\Repositories\\" . $segments[0] . 'Repository')($connectionDB);
                 $service = new ("{$namespace}\\" . $segments[0] . 'Service')($repository);
             } elseif (\count($segments) === 2) {
+                $method = $segments[1];
                 $repository = new ("{$namespace}\Repositories\\" . $segments[1] . $segments[0] . 'Repository')($connectionDB);
                 $service = new ("{$namespace}\\{$segments[1]}" . $segments[0] . 'Service')($repository);
-                $params = $segments[1];
+                $params = [$segments[1], $segments[0]];
             } elseif (\count($segments) === 3) {
                 $repository = new ("{$namespace}\Repositories\\" . \rtrim($segments[2], 's') . \rtrim($segments[0],
                         's') . 'Repository')($connectionDB);
                 $service = new ("{$namespace}\\" . \rtrim($segments[2], 's') . $segments[0] . 'Service')($repository);
-                $method = 'index';
             } elseif (\count($segments) === 5) {
                 $repository = new ("{$namespace}\Repositories\\" . $segments[3] . \rtrim($segments[0],
                         's') . 'Repository')($connectionDB);
