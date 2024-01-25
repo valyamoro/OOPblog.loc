@@ -1,7 +1,12 @@
 <?php if (!empty($_SESSION['warning'])): ?>
-    <?php echo nl2br($_SESSION['warning']); ?>
+    <?php echo \nl2br($_SESSION['warning']); ?>
     <?php unset($_SESSION['warning']); ?>
 <?php else: ?>
+    <?php if (!empty($_SESSION['msg'])): ?>
+    <?php echo \nl2br($_SESSION['msg']); ?>
+    <?php unset($_SESSION['msg']); ?>
+        <br><br>
+    <?php endif; ?>
     <?php foreach ($articles as $article): ?>
         <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
         <br>
