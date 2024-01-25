@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $data = $this->request->getPost();
 
-        $this->service->auth($data);
+        $params['validate'] = $this->service->auth($data);
 
         return $this->view->render($view, $layout, $params);
     }

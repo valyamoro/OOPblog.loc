@@ -9,8 +9,8 @@
             <label for="email" class="form-label">Email address</label>
             <input type="email" name="email" class="form-control" id="email"
                    aria-describedby="emailHelp">
-            <?php if (isset($_SESSION['validate']['email'])): ?>
-                <div id="email" class="form-text"> <?php echo $_SESSION['validate']['email'][0]; ?> </div>
+            <?php if (isset($validate['email'])): ?>
+                <div id="email" class="form-text"> <?php echo $validate['email']; ?> </div>
             <?php else: ?>
                 <div id="email" class="form-text">We'll never share your email with anyone else.</div>
             <?php endif; ?>
@@ -19,8 +19,8 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" name="password" class="form-control" id="password"
                    aria-describedby="password_confirm">
-            <?php if (isset($_SESSION['validate']['password'])): ?>
-                <div id="password" class="form-text"> <?php echo $_SESSION['validate']['password'][0]; ?> </div>
+            <?php if (isset($validate['password'])): ?>
+                <div id="password" class="form-text"> <?php echo $validate['password']; ?> </div>
             <?php else: ?>
                 <div id="password" class="form-text">We'll never share your password with anyone else.</div>
             <?php endif; ?>

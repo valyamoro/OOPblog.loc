@@ -94,8 +94,6 @@
                 <?php endif; ?>
             </div>
         </div>
-
-
         <button type="submit" class="btn btn-primary">Registry</button>
     </form>
 </div>
