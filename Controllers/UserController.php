@@ -8,13 +8,22 @@ use app\Models\UserModel;
 
 class UserController extends Controller
 {
-    public function index(string $view, array $params = []): string
+    public function auth(string $view, string $layout = '', array $params = []): string
     {
         $data = $this->request->getPost();
 
         $this->service->{$view}($data);
 
-        return $this->view->render($view, $params);
+        return $this->view->render($view, $layout, $params);
+    }
+
+    public function add(string $view, string $layout = '', array $params = []): string
+    {
+        $data = $this->request->getPost();
+
+        $this->service->{$view}($data);
+
+        return $this->view->render($view, $layout, $params);
     }
 
 }
