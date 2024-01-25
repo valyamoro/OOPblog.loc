@@ -36,4 +36,11 @@ class UserController extends Controller
         return $this->view->render($view, $layout, $params);
     }
 
+    public function logout(): void
+    {
+        unset($_SESSION['user']);
+        $_SESSION['message'] = 'You logout!' . "\n";
+        \header('Location: /home');
+    }
+
 }
