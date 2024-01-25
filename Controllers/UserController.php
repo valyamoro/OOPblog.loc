@@ -26,4 +26,14 @@ class UserController extends Controller
         return $this->view->render($view, $layout, $params);
     }
 
+    public function profile(string $view, string $layout = '', array $params = []): string
+    {
+        $data = $this->request->getGET();
+
+        $params['user'] = $this->service->getProfileData()['user'];
+        $params['articles'] = $this->service->getProfileData()['articles'];
+
+        return $this->view->render($view, $layout, $params);
+    }
+
 }
