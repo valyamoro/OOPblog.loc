@@ -11,9 +11,11 @@ class AddUserService extends BaseService
     public function add(array $data): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Переименовать. result плохое название.
             $result = new UserModel(...$data);
             $result->validator->setRules($result->rules());
 
+            // Сначала false
             if ($result->validator->validate($result)) {
                 $now = \date('Y-m-d H:i:s');
 
@@ -38,6 +40,7 @@ class AddUserService extends BaseService
                     $_SESSION['success'] = 'Вы успешно зарегистрировались!';
                     \header('Location: /home');
                 } else {
+                    // Возвращать result и передавать в вид ошибки.
                     $_SESSION['warning'] = 'Вы не зарегистрировались! Пожалуйста, попробуйте снова.';
                 }
             } else {
