@@ -17,9 +17,7 @@ class ArticleController extends Controller
 
     public function add(string $view, string $layout = '', array $params = []): string
     {
-        $request = $this->request->getPost();
-
-        $params['validate'] = $this->service->add($request);
+        $params['validate'] = $this->service->add($this->request->getPost());
 
         return $this->view->render($view, $layout, $params);
     }

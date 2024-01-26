@@ -7,7 +7,7 @@ use app\Services\BaseRepository;
 
 class AddUserRepository extends BaseRepository
 {
-    public function add($data): bool
+    public function add(array $data): bool
     {
         $query = 'insert into users (firstName, lastName, patronymic, email, phone, password, is_bann, created_at, updated_at) 
         values (?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -15,6 +15,15 @@ class AddUserRepository extends BaseRepository
         $this->connection->prepare($query)->execute(\array_values($data));
 
         return (bool)$this->connection->lastInsertId();
+    }
+
+    public function getByEmail(string $value): bool
+    {
+        $query = 'select * from users where email=?';
+
+        $this->connection->prepare($query)->execute([$value]);
+
+        return (bool)$this->connection->fetch();
     }
 
 }

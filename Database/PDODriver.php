@@ -25,7 +25,7 @@ class PDODriver
         return $this;
     }
 
-    public function fetch(): ?array
+    public function fetch(): array
     {
         $result = $this->sth->fetch();
         $this->sth = null;

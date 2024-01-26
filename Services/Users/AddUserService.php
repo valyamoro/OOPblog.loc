@@ -19,29 +19,33 @@ class AddUserService extends BaseService
             if (!$model->validator->validate($model)) {
                 $messages = $model->validator->errors;
             } else {
-                $now = \date('Y-m-d H:i:s');
-
-                $phoneNumber = \str_replace(['+', '8'], '', $data['phoneNumber']);
-                if (\strlen($phoneNumber) === 10 && !\str_starts_with($phoneNumber, '7')) {
-                    $phoneNumber = '7' . $phoneNumber;
-                }
-                $data = [
-                    'firstName' => $data['firstName'],
-                    'lastName' => $data['lastName'],
-                    'patronymic' => $data['patronymic'],
-                    'email' => $data['email'],
-                    'phone' => (int)$phoneNumber,
-                    'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
-                    'is_bann' => 0,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ];
-
-                if ($this->repository->add($data)) {
-                    $_SESSION['success'] = 'you have successfully registered!' . "\n";
-                    \header('Location: /home');
+                if ($this->repository->getByEmail($data['email'])) {
+                    $_SESSION['warning'] = 'This email already exists!' . "\n";
                 } else {
-                    $_SESSION['warning'] =  'You are not registered! Please try again.' . "\n";
+                    $now = \date('Y-m-d H:i:s');
+
+                    $phoneNumber = \str_replace(['+', '8'], '', $data['phoneNumber']);
+                    if (\strlen($phoneNumber) === 10 && !\str_starts_with($phoneNumber, '7')) {
+                        $phoneNumber = '7' . $phoneNumber;
+                    }
+                    $data = [
+                        'firstName' => $data['firstName'],
+                        'lastName' => $data['lastName'],
+                        'patronymic' => $data['patronymic'],
+                        'email' => $data['email'],
+                        'phone' => (int)$phoneNumber,
+                        'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
+                        'is_bann' => 0,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+
+                    if ($this->repository->add($data)) {
+                        $_SESSION['success'] = 'you have successfully registered!' . "\n";
+                        \header('Location: /home');
+                    } else {
+                        $_SESSION['warning'] =  'You are not registered! Please try again.' . "\n";
+                    }
                 }
             }
         }

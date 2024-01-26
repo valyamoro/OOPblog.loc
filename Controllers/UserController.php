@@ -30,8 +30,8 @@ class UserController extends Controller
     {
         $data = $this->request->getGET();
 
-        $params['user'] = $this->service->getProfileData()['user'];
-        $params['articles'] = $this->service->getProfileData()['articles'];
+        $params['user'] = $this->service->getProfileData($data)['user'];
+        $params['articles'] = $this->service->getProfileData($data)['articles'];
 
         return $this->view->render($view, $layout, $params);
     }

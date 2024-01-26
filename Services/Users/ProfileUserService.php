@@ -6,25 +6,25 @@ use app\Services\BaseService;
 
 class ProfileUserService extends BaseService
 {
-    public function getProfileData(): array
+    public function getProfileData(array $request): array
     {
         $result['user'] = [];
         $result['articles'] = [];
 
-        if (empty($_GET['id']) && empty($_SESSION['user'])) {
+        if (empty($request['get']['id']) && empty($_SESSION['user'])) {
             $_SESSION['warning'] = 'You not authorized!' . "\n";
             \header('Location: /users/add');
         }
 
-        if (empty($_GET['id']) && !empty($_SESSION['user'])) {
+        if (empty($request['get']['id']) && !empty($_SESSION['user'])) {
             $result['user'] = $this->repository->getUserById($_SESSION['user']['id']);
         }
 
-        if (!empty($_GET['id']) && !empty($_SESSION['user'])) {
+        if (!empty($request['get']['id']) && !empty($_SESSION['user'])) {
             $result['user'] = $this->repository->getUserById($_GET['id']);
         }
 
-        if (!empty($_GET['id']) && empty($_SESSION['user'])) {
+        if (!empty($request['get']['id']) && empty($_SESSION['user'])) {
             $result['user'] = $this->repository->getUserById($_GET['id']);
         }
 
