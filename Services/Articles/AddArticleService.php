@@ -37,7 +37,7 @@ class AddArticleService extends BaseService
                     $_SESSION['message'] = 'Article was not added, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was added!' . "\n";
-                    \header('Location: /home');
+                    \header('Location: /');
                 }
             }
         }

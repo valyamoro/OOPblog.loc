@@ -21,12 +21,12 @@ class EditArticleService extends BaseService
 
         if ($result['is_active'] === 0) {
             $_SESSION['message'] = 'This article is under review!' . "\n";
-            \header('Location: /home');
+            \header('Location: /');
         }
 
         if ($result['is_blocked'] === 1) {
             $_SESSION['message'] = 'This article is under block!' . "\n";
-            \header('Location: /home');
+            \header('Location: /');
         }
 
         $result = $this->repository->getAuthorOfArticle((int)$request['get']['id']);
@@ -54,7 +54,7 @@ class EditArticleService extends BaseService
                     $_SESSION['message'] = 'Article was not edited, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was edited!' . "\n";
-                    \header('Location: /home');
+                    \header('Location: /');
                 }
             }
         }

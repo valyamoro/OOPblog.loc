@@ -23,9 +23,15 @@
             </ul>
 
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/users/auth">Login</a>
-                </li>
+                <?php if (empty($_SESSION['user'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/users/auth">Login</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/users/logout">Logout</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/users/add">Register</a>
                 </li>

@@ -42,7 +42,7 @@ class AddUserService extends BaseService
 
                     if ($this->repository->add($data)) {
                         $_SESSION['success'] = 'you have successfully registered!' . "\n";
-                        \header('Location: /home');
+                        \header('Location: /');
                     } else {
                         $_SESSION['warning'] =  'You are not registered! Please try again.' . "\n";
                     }

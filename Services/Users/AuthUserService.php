@@ -41,7 +41,7 @@ class AuthUserService extends BaseService
                     ];
 
                     $_SESSION['success'] = 'You have successfully logged in!' . "\n";
-                    \header('Location: /home');
+                    \header('Location: /');
                 }
             }
         }

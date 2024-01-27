@@ -1,4 +1,4 @@
-<?php if ($_SESSION['user']['id'] !== $article['id_user'] || $_SESSION['user']['role'] !== '1'): ?>
+<?php if ($_SESSION['user']['id'] === $article['id_user'] || $_SESSION['user']['role'] === '1'): ?>
     <a href="<?php echo "/articles/edit?id={$article['id']}"; ?>">Edit</a> <br><br>
 <?php endif; ?>
 <?php echo $article['id']; ?> <br>
