@@ -31,8 +31,9 @@ class EditArticleService extends BaseService
 
         $result = $this->repository->getAuthorOfArticle((int)$request['get']['id']);
 
-        if ($_SESSION['user']['id'] !== $result['id']) {
-            $_SESSION['message'] = 'This isn\`t your article!' . "\n";
+        if ($_SESSION['user']['id'] !== $result['id'] && $_SESSION['user']['role'] !== '1') {
+            $_SESSION['message'] = 'This isn`t your article!' . "\n";
+            \header('Location: /');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
