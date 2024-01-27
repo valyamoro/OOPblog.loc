@@ -6,6 +6,10 @@
     <?php echo \nl2br($_SESSION['warning']); ?>
     <?php unset($_SESSION['warning']); ?>
 <?php endif; ?>
+<?php if (!empty($warning)): ?>
+    <?php echo \nl2br($warning); ?>
+    <?php unset($warning); ?>
+<?php endif; ?>
 <?php foreach ($items as $item): ?>
     <a href="<?php echo "/articles/show?id={$item['id']}"; ?>"><?php echo $item['title']; ?></a><br>
     <form action="delete?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">

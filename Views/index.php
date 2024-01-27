@@ -22,21 +22,22 @@
     <?php endforeach; ?>
 <?php endif; ?>
 
-ФИЛЬТР: <br>
-<a href="<?php echo "?page={$_GET['page']}&mode=asc" ?>">Сначала новые</a> <br>
-<a href="<?php echo "?page={$_GET['page']}&mode=desc" ?>">Сначала старые</a> <br>
+
 
 <?php if ($paginator->calculateTotalPages() > 1): ?>
+    ФИЛЬТР: <br>
+    <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=asc" ?>">Сначала новые</a> <br>
+    <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=desc" ?>">Сначала старые</a> <br>
     <nav aria-label="navigation">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" href="<?php echo $paginator->moveLeft() ?>" aria-label="Предыдущая">
+                <a class="page-link" href="<?php echo "{$paginator->moveLeft()}&mode={$paginator->getOrder()}" ?>" aria-label="Prev">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <?php echo $paginator->generatePaginationLinks(); ?>
             <li class="page-item">
-                <a class="page-link" href="<?php echo $paginator->moveRight() ?>" aria-label="Следующая">
+                <a class="page-link" href="<?php echo "{$paginator->moveRight()}&mode={$paginator->getOrder()}" ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

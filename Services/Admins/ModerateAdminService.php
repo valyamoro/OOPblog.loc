@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Admins;
 
@@ -8,12 +9,18 @@ class ModerateAdminService extends BaseService
 {
     public function getAll(string $page): array
     {
-        $result['items'] = $this->repository->getAll($page);
+        if ($_SESSION['user']['role'] !== '0') {
+            $result['items'] = $this->repository->getAll($page);
 
-        if (empty($result)) {
-            $result['messages'] = 'There are not have a ' . $page;
+            if (empty($result['items'])) {
+                $result['warning'] = 'There are not have a ' . $page;
+            }
+
+            return $result;
+        } else {
+            \header('Location: /');
         }
 
-        return $result;
     }
+
 }

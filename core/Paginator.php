@@ -4,11 +4,28 @@ namespace app\core;
 
 class Paginator
 {
+    private readonly string $order;
+
     public function __construct(
         private readonly int $totalItems,
         private readonly int $itemsPerPage,
         private readonly int $currentPage,
     ) {
+    }
+
+    public function getOrder(): string
+    {
+        return $this->order;
+    }
+
+    public function setOrder(string $value): void
+    {
+        $this->order = $value;
+    }
+
+    public function getCurrentPage(): int
+    {
+        return $this->currentPage;
     }
 
     public function calculateTotalPages(): int
@@ -37,7 +54,7 @@ class Paginator
         $links = '';
 
         for ($i = 1; $i <= $totalPages; $i++) {
-            $links .= "<li class='page-item'><a class='page-link' href='?page={$i}'>{$i}</a></li>";
+            $links .= "<li class='page-item'><a class='page-link' href='?page={$i}&mode={$this->getOrder()}'>{$i}</a></li>";
         }
 
         return $links;

@@ -34,6 +34,8 @@ class AuthUserService extends BaseService
                         'email' => $result['email'],
                         'phone' => $result['phone'],
                         'password' => $result['password'],
+                        'is_bann' => $result['is_bann'],
+                        'role' => $result['role'],
                         'created_at' => $result['created_at'],
                         'updated_at' => $result['updated_at'],
                     ];

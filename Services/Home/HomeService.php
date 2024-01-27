@@ -12,23 +12,27 @@ class HomeService extends BaseService
     {
         $totalItems = $this->repository->getCount();
         $itemsPerPage = 5;
-        $currentPage = (int)$_GET['page'] ?? 1;
+        $currentPage = (int)($_GET['page'] ?? 1);
 
         $result['paginator'] = new Paginator($totalItems, $itemsPerPage, $currentPage);
 
-        if ($currentPage <= 0) {
-            \header('Location: /?page=1');
-        }
+        $mode = $_GET['mode'] ?? 'asc';
+        $result['paginator']->setOrder($mode);
 
         $totalPages = $result['paginator']->calculateTotalPages();
+
+        if ($currentPage <= 0) {
+            \header("Location: /?page=1&mode={$result['paginator']->getOrder()}");
+        }
+
         if ($currentPage > $totalPages) {
-            \header("Location: /?page={$totalPages}");
+            \header("Location: /?page={$totalPages}&mode={$result['paginator']->getOrder()}");
         }
 
         $offset = ($currentPage - 1) * $itemsPerPage;
 
-        $mode = $_GET['mode'] ?? 'desc';
         $result['articles'] = $this->repository->getAll($itemsPerPage, $offset, $mode);
+
 
         if (empty($result['articles'])) {
             $_SESSION['warning'] = 'There are no articles on the site' . "\n";
