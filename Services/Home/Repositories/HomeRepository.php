@@ -9,7 +9,7 @@ class HomeRepository extends BaseRepository
 {
     public function getAll(int $limit, int $offset, string $mode): array
     {
-        $query = 'select * from articles order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
+        $query = 'select * from articles where is_active=1 order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
 
         $this->connection->prepare($query)->execute();
 

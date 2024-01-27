@@ -15,7 +15,7 @@
     <form action="delete?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
         <input type="submit" class="btn btn-danger" value="Delete">
     </form>
-    <form action="?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
+    <form action="approve?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
         <input type="submit" class="btn btn-success" value="Approve">
     </form>
     <br>

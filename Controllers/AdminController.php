@@ -21,4 +21,10 @@ class AdminController extends Controller
         $this->service->delete($request['id']);
     }
 
+    public function approve(): void
+    {
+        $request = $this->request->getGET();
+        $this->service->approve($request['id']);
+    }
+
 }
