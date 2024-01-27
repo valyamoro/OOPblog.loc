@@ -37,7 +37,7 @@ class Router
 
         $namespace = "app\Services\\{$segments[0]}";
         $segments[0] = \rtrim($segments[0], 's');
-        print_r($_GET);
+
         if (\is_array($segments)) {
             if (\count($segments) === 1) {
                 $repository = new ("{$namespace}\Repositories\\" . $segments[0] . 'Repository')($connectionDB);
