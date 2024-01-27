@@ -25,4 +25,13 @@ class HomeRepository extends BaseRepository
         return \array_values($this->connection->fetch())[0];
     }
 
+    public function getCommentsById(int $id): array
+    {
+        $query = 'select * from comments where id_article=?';
+
+        $this->connection->prepare($query)->execute([$id]);
+
+        return $this->connection->fetchAll();
+    }
+
 }
