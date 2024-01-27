@@ -10,7 +10,6 @@ class CommentController extends Controller
     {
         $request = $this->request->getPost();
         $this->service->add($request);
-        \header("Location: {$_SERVER['HTTP_REFERER']}");
     }
 
 }

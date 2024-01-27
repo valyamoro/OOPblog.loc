@@ -35,8 +35,8 @@
         <?php foreach ($comments as $comment): ?>
             Author: <?php echo $comment['firstName']; ?> <br>
             Comment: <?php echo $comment['content']; ?> <br>
+            <br>
         <?php endforeach; ?>
-        <br>
     <?php endif; ?>
     <br>
 </div>
