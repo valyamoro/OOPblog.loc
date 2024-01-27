@@ -4,7 +4,7 @@ namespace app\Controllers;
 
 use app\core\Controller;
 
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
     public function show(string $view, string $layout): string
     {

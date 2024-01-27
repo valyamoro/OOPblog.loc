@@ -13,5 +13,5 @@ class CategoryArticleService extends BaseService
 
         return $this->repository->getArticlesByCategory($id);
     }
-    
+
 }

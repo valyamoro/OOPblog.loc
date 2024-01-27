@@ -5,7 +5,7 @@ namespace app\Controllers;
 
 use app\core\Controller;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     public function index(string $view, string $layout = '', array $params = []): string
     {

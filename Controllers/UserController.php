@@ -6,7 +6,7 @@ namespace app\Controllers;
 use app\core\Controller;
 use app\Models\UserModel;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     public function auth(string $view, string $layout = '', array $params = []): string
     {

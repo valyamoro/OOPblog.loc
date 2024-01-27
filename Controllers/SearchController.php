@@ -4,7 +4,7 @@ namespace app\Controllers;
 
 use app\core\Controller;
 
-class SearchController extends Controller
+class SearchController extends BaseController
 {
     public function search(): string
     {

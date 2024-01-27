@@ -4,7 +4,7 @@ namespace app\Controllers;
 
 use app\core\Controller;
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
     public function moderate(string $view, string $layout, array $params = []): string
     {
