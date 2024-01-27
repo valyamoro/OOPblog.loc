@@ -34,4 +34,13 @@ class HomeRepository extends BaseRepository
         return $this->connection->fetchAll();
     }
 
+    public function getCategories(): array
+    {
+        $query = 'select * from categories';
+
+        $this->connection->prepare($query)->execute();
+
+        return $this->connection->fetchAll();
+    }
+
 }

@@ -32,4 +32,11 @@ class ArticleController extends Controller
         return $this->view->render($view, $layout, $params);
     }
 
+    public function category(string $view, string $layout, string $params): string
+    {
+        $result['articles'] = $this->service->getCategoryArticles($params);
+
+        return $this->view->render($view, $layout, $result);
+    }
+
 }

@@ -32,7 +32,7 @@ class HomeService extends BaseService
         $offset = ($currentPage - 1) * $itemsPerPage;
 
         $result['articles'] = $this->repository->getAll($itemsPerPage, $offset, $mode);
-
+        $result['categories'] = $this->repository->getCategories();
 
         if (empty($result['articles'])) {
             $_SESSION['warning'] = 'There are no articles on the site' . "\n";

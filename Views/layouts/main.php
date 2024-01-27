@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="/asserts/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -18,8 +19,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Main page</a>
                 </li>
+
+                <ul class="menu">
+                    <li>
+                        <a href="#">Categories</a>
+                        <ul>
+                        <?php foreach ($categories as $category): ?>
+                        <li>
+                            <a href="/articles/category/<?php echo $category['title'] ?>"><?php echo $category['title'] ?></a>
+                        </li>
+                        <?php endforeach; ?>
+                        </ul>
+                    </li>
+                </ul>
             </ul>
 
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -57,5 +71,20 @@
 </html>
 <body>
 
+<script>
+    function showCategories() {
+        var categoryList = document.getElementById("categoryList");
+        categoryList.style.display = "block";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var categoryButton = document.querySelector("button");
+        var categoryList = document.getElementById("categoryList");
+
+        categoryButton.addEventListener("mouseout", function() {
+            categoryList.style.display = "none";
+        });
+    });
+</script>
 </body>
 

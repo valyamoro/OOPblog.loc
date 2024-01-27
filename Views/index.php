@@ -22,8 +22,6 @@
     <?php endforeach; ?>
 <?php endif; ?>
 
-
-
 <?php if ($paginator->calculateTotalPages() > 1): ?>
     ФИЛЬТР: <br>
     <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=asc" ?>">Сначала новые</a> <br>
