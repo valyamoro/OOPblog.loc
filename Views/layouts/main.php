@@ -30,9 +30,15 @@
                     <a class="nav-link" href="/users/add">Register</a>
                 </li>
             </ul>
+            <form name="search" method="post" action="search">
+                <label>
+                    <input type="search" id="search" name="search" oninput="updateSelectedCurrency()"
+                           placeholder="Поиск">
+                </label>
+                <input type="submit" value="Поиск"/>
+            </form>
         </div>
     </div>
-
 </nav>
 <div class="container">
     {{content}}
@@ -43,3 +49,7 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+<body>
+
+</body>
+

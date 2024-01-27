@@ -12,7 +12,8 @@ class Request
             $result[$key] = \htmlspecialchars(strip_tags(trim($value)));
         }
 
-        return $result;
+//        return $result;
+        return $_POST;
     }
 
     public function getGET(): array
