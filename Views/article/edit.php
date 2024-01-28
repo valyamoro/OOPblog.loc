@@ -4,7 +4,7 @@
         <?php unset($_SESSION['warning']); ?>
     <?php endif; ?>
     <h1>Edit article</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title article</label>
             <input type="text" name="title" class="form-control" id="title"
@@ -19,6 +19,10 @@
             <?php if (isset($_SESSION['validate']['content'])): ?>
                 <div id="password" class="form-text"> <?php echo $_SESSION['validate']['content'][0]; ?> </div>
             <?php endif; ?>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Изображение</label>
+            <input type="file" name="image" class="form-control" id="image">
         </div>
         <button type="submit" class="btn btn-primary">Create article</button>
     </form>

@@ -19,7 +19,7 @@ class AddArticleRepository extends BaseRepository
 
     public function addItem(array $data): int
     {
-        $query = 'insert into articles(title, content, is_active, is_blocked, created_at, updated_at) values (?, ?, ?, ?, ?, ?)';
+        $query = 'insert into articles(title, content, is_active, is_blocked, image_path, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?)';
 
         $this->connection->prepare($query)->execute(\array_values($data));
 

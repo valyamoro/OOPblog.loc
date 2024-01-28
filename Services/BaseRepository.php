@@ -13,4 +13,22 @@ abstract class BaseRepository
     ) {
     }
 
+    public function uploadImage(array $data): string
+    {
+        $filePath = __DIR__ . '\..\uploads\\' . \uniqid() . $data['name'];
+
+        \move_uploaded_file($data['tmp_name'], $filePath);
+
+        return '\..\\' . \strstr($filePath, 'uploads');
+    }
+
+    public function getImageById(int $id): string
+    {
+        $query = 'select image_path from articles where id=?';
+
+        $this->connection->prepare($query)->execute([$id]);
+
+        return $this->connection->fetch()['image_path'];
+    }
+
 }

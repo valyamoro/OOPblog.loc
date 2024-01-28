@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Create article</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title article</label>
             <input type="text" name="title" class="form-control" id="title"
@@ -15,6 +15,10 @@
             <?php if (isset($validate['content'])): ?>
                 <div id="content" class="form-text text-danger"> <?php echo $validate['content'][0]; ?> </div>
             <?php endif; ?>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Изображение</label>
+            <input type="file" name="image" class="form-control" id="image">
         </div>
         <button type="submit" class="btn btn-primary">Create article</button>
     </form>

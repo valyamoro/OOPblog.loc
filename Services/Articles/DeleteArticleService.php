@@ -32,10 +32,16 @@ class DeleteArticleService extends BaseService
             $_SESSION['message'] = 'This isn`t your article!' . "\n";
             \header('Location: /');
         } else {
-            $_SESSION['success'] = 'You are success deleted your article!' . "\n";
+            $imagePath = $this->repository->getImageById($id);
+
+            if (!empty($imagePath)) {
+                unlink(__DIR__ . '\..\\' .  $imagePath);
+            }
             $this->repository->delete($id);
             $this->repository->deleteArticlesCategories($id);
             $this->repository->deleteUsersArticles($id);
+            $_SESSION['success'] = 'You are success deleted your article!' . "\n";
+
             \header('Location: /');
         }
     }

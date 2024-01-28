@@ -43,10 +43,19 @@ class EditArticleService extends BaseService
             if (!$model->validator->validate($model)) {
                 $messages = $model->validator->errors;
             } else {
+                $imagePath = $this->repository->getImageById((int)$request['get']['id']);
+
+                if (!empty($imagePath)) {
+                    unlink(__DIR__ . '\..\\' .  $imagePath);
+                }
+
+                $imagePath = $this->repository->uploadImage($request['files']['image']);
+
                 $data = [
                     'title' => $request['post']['title'],
                     'content' => $request['post']['content'],
                     'is_active' => 0,
+                    'image_path' => $imagePath,
                     'updated_at' => \date('Y-m-d H:i:s'),
                 ];
 

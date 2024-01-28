@@ -17,7 +17,10 @@ class ArticleController extends BaseController
 
     public function add(string $view, string $layout, array $params = []): string
     {
-        $params['validate'] = $this->service->add($this->request->getPost());
+        $request['post'] = $this->request->getPost();
+        $request['files'] = $this->request->getFiles();
+
+        $params['validate'] = $this->service->add($request);
 
         return $this->view->render($view, $layout, $params);
     }
@@ -26,6 +29,7 @@ class ArticleController extends BaseController
     {
         $request['get'] = $this->request->getGET();
         $request['post'] = $this->request->getPost();
+        $request['files'] = $this->request->getFiles();
 
         $this->service->edit($request);
 

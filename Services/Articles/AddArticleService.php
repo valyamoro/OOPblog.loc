@@ -17,7 +17,7 @@ class AddArticleService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new ArticleModel(...$data);
+            $model = new ArticleModel(...$data['post']);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
@@ -25,10 +25,11 @@ class AddArticleService extends BaseService
             } else {
                 $now = \date('Y-m-d H:i:s');
                 $data = [
-                    'title' => $data['title'],
-                    'content' => $data['content'],
+                    'title' => $data['post']['title'],
+                    'content' => $data['post']['content'],
                     'is_active' => 0,
                     'is_blocked' => 0,
+                    'image_path' => $this->repository->uploadImage($data['files']['image']),
                     'created_at' => $now,
                     'updated_at' => $now,
                 ];

@@ -18,6 +18,7 @@
     <?php endif; ?>
     <?php foreach ($articles as $article): ?>
         <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
+        <img src="<?php echo $article['image_path']; ?>" alt="Изображение"><br>
     <?php endforeach; ?>
 <?php endif; ?>
 

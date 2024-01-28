@@ -12,8 +12,7 @@ class Request
             $result[$key] = \htmlspecialchars(strip_tags(trim($value)));
         }
 
-//        return $result;
-        return $_POST;
+        return $result;
     }
 
     public function getGET(): array
@@ -25,6 +24,11 @@ class Request
         }
 
         return $result;
+    }
+
+    public function getFiles(): array
+    {
+        return $_FILES;
     }
 
 }

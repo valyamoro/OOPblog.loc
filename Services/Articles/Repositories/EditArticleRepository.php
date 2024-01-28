@@ -27,7 +27,7 @@ class EditArticleRepository extends BaseRepository
 
     public function edit(array $data, int $id): bool
     {
-        $query = 'update articles set title=?, content=?, is_active=?, updated_at=? where id=?';
+        $query = 'update articles set title=?, content=?, is_active=?, image_path=?, updated_at=? where id=?';
 
         $data = [...$data, $id];
 

@@ -41,7 +41,7 @@ Article:<br><?php echo $article['id']; ?> <br>
         <?php unset($warning); ?>
     <?php else: ?>
         <?php foreach ($comments as $comment): ?>
-            Author: <?php echo $comment['firstName']; ?> <br>
+            Author: <a href="/users/profile?id=<?php echo $comment['id_user']; ?>"><?php echo $comment['firstName']; ?></a> <br>
             Comment: <?php echo $comment['content']; ?> <br>
             <br>
         <?php endforeach; ?>
