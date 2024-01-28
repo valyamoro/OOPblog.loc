@@ -17,10 +17,10 @@ class AddUserService extends BaseService
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $messages = $model->validator->errors;
+                $messages['validate'] = $model->validator->errors;
             } else {
                 if ($this->repository->getByEmail($data['email'])) {
-                    $_SESSION['warning'] = 'This email already exists!' . "\n";
+                    $messages['warning'] = 'This email already exists!' . "\n";
                 } else {
                     $now = \date('Y-m-d H:i:s');
 
@@ -28,6 +28,7 @@ class AddUserService extends BaseService
                     if (\strlen($phoneNumber) === 10 && !\str_starts_with($phoneNumber, '7')) {
                         $phoneNumber = '7' . $phoneNumber;
                     }
+
                     $data = [
                         'firstName' => $data['firstName'],
                         'lastName' => $data['lastName'],
@@ -36,15 +37,16 @@ class AddUserService extends BaseService
                         'phone' => (int)$phoneNumber,
                         'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
                         'is_bann' => 0,
+                        'role' => 0,
                         'created_at' => $now,
                         'updated_at' => $now,
                     ];
 
                     if ($this->repository->add($data)) {
-                        $_SESSION['success'] = 'you have successfully registered!' . "\n";
+                        $_SESSION['success'] = 'You have successfully registered!' . "\n";
                         \header('Location: /');
                     } else {
-                        $_SESSION['warning'] =  'You are not registered! Please try again.' . "\n";
+                        $messages['warning'] =  'You are not registered! Please try again.' . "\n";
                     }
                 }
             }

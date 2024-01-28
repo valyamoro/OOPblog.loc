@@ -9,8 +9,8 @@ class AddUserRepository extends BaseRepository
 {
     public function add(array $data): bool
     {
-        $query = 'insert into users (firstName, lastName, patronymic, email, phone, password, is_bann, created_at, updated_at) 
-        values (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $query = 'insert into users (firstName, lastName, patronymic, email, phone, password, is_bann, role, created_at, updated_at) 
+        values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         $this->connection->prepare($query)->execute(\array_values($data));
 

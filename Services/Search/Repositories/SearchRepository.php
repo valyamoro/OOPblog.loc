@@ -8,9 +8,11 @@ class SearchRepository extends BaseRepository
 {
     public function search(string $value)
     {
-        $query = "select id, title from articles where title like '%$value%'";
+        $query = "select id, title from articles where title like :searchValue";
 
-        $this->connection->prepare($query)->execute();
+        $this->connection->prepare($query)->execute([
+            ':searchValue' => '%' . $value . '%',
+        ]);
 
         return $this->connection->fetchAll();
     }

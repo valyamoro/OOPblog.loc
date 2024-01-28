@@ -10,7 +10,7 @@ class SearchController extends BaseController
     {
         $request = $this->request->getPost();
 
-        $result['articles'] = $this->service->search($request['search']);
+        $result = $this->service->search($request);
 
         return $this->view->render('search', 'article', $result);
     }

@@ -37,13 +37,18 @@
                         <a class="nav-link" href="/users/add">Register</a>
                     </li>
                 </ul>
-                <form name="search" method="post" action="search">
+                <form name="search" method="post" action="/search">
                     <label>
                         <input type="search" id="search" name="search" oninput="updateSelectedCurrency()"
                                placeholder="Поиск">
                     </label>
                     <input type="submit" value="Поиск"/>
+                    <?php if (!empty($_SESSION['warning']['content'])): ?>
+                        <?php echo \nl2br($_SESSION['warning']['content'][0]); ?>
+                        <?php unset($_SESSION['warning']); ?>
+                    <?php endif; ?>
                 </form>
+
         </div>
     </div>
 </nav>

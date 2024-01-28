@@ -1,7 +1,10 @@
 <div class="container">
     <?php if (!empty($_SESSION['warning'])): ?>
-        <?php echo '<p class="msg"> ' . nl2br($_SESSION['warning']) . ' </p>'; ?>
+        <?php echo '<p class="msg"> ' . \nl2br($_SESSION['warning']) . ' </p>'; ?>
         <?php unset($_SESSION['warning']); ?>
+    <?php endif; ?>
+    <?php if (!empty($warning)): ?>
+        <?php echo '<p class="msg"> ' . \nl2br($warning) . ' </p>'; ?>
     <?php endif; ?>
     <h1>Registration</h1>
     <form action="" method="post">
