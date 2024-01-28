@@ -11,7 +11,7 @@ class ArticleController extends BaseController
     {
         $request = $this->request->getGET();
 
-        $data = $this->service->show($request['id']);
+        $data = $this->service->show((int)$request['id']);
 
         return $this->view->render($view, $layout, $data);
     }
@@ -49,6 +49,13 @@ class ArticleController extends BaseController
         $request = $this->request->getGET();
 
         $this->service->delete((int)$request['id']);
+    }
+
+    public function block(): void
+    {
+        $request = $this->request->getGET();
+
+        $this->service->block((int)$request['id']);
     }
 
 }
