@@ -39,4 +39,11 @@ class ArticleController extends BaseController
         return $this->view->render($view, $layout, $result);
     }
 
+    public function delete(): void
+    {
+        $request = $this->request->getGET();
+
+        $this->service->delete((int)$request['id']);
+    }
+
 }

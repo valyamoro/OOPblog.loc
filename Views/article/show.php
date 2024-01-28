@@ -1,5 +1,6 @@
 <?php if (!empty($_SESSION['user']['id']) && ($_SESSION['user']['id'] === (int)$article['id_user'] || $_SESSION['user']['role'] === '1')): ?>
     <a href="<?php echo "/articles/edit?id={$article['id']}"; ?>">Edit</a> <br><br>
+    <a href="<?php echo "/articles/delete?id={$article['id']}"; ?>">Delete</a> <br><br>
 <?php endif; ?>
 <?php echo $article['id']; ?> <br>
 <?php echo $article['title']; ?> <br>

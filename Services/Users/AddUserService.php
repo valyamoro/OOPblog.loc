@@ -33,7 +33,7 @@ class AddUserService extends BaseService
                     if ($_SESSION['user']['role'] !== '1') {
                         $role = 0;
                     }
-                    
+
                     $data = [
                         'firstName' => $data['firstName'],
                         'lastName' => $data['lastName'],
