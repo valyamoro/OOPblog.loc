@@ -39,7 +39,7 @@ class UserController extends BaseController
     {
         unset($_SESSION['user']);
         $_SESSION['message'] = 'You logout!' . "\n";
-        \header('Location: /home');
+        \header('Location: /');
     }
 
 }
