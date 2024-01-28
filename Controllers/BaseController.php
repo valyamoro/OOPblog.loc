@@ -33,21 +33,18 @@ class BaseController extends Controller
 
         foreach ($data as $value) {
             $string .= "<li><a href='/articles/category/{$value['title']}'> {$value['title']}</a>";
-
             if (!empty($value['childs'])) {
+                $string .= "<ul class='menu'>";
                 foreach ($value['childs'] as $child) {
-                    $string .= "<ul class='menu'><li><a href='/articles/category/{$child['title']}'> {$child['title']}</a><ul class='sub-menu'>";
-                    $string .= $this->createMenu($value['childs']);
-                    $string .= "</ul></li></ul>";
+                    $string .= "<li><a href='/articles/category/{$child['title']}'> {$child['title']}</a></li>";
                 }
-
+                $string .= "</ul>";
             }
-
+            
             $string .= "</li>";
         }
 
         $string .= "</ul></li></ul></ul>";
         return $string;
     }
-
 }
