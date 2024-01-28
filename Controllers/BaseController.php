@@ -22,7 +22,32 @@ class BaseController extends Controller
         $repository = new BaseControllerRepository($this->PDODriver);
         $service = new BaseControllerService($repository);
 
-        return $service->getAllCategories();
+        $result['menu'] = $this->createMenu($service->getAllCategories());
+
+        return $result;
+    }
+
+    public function createMenu(array $data): string
+    {
+        $string = '<ul class="menu"><li><a href="#">Categories</a><ul class="sub-menu">';
+
+        foreach ($data as $value) {
+            $string .= "<li><a href='/articles/category/{$value['title']}'> {$value['title']}</a>";
+
+            if (!empty($value['childs'])) {
+                foreach ($value['childs'] as $child) {
+                    $string .= "<ul class='menu'><li><a href='/articles/category/{$child['title']}'> {$child['title']}</a><ul class='sub-menu'>";
+                    $string .= $this->createMenu($value['childs']);
+                    $string .= "</ul></li></ul>";
+                }
+
+            }
+
+            $string .= "</li>";
+        }
+
+        $string .= "</ul></li></ul></ul>";
+        return $string;
     }
 
 }

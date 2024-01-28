@@ -24,8 +24,7 @@ class View
 
     protected function layoutContent(): string
     {
-        $data['categories'] = $this->getData();
-        \extract($data);
+        \extract( $this->getData());
         \ob_start();
         require_once __DIR__ . '/../Views/layouts/main.php';
         return \ob_get_clean();

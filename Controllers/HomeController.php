@@ -14,4 +14,18 @@ class HomeController extends BaseController
         return $this->view->render($view, $layout, $result);
     }
 
+    public function categoriesToString(array $data): string
+    {
+        foreach ($data as $item) {
+            $string .= categoriesToTemplate($item);
+        }
+
+        return $string;
+    }
+
+    public function categoriesToTemplate(array $data): string
+    {
+        \ob_start();
+
+    }
 }

@@ -7,7 +7,7 @@ use app\Services\BaseService;
 
 class CategoryArticleService extends BaseService
 {
-    public function getCategoryArticles(string $category)
+    public function getCategoryArticles(string $category): array
     {
         $id = $this->repository->getIdByTitle($category);
 

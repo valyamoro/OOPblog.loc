@@ -21,42 +21,29 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Main page</a>
                 </li>
+                <?php echo $menu; ?>
 
-                <ul class="menu">
-                    <li>
-                        <a href="#">Categories</a>
-                        <ul>
-                        <?php foreach ($categories as $category): ?>
-                        <li>
-                            <a href="/articles/category/<?php echo $category['title'] ?>"><?php echo $category['title'] ?></a>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <?php if (empty($_SESSION['user'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/users/auth">Login</a>
                         </li>
-                        <?php endforeach; ?>
-                        </ul>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/users/logout">Logout</a>
+                        </li>
+                    <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/add">Register</a>
                     </li>
                 </ul>
-            </ul>
-
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <?php if (empty($_SESSION['user'])): ?>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/users/auth">Login</a>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/users/logout">Logout</a>
-                    </li>
-                <?php endif; ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/add">Register</a>
-                </li>
-            </ul>
-            <form name="search" method="post" action="search">
-                <label>
-                    <input type="search" id="search" name="search" oninput="updateSelectedCurrency()"
-                           placeholder="Поиск">
-                </label>
-                <input type="submit" value="Поиск"/>
-            </form>
+                <form name="search" method="post" action="search">
+                    <label>
+                        <input type="search" id="search" name="search" oninput="updateSelectedCurrency()"
+                               placeholder="Поиск">
+                    </label>
+                    <input type="submit" value="Поиск"/>
+                </form>
         </div>
     </div>
 </nav>
@@ -77,11 +64,11 @@
         categoryList.style.display = "block";
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var categoryButton = document.querySelector("button");
         var categoryList = document.getElementById("categoryList");
 
-        categoryButton.addEventListener("mouseout", function() {
+        categoryButton.addEventListener("mouseout", function () {
             categoryList.style.display = "none";
         });
     });
