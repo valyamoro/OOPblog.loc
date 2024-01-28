@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Controllers;
 
@@ -38,6 +39,7 @@ class BaseController extends Controller
                 foreach ($value['childs'] as $child) {
                     $string .= "<li><a href='/articles/category/{$child['title']}'> {$child['title']}</a></li>";
                 }
+
                 $string .= "</ul>";
             }
 

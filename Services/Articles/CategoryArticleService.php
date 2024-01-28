@@ -23,9 +23,7 @@ class CategoryArticleService extends BaseService
             $_SESSION['warning'] = 'Articles with this category doesnt exist!' . "\n";
         }
 
-        $articles = $this->repository->getArticles($ids);
-        dump($articles);
-        if (!array_diff($articles, $result)) {
+        if (strlen($ids) === 1) {
             $result = [];
         }
 

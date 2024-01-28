@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Controllers;
 
@@ -36,4 +37,13 @@ class AdminController extends BaseController
         return $this->view->render($view, $layout, $data);
     }
 
+    public function category(string $view, string $layout, array $params = []): string
+    {
+        $request = $this->request->getPost();
+
+        $this->service->add($request);
+        $result['categories'] = $this->service->getCategories();
+
+        return $this->view->render($view, $layout, $result);
+    }
 }
