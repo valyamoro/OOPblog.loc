@@ -27,4 +27,13 @@ class AdminController extends BaseController
         $this->service->approve($request['id']);
     }
 
+    public function add(string $view, string $layout): string
+    {
+        $request = $this->request->getPost();
+
+        $data = $this->service->add($request);
+
+        return $this->view->render($view, $layout, $data);
+    }
+
 }

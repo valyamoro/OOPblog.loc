@@ -13,6 +13,7 @@ class AddUserService extends BaseService
         $messages = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $role = \array_pop($data);
             $model = new UserModel(...$data);
             $model->validator->setRules($model->rules());
 
@@ -29,6 +30,10 @@ class AddUserService extends BaseService
                         $phoneNumber = '7' . $phoneNumber;
                     }
 
+                    if ($_SESSION['user']['role'] !== '1') {
+                        $role = 0;
+                    }
+                    
                     $data = [
                         'firstName' => $data['firstName'],
                         'lastName' => $data['lastName'],
@@ -37,7 +42,7 @@ class AddUserService extends BaseService
                         'phone' => (int)$phoneNumber,
                         'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
                         'is_bann' => 0,
-                        'role' => 0,
+                        'role' => $role,
                         'created_at' => $now,
                         'updated_at' => $now,
                     ];

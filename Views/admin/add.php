@@ -6,7 +6,7 @@
     <?php if (!empty($warning)): ?>
         <?php echo '<p class="msg"> ' . \nl2br($warning) . ' </p>'; ?>
     <?php endif; ?>
-    <h1>Registration user</h1>
+    <h1>Registration admin</h1>
     <form action="" method="post">
         <div class="row">
             <div class="col">
@@ -95,12 +95,7 @@
                 <?php endif; ?>
             </div>
         </div>
-        <br>
-
-        <button type="submit" name="role" value="0" class="btn btn-primary">Registry</button>
-        <?php if ($_SESSION['user']['role'] === '1'): ?>
-        <button type="submit" name="role" value="1" class="btn btn-danger">Registry like admin</button>
-        <?php endif; ?>
+        <button type="submit" class="btn btn-primary">Registry</button>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
