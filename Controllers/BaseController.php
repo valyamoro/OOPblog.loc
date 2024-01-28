@@ -40,11 +40,12 @@ class BaseController extends Controller
                 }
                 $string .= "</ul>";
             }
-            
+
             $string .= "</li>";
         }
 
         $string .= "</ul></li></ul></ul>";
         return $string;
     }
+
 }

@@ -6,6 +6,7 @@
   },
   "require": {
     "phpunit/phpunit": "10.2.4",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-mbstring": "*"
   }
 }
