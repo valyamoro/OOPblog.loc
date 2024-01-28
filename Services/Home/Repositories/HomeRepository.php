@@ -18,7 +18,7 @@ class HomeRepository extends BaseRepository
 
     public function getCount(): int
     {
-        $query = 'select count(id) from articles';
+        $query = 'select count(id) from articles where is_active=1';
 
         $this->connection->prepare($query)->execute();
 
@@ -30,15 +30,6 @@ class HomeRepository extends BaseRepository
         $query = 'select * from comments where id_article=?';
 
         $this->connection->prepare($query)->execute([$id]);
-
-        return $this->connection->fetchAll();
-    }
-
-    public function getCategories(): array
-    {
-        $query = 'select * from categories';
-
-        $this->connection->prepare($query)->execute();
 
         return $this->connection->fetchAll();
     }

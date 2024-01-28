@@ -23,8 +23,8 @@
 
 <?php if ($paginator->calculateTotalPages() > 1): ?>
     ФИЛЬТР: <br>
-    <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=asc" ?>">Сначала новые</a> <br>
-    <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=desc" ?>">Сначала старые</a> <br>
+    <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=desc" ?>">Сначала новые</a> <br>
+    <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=asc" ?>">Сначала старые</a> <br>
     <nav aria-label="navigation">
         <ul class="pagination">
             <li class="page-item">

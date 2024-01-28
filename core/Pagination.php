@@ -2,15 +2,23 @@
 
 namespace app\core;
 
-class Paginator
+class Pagination
 {
     private readonly string $order;
+    private readonly string $offset;
+
 
     public function __construct(
         private readonly int $totalItems,
         private readonly int $itemsPerPage,
         private readonly int $currentPage,
     ) {
+        $this->offset = ($currentPage - 1) * $itemsPerPage;
+    }
+
+    public function getOffset(): int
+    {
+        return $this->offset;
     }
 
     public function getOrder(): string

@@ -9,23 +9,12 @@ class HomeController extends BaseController
 {
     public function index(string $view, string $layout = '', array $params = []): string
     {
-        $result = $this->service->getAll();
+        $request = $this->request->getGET();
+
+        $itemsPerPage = 5;
+        $result = $this->service->getAll($request, $itemsPerPage);
 
         return $this->view->render($view, $layout, $result);
     }
 
-    public function categoriesToString(array $data): string
-    {
-        foreach ($data as $item) {
-            $string .= categoriesToTemplate($item);
-        }
-
-        return $string;
-    }
-
-    public function categoriesToTemplate(array $data): string
-    {
-        \ob_start();
-
-    }
 }
