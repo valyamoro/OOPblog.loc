@@ -29,6 +29,9 @@
                             <a class="nav-link active" aria-current="page" href="/users/auth">Login</a>
                         </li>
                     <?php else: ?>
+                        <li>
+                            <a class="nav-link active" aria-current="page" href="/users/profile">My profile</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/users/logout">Logout</a>
                         </li>
@@ -39,8 +42,7 @@
                 </ul>
                 <form name="search" method="post" action="/search">
                     <label>
-                        <input type="search" id="search" name="search" oninput="updateSelectedCurrency()"
-                               placeholder="Поиск">
+                        <input type="search" id="search" name="search" placeholder="Поиск">
                     </label>
                     <input type="submit" value="Поиск"/>
                     <?php if (!empty($_SESSION['warning']['content'])): ?>
@@ -62,21 +64,5 @@
 </body>
 </html>
 <body>
-
-<script>
-    function showCategories() {
-        var categoryList = document.getElementById("categoryList");
-        categoryList.style.display = "block";
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        var categoryButton = document.querySelector("button");
-        var categoryList = document.getElementById("categoryList");
-
-        categoryButton.addEventListener("mouseout", function () {
-            categoryList.style.display = "none";
-        });
-    });
-</script>
 </body>
 
