@@ -53,12 +53,6 @@ class Router
                 $service = new ("{$namespace}\\{$segments[1]}" . $segments[0] . 'Service')($repository);
                 $method = $segments[1];
                 $params = [$segments[1], $segments[0], $segments[2]];
-            } elseif (\count($segments) === 5) {
-                $repository = new ("{$namespace}\Repositories\\" . $segments[3] . \rtrim($segments[0],
-                        's') . 'Repository')($connectionDB);
-                $service = new ("{$namespace}\\" . $segments[3] . $segments[0] . 'Service')($repository);
-                $method = $segments[3];
-                $params = [$segments[3], $segments[2], $segments[4]];
             }
         } else {
             $repository = new ("app\Services\\{$segments}\\Repositories\\" . $segments . 'Repository')($connectionDB);

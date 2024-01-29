@@ -8,25 +8,28 @@ class ProfileUserService extends BaseService
 {
     public function getProfileData(array $request): array
     {
-        $result['user'] = [];
         $result['articles'] = [];
 
         if (empty($request['id']) && empty($_SESSION['user'])) {
-            $_SESSION['warning'] = 'You not authorized!' . "\n";
-            \header('Location: /users/add');
+            $_SESSION['warning'] = 'You are not authorized!' . "\n";
+            \header('Location: /users/auth');
         }
 
+        $id = 0;
+
         if (empty($request['id']) && !empty($_SESSION['user'])) {
-            $result['user'] = $this->repository->getUserById($_SESSION['user']['id']);
+            $id = $_SESSION['user']['id'];
         }
 
         if (!empty($request['id']) && !empty($_SESSION['user'])) {
-            $result['user'] = $this->repository->getUserById($_GET['id']);
+            $id = $request['id'];
         }
 
         if (!empty($request['id']) && empty($_SESSION['user'])) {
-            $result['user'] = $this->repository->getUserById($_GET['id']);
+            $id = $request['id'];
         }
+
+        $result['user'] = $this->repository->getUserById($id);
 
         if (empty($result['user']))  {
             $_SESSION['warning'] = 'This user doesnt exist!' . "\n";

@@ -33,7 +33,14 @@ class UserTest extends TestCase
         $this->user->validator->setRules($this->user->rules());
         $this->user->validator->validate($this->user);
 
+        print_r($this->user->validator->errors);
         $this->assertSame($this->user->validator->errors, []);
+    }
+
+    public function Something()
+    {
+        $rewPeople = file_get_contents('people.json') ?? '[]';
+        print_r(json_decode($rewPeople, true));
     }
 
 }

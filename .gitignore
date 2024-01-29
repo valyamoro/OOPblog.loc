@@ -2,3 +2,4 @@
 /vendor
 /config/db.php
 /uploads
+.phpunit.result.cache
