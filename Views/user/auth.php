@@ -1,7 +1,3 @@
-<?php if (!empty($_SESSION['user'])): ?>
-<?php $_SESSION['message'] = 'You already authorized!' . "\n"; ?>
-<?php \header('Location: /home'); ?>
-<?php endif; ?>
 <div class="container">
     <?php if (!empty($_SESSION['warning'])): ?>
         <?php echo '<p class="msg"> ' . \nl2br($_SESSION['warning']) . ' </p>'; ?>

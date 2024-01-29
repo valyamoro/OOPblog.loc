@@ -98,7 +98,7 @@
         <br>
 
         <button type="submit" name="role" value="0" class="btn btn-primary">Registry</button>
-        <?php if ($_SESSION['user']['role'] === '1'): ?>
+        <?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '1'): ?>
         <button type="submit" name="role" value="1" class="btn btn-danger">Registry like admin</button>
         <?php endif; ?>
     </form>

@@ -12,6 +12,11 @@ class AuthUserService extends BaseService
     {
         $messages = [];
 
+        if (!empty($_SESSION['user'])) {
+            $_SESSION['message'] = 'You are already authorized!' . "\n";
+            \header('Location: /');
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $this->repository->getByEmail($data['email']);
 

@@ -2,7 +2,7 @@
     <a href="<?php echo "/articles/edit?id={$article['id']}"; ?>">Edit</a> <br><br>
     <a href="<?php echo "/articles/delete?id={$article['id']}"; ?>">Delete</a> <br><br>
 <?php endif; ?>
-<?php if ($_SESSION['user']['role'] === '1'): ?>
+<?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '1'): ?>
     <a href="<?php echo "/articles/block?id={$article['id']}"; ?>">Block</a> <br><br>
 <?php endif; ?>
 Author: <br> <a href="/users/profile?id=<?php echo $article['id_user']; ?>"><?php echo $article['firstName']; ?></a>
