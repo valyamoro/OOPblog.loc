@@ -10,6 +10,7 @@ class SearchService extends BaseService
     public function search(array $value): array
     {
         $result = [];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $model = new SearchModel($value['search']);
@@ -18,7 +19,9 @@ class SearchService extends BaseService
             if (!$model->validator->validate($model)) {
                 $_SESSION['warning'] = $model->validator->errors;
             }
+
             $result['articles'] = $this->repository->search($value['search']);
+
             if (empty($result['articles'])) {
                 $result['warning'] = 'There are no such articles!' . "\n";
             }

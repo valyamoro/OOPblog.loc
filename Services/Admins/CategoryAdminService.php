@@ -17,7 +17,6 @@ class CategoryAdminService extends BaseService
                 $_SESSION['success'] = 'You have successfully added a new category' . "\n";
             }
         }
-
     }
 
     public function getCategories()

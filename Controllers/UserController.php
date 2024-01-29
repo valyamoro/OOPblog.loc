@@ -37,9 +37,7 @@ class UserController extends BaseController
 
     public function logout(): void
     {
-        unset($_SESSION['user']);
-        $_SESSION['message'] = 'You logout!' . "\n";
-        \header('Location: /');
+        $this->service->logout();
     }
 
 }
