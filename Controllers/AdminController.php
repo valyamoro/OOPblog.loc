@@ -11,7 +11,7 @@ class AdminController extends BaseController
     {
         $request = $this->request->getGET();
 
-        $data = $this->service->getAll($request['page']);
+        $data = $this->service->getAll($request);
 
         return $this->view->render($view, $layout, $data);
     }
@@ -26,7 +26,15 @@ class AdminController extends BaseController
     public function approve(): void
     {
         $request = $this->request->getGET();
-        $this->service->approve($request['id']);
+
+        $this->service->approve($request);
+    }
+
+    public function unBlock(): void
+    {
+        $request = $this->request->getGET();
+
+        $this->service->unBlock($request);
     }
 
     public function add(string $view, string $layout): string
@@ -43,8 +51,9 @@ class AdminController extends BaseController
         $request = $this->request->getPost();
 
         $this->service->add($request);
-        $result['categories'] = $this->service->getCategories();
+        $params['categories'] = $this->service->getCategories();
 
-        return $this->view->render($view, $layout, $result);
+        return $this->view->render($view, $layout, $params);
     }
+
 }

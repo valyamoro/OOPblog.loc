@@ -18,7 +18,7 @@ class CategoryAdminService extends BaseService
                     die;
                 }
             }
-            
+
             $result = $this->repository->add($request);
 
             if (!$result) {
