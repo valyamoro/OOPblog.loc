@@ -12,11 +12,12 @@ class ShowArticleService extends BaseService
         $result['comments'] = $this->repository->getCommentsById($id);
 
         if (empty($result['article'])) {
-            $_SESSION['warning'] = 'Такого продукта не существует!' . "\n";
+            $_SESSION['message'] = 'This article doesnt exist!' . "\n";
+            \header('Location: /');
         }
 
         if (empty($result['comments'])) {
-            $result['warning'] = 'В этой статье нет комментариев!' . "\n";
+            $result['warning'] = 'This article doesnt have a comments!' . "\n";
         }
 
         return $result;

@@ -58,4 +58,13 @@ class ArticleController extends BaseController
         $this->service->block((int)$request['id']);
     }
 
+    public function search(string $view, string $layout): string
+    {
+        $request = $this->request->getPost();
+
+        $params = $this->service->search($request);
+
+        return $this->view->render($view, $layout, $params);
+    }
+
 }

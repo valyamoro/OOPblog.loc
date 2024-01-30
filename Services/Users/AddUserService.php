@@ -46,16 +46,16 @@ class AddUserService extends BaseService
     private function formatUserData(array $data): array
     {
         return [
-            'firstName' => $data['firstName'],
-            'lastName' => $data['lastName'],
-            'patronymic' => $data['patronymic'],
-            'email' => $data['email'],
-            'phone' => (int)$data['phoneNumber'],
-            'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
-            'is_bann' => 0,
-            'role' => $data['role'],
-            'created_at' => $data['currentDate'],
-            'updated_at' => $data['currentDate'],
+            $data['firstName'],
+            $data['lastName'],
+            $data['patronymic'],
+            $data['email'],
+            (int)$data['phoneNumber'],
+            \password_hash($data['password'], PASSWORD_DEFAULT),
+            0,
+            $data['role'],
+            $data['currentDate'],
+            $data['currentDate'],
         ];
     }
 

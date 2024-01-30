@@ -40,9 +40,9 @@
                         <a class="nav-link" href="/users/add">Register</a>
                     </li>
                 </ul>
-                <form name="search" method="post" action="/search">
+                <form name="search" method="post" action="/articles/search">
                     <label>
-                        <input type="search" id="search" name="search" placeholder="Поиск">
+                        <input type="search" id="search" name="search" placeholder="Поиск" value="<?php echo $_POST['search'] ?? '' ?>">
                     </label>
                     <input type="submit" value="Поиск"/>
                     <?php if (!empty($_SESSION['warning']['content'])): ?>

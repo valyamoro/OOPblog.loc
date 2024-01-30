@@ -1,10 +1,10 @@
 <?php
 
-namespace app\Services\Search\Repositories;
+namespace app\Services\Articles\Repositories;
 
 use app\Services\BaseRepository;
 
-class SearchRepository extends BaseRepository
+class SearchArticleRepository extends BaseRepository
 {
     public function search(string $value)
     {

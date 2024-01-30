@@ -3,7 +3,7 @@
     <?php unset($_SESSION['warning']); ?>
 <?php else: ?>
     User data: <br>
-    <?php echo $user['firstName']; ?> <br>
+    <?php echo $user['first_name']; ?> <br>
     <?php echo $user['email']; ?> <br>
     <?php echo $user['created_at']; ?> <br>
     <br>

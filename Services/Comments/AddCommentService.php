@@ -14,6 +14,7 @@ class AddCommentService extends BaseService
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
+                $_SESSION['default_value']['content'] = $data['content'];
                 $_SESSION['validate'] = $model->validator->errors;
             } else {
                 $idArticle = $this->repository->add($data);
