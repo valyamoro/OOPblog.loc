@@ -39,8 +39,6 @@ Article:<br><?php echo $article['id']; ?> <br>
             <button type="submit" name="id_article" value="<?php echo $_GET['id']; ?>" class="btn btn-primary">Add
                 commentary
             </button>
-            <button type="submit" name="role" value="0" class="btn btn-primary">Registry</button>
-
         </form>
     <?php else: ?>
         You are not authorized! Please authorise for left a comments!

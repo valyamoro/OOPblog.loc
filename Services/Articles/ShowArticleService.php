@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Articles;
 
@@ -6,8 +7,10 @@ use app\Services\BaseService;
 
 class ShowArticleService extends BaseService
 {
-    public function show(int $id): array
+    public function show(array $request): array
     {
+        $id = $request['id'];
+
         $result['article'] = $this->repository->getById($id);
         $result['comments'] = $this->repository->getCommentsById($id);
 

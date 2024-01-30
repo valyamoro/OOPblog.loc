@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Articles;
 
@@ -15,6 +16,7 @@ class UnBlockArticleService extends BaseService
                 $_SESSION['warning'] = 'You are not a unblocked article!' . "\n";
             }
         }
+
         \header('Location: /articles');
     }
 

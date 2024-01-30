@@ -44,16 +44,14 @@ class EditArticleService extends BaseService
             if (!$model->validator->validate($model)) {
                 $result['validate'] = $model->validator->errors;
             } else {
-                $imagePath = $this->repository->getImageById((int)$request['get']['id']);
+                $data = $this->formatArticleData($request);
 
-                if (!empty($imagePath)) {
+                $imagePath = $this->repository->getImageById((int)$request['get']['id']);
+                if (!empty($request['files']['image']['tmp_name'])) {
                     \unlink(__DIR__ . '\..\\' . $imagePath);
                 }
 
-                $data = $this->formatArticleData($request);
-
                 $data = [...$data, (int)$request['get']['id']];
-
                 if (!$this->repository->edit($data)) {
                     $_SESSION['message'] = 'Article was not edited, please try more' . "\n";
                 } else {
@@ -68,10 +66,10 @@ class EditArticleService extends BaseService
 
     private function formatArticleData(array $request): array
     {
-        if (!\is_null($request['files'])) {
+        if (!empty($request['files']['image']['tmp_name'])) {
             $imagePath = $this->repository->uploadImage($request['files']['image']);
         } else {
-            $imagePath = '';
+            $imagePath = $this->repository->getImageById((int)$request['get']['id']);
         }
 
         $now = \date('Y-m-d H:i:s');

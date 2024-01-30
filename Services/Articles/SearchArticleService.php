@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Articles;
 
@@ -19,7 +20,8 @@ class SearchArticleService extends BaseService
                 $_SESSION['warning'] = $model->validator->errors;
             }
 
-            $result['articles'] = $this->repository->search($request['search']);
+            $search = '%' . $request['search'] . '%';
+            $result['articles'] = $this->repository->search($search);
 
             if (empty($result['articles'])) {
                 $result['warning'] = 'There are no such articles!' . "\n";

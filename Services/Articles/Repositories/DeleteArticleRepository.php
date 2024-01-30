@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Articles\Repositories;
 
@@ -25,6 +26,8 @@ class DeleteArticleRepository extends BaseRepository
 
             return true;
         } catch (Exception $e) {
+            $this->connection->rollBack();
+
             return false;
         }
     }
