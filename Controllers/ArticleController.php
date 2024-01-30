@@ -21,7 +21,7 @@ class ArticleController extends BaseController
         $request['post'] = $this->request->getPost();
         $request['files'] = $this->request->getFiles();
 
-        $params['validate'] = $this->service->add($request);
+        $params = $this->service->add($request);
 
         return $this->view->render($view, $layout, $params);
     }
@@ -48,14 +48,21 @@ class ArticleController extends BaseController
     {
         $request = $this->request->getGET();
 
-        $this->service->delete((int)$request['id']);
+        $this->service->delete($request);
     }
 
     public function block(): void
     {
         $request = $this->request->getGET();
 
-        $this->service->block((int)$request['id']);
+        $this->service->block($request);
+    }
+
+    public function unBlock(): void
+    {
+        $request = $this->request->getGET();
+
+        $this->service->unBlock($request);
     }
 
     public function search(string $view, string $layout): string

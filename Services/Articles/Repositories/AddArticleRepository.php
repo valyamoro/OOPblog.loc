@@ -8,7 +8,7 @@ use Exception;
 
 class AddArticleRepository extends BaseRepository
 {
-    public function add(array $data): bool
+    public function add(array $data, int $categoryId): bool
     {
         try {
             $this->connection->beginTransaction();
@@ -21,6 +21,9 @@ class AddArticleRepository extends BaseRepository
             $query = 'insert into users_articles (id_user, id_article) values (?, ?)';
             $this->connection->prepare($query)->execute([$_SESSION['user']['id'], $articleId]);
 
+            $query = 'insert into articles_categories (id_article, id_category) values (?, ?)';
+            $this->connection->prepare($query)->execute([$articleId, $categoryId]);
+
             $this->connection->commit();
 
             return true;
@@ -29,6 +32,15 @@ class AddArticleRepository extends BaseRepository
 
             return false;
         }
+    }
+
+    public function getCategories(): array
+    {
+        $query = 'select * from categories';
+
+        $this->connection->prepare($query)->execute();
+
+        return $this->connection->fetchAll();
     }
 
 }

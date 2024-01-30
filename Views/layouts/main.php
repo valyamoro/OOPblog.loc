@@ -19,8 +19,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Main page</a>
+                    <a class="nav-link active" aria-current="page" href="/articles">Main page</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/articles/add">Add article</a>
+                </li>
+
                 <?php echo $menu; ?>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">

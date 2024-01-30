@@ -3,34 +3,30 @@
 namespace app\Services\Articles\Repositories;
 
 use app\Services\BaseRepository;
+use Exception;
 
 class DeleteArticleRepository extends BaseRepository
 {
     public function delete(int $id): bool
     {
-        $query = 'DELETE from articles where id=?';
+        try {
+            $this->connection->beginTransaction();
 
-        $this->connection->prepare($query)->execute([$id]);
+            $query = 'DELETE from articles_categories where id_article=? limit 1';
+            $this->connection->prepare($query)->execute([$id]);
 
-        return (bool)$this->connection->rowCount();
-    }
+            $query = 'DELETE from users_articles where id_article=? limit 1';
+            $this->connection->prepare($query)->execute([$id]);
 
-    public function deleteArticlesCategories(int $id): bool
-    {
-        $query = 'DELETE from articles_categories where id_article=?';
+            $query = 'DELETE from articles where id=? limit 1';
+            $this->connection->prepare($query)->execute([$id]);
 
-        $this->connection->prepare($query)->execute([$id]);
+            $this->connection->commit();
 
-        return (bool)$this->connection->rowCount();
-    }
-
-    public function deleteUsersArticles(int $id): bool
-    {
-        $query = 'DELETE from users_articles where id_article=?';
-
-        $this->connection->prepare($query)->execute([$id]);
-
-        return (bool)$this->connection->rowCount();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     public function getArticleById(int $id): array

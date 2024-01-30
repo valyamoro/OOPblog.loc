@@ -20,6 +20,16 @@
                 <div id="content" class="form-text text-danger"> <?php echo $validate['content'][0]; ?> </div>
             <?php endif; ?>
         </div>
+        <label for="id_category"></label><select name="id_category" id="id_category">
+            <option value="0">Chose category</option>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?php echo $category['id'] ?>"><?php echo $category['title']; ?></option>
+            <?php endforeach; ?>
+        </select>
+        <?php if (isset($validate['option'])): ?>
+            <div id="content" class="form-text text-danger"> <?php echo $validate['option']; ?> </div>
+        <?php endif; ?>
+        <br>
         <div class="mb-3">
             <label for="image" class="form-label">Изображение</label>
             <input type="file" name="image" class="form-control" id="image">

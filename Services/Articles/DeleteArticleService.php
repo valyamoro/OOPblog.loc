@@ -7,22 +7,19 @@ use app\Services\BaseService;
 
 class DeleteArticleService extends BaseService
 {
-    public function delete(int $id): void
+    public function delete(array $request): void
     {
         if (empty($_SESSION['user'])) {
             $_SESSION['warning'] = 'You are not logged in, please log in.' . "\n";
             \header('Location: /users/auth');
         }
 
+        $id = (int)$request['id'];
+
         $result = $this->repository->getArticleById($id);
 
         if ($result['is_active'] === 0) {
             $_SESSION['message'] = 'This article is under review!' . "\n";
-            \header('Location: /articles');
-        }
-
-        if ($result['is_blocked'] === 1) {
-            $_SESSION['message'] = 'This article is under block!' . "\n";
             \header('Location: /articles');
         }
 
@@ -35,12 +32,15 @@ class DeleteArticleService extends BaseService
             $imagePath = $this->repository->getImageById($id);
 
             if (!empty($imagePath)) {
-                unlink(__DIR__ . '\..\\' .  $imagePath);
+                \unlink(__DIR__ . '\..\\' .  $imagePath);
             }
-            $this->repository->delete($id);
-            $this->repository->deleteArticlesCategories($id);
-            $this->repository->deleteUsersArticles($id);
-            $_SESSION['success'] = 'You are success deleted your article!' . "\n";
+
+            if ($this->repository->delete($id)) {
+                $_SESSION['success'] = 'You are success deleted your article!' . "\n";
+            } else {
+                $_SESSION['message'] = 'You are not deleted your article!' . "\n";
+            }
+
 
             \header('Location: /articles');
         }

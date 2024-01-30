@@ -2,8 +2,11 @@
     <a href="<?php echo "/articles/edit?id={$article['id']}"; ?>">Edit</a> <br><br>
     <a href="<?php echo "/articles/delete?id={$article['id']}"; ?>">Delete</a> <br><br>
 <?php endif; ?>
-<?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '1'): ?>
+<?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '1' && $article['is_blocked'] === 0): ?>
     <a href="<?php echo "/articles/block?id={$article['id']}"; ?>">Block</a> <br><br>
+<?php endif; ?>
+<?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '1' && $article['is_blocked'] === 1): ?>
+    <a href="<?php echo "/articles/unblock?id={$article['id']}"; ?>">Un block</a> <br><br>
 <?php endif; ?>
 Author: <br> <a href="/users/profile?id=<?php echo $article['id_user']; ?>"><?php echo $article['first_name']; ?></a>
 <br><br>

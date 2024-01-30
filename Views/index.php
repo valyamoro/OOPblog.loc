@@ -17,15 +17,25 @@
         <br><br>
     <?php endif; ?>
     <?php foreach ($articles as $article): ?>
+        <?php if (!empty($_SESSION['user']) && ($article['is_blocked'] === 1 && $_SESSION['user']['role'] === '1')): ?>
+            Заблокирована<br>
+        <?php endif; ?>
+        <?php if (!empty($_SESSION['user']) && ($article['is_blocked'] === 1 && $_SESSION['user']['role'] !== '1')): ?>
+            <?php continue; ?>
+        <?php endif; ?>
+        <?php if (empty($_SESSION['user']) && $article['is_blocked'] === 1): ?>
+            <?php continue; ?>
+        <?php endif; ?>
         <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
-        <img src="<?php echo $article['image_path']; ?>" alt="Изображение"><br>
+        <img src="<?php echo $article['image_path']; ?>" alt=""><br>
     <?php endforeach; ?>
 <?php endif; ?>
-
+<br>
 <?php if ($paginator->calculateTotalPages() > 1): ?>
     ФИЛЬТР: <br>
     <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=desc" ?>">Сначала новые</a> <br>
     <a href="<?php echo "?page={$paginator->getCurrentPage()}&mode=asc" ?>">Сначала старые</a> <br>
+    <br>
     <nav aria-label="navigation">
         <ul class="pagination">
             <li class="page-item">

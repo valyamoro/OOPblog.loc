@@ -14,8 +14,7 @@ class AddCommentRepository extends BaseRepository
             $this->connection->beginTransaction();
 
             $query = 'INSERT INTO comments (content, id_article) VALUES (?, ?)';
-            $this->connection->prepare($query);
-            $this->connection->execute([$data['content'], $data['id_article']]);
+            $this->connection->prepare($query)->execute([$data['content'], $data['id_article']]);
 
             $commentId = $this->connection->lastInsertId();
 
