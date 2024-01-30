@@ -7,9 +7,9 @@ use app\Services\BaseRepository;
 
 class ApproveAdminRepository extends BaseRepository
 {
-    public function approve(int $id): bool
+    public function approve(string $page, int $id): bool
     {
-        $query = 'update articles set is_active=1 where id=?';
+        $query = 'update ' . $page . ' set is_active=1 where id=?';
 
         $this->connection->prepare($query)->execute([$id]);
 

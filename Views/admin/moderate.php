@@ -11,7 +11,11 @@
     <?php unset($warning); ?>
 <?php endif; ?>
 <?php foreach ($items as $item): ?>
-    <a href="<?php echo "/articles/show?id={$item['id']}"; ?>"><?php echo $item['title']; ?></a><br>
+    <?php if (!empty($item['title'])): ?>
+        <a href="<?php echo "/articles/show?id={$item['id']}"; ?>"><?php echo $item['title']; ?></a><br>
+    <?php else: ?>
+        <a href="<?php echo "/articles/show?id={$item['id']}"; ?>"><?php echo $item['content']; ?></a><br>
+    <?php endif; ?>
     <?php if ($item['is_blocked'] === 1): ?>
         Заблокирована:<br>
         <form action="unBlock?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace app\Services;
 use app\Database\PDODriver;
+use Exception;
 
 abstract class BaseRepository
 {
@@ -31,7 +32,7 @@ abstract class BaseRepository
         return $this->connection->fetch()['image_path'];
     }
 
-    public function deleteArticle(int $id): bool
+    public function deleteArticle(string $page, int $id): bool
     {
         try {
             $this->connection->beginTransaction();
@@ -55,5 +56,25 @@ abstract class BaseRepository
         }
     }
 
+    public function deleteComment(string $page, int $id): bool
+    {
+        try {
+            $this->connection->beginTransaction();
+
+            $query = 'DELETE from users_comments where id_comment=? limit 1';
+            $this->connection->prepare($query)->execute([$id]);
+
+            $query = 'DELETE from comments where id=? limit 1';
+            $this->connection->prepare($query)->execute([$id]);
+
+            $this->connection->commit();
+
+            return true;
+        } catch (Exception $e) {
+            $this->connection->rollBack();
+
+            return false;
+        }
+    }
 
 }

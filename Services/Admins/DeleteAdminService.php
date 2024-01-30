@@ -10,10 +10,12 @@ class DeleteAdminService extends BaseService
     public function delete(array $request): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] !== '0') {
-            if ($this->repository->deleteArticle((int)$request['id'])) {
-                $_SESSION['success'] = 'The article has been successfully deleted!' . "\n";
+            $page = \rtrim($request['page'], 's');
+            $method = 'delete' . $page;
+            if ($this->repository->$method($request['page'], (int)$request['id'])) {
+                $_SESSION['success'] = "The {$page} has been successfully deleted!\n";
             } else {
-                $_SESSION['warning'] = 'The article was not deleted!' . "\n";;
+                $_SESSION['warning'] = "The {$page} was not deleted!\n";
             }
 
             \header("Location: {$_SERVER['HTTP_REFERER']}");
