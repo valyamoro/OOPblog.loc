@@ -16,18 +16,19 @@ class BaseControllerService extends BaseService
             $formattedCategories[$value['id']] = $value;
         }
 
+
         return $this->mapTree($formattedCategories);
     }
 
-    public function mapTree(array $dataSet): array
+    private function mapTree(array $data): array
     {
         $tree = [];
 
-        foreach ($dataSet as $id => &$node) {
-            if (!$node['id_parent']) {
-                $tree[$id] = &$node;
+        foreach ($data as $key => &$value) {
+            if (!$value['id_parent']) {
+                $tree[$key] = &$value;
             } else {
-                $dataSet[$node['id_parent']]['childs'][$id] = &$node;
+                $data[$value['id_parent']]['child'][$key] = &$value;
             }
         }
 

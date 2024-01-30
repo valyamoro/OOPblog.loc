@@ -15,38 +15,36 @@ class BaseController extends Controller
     public function __construct(PDODriver $PDODriver, Request $request, BaseService $service)
     {
         parent::__construct($PDODriver, $request, $service);
-        $this->view->setData($this->getAllCategories());
+        $this->view->setData($this->getMenuCategories());
     }
 
-    public function getAllCategories(): array
+    private function getMenuCategories(): array
     {
         $repository = new BaseControllerRepository($this->PDODriver);
         $service = new BaseControllerService($repository);
 
-        $result['menu'] = $this->createMenu($service->getAllCategories());
+        $menu = '<ul class="menu"><li><a href="#">Categories</a><ul class="sub-menu">';
+        $menu .= $this->createMenu($service->getAllCategories());
+        $menu .= '</ul></ul></ul>';
 
+        $result['menu'] = $menu;
         return $result;
     }
 
-    public function createMenu(array $data): string
+    private function createMenu(array $data): string
     {
-        $string = '<ul class="menu"><li><a href="#">Categories</a><ul class="sub-menu">';
+        $string = '';
 
         foreach ($data as $value) {
             $string .= "<li><a href='/articles/category/{$value['title']}'> {$value['title']}</a>";
-            if (!empty($value['childs'])) {
+            if (!empty($value['child'])) {
                 $string .= "<ul class='menu'>";
-                foreach ($value['childs'] as $child) {
-                    $string .= "<li><a href='/articles/category/{$child['title']}'> {$child['title']}</a></li>";
-                }
-
-                $string .= '</ul>';
+                $string .= $this->createMenu($value['child']);
             }
 
-            $string .='</li>';
         }
 
-        $string .= '</ul></li></ul></ul>';
+        $string .= '</ul>';
         return $string;
     }
 

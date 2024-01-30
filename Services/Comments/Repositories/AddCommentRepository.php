@@ -26,9 +26,9 @@ class AddCommentRepository extends BaseRepository
             $this->connection->commit();
 
             return true;
-        } catch (Exception $e) {
-            // Если что-то пошло не так, откатываем транзакцию
+        } catch (Exception) {
             $this->connection->rollBack();
+
             return false;
         }
     }
