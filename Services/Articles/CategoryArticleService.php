@@ -15,19 +15,15 @@ class CategoryArticleService extends BaseService
         }
 
         $ids = $this->repository->getCategoriesIds($this->repository->getAll(), $id);
-        $ids = $ids === '' ? (string)$id : \rtrim($ids, ',');
+        $ids =  $ids === '' ? (string)$id : \rtrim($ids, ',');
 
-        $result = $this->repository->getArticlesByCategory($id);
+        $result['articles'] = $this->repository->getArticles($ids);
 
-        if (empty($result)) {
+        if (empty($result['articles'])) {
             $_SESSION['warning'] = 'Articles with this category doesnt exist!' . "\n";
         }
 
-        if (strlen($ids) === 1) {
-            $result = [];
-        }
-
-        return array_merge($result, $this->repository->getArticles($ids));
+        return $result;
     }
 
 }

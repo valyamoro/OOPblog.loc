@@ -16,22 +16,9 @@ class CategoryArticleRepository extends BaseRepository
         return (int)$this->connection->fetch()['id'];
     }
 
-    public function getArticlesByCategory(int $id): array
-    {
-        $query = 'SELECT articles.*, categories.id_parent 
-          FROM articles
-          JOIN articles_categories ON articles.id = articles_categories.id_article 
-          JOIN categories ON articles_categories.id_category = categories.id
-          WHERE articles_categories.id_category=?';
-
-        $this->connection->prepare($query)->execute([$id]);
-
-        return $this->connection->fetchAll();
-    }
-
     public function getCategoriesIds(array $data, int $id): string
     {
-        $string = '';
+        $string = "{$id},";
 
         foreach ($data as $item) {
             if ((int)$item['id_parent'] === $id) {
