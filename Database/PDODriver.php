@@ -54,4 +54,19 @@ class PDODriver
         return $result;
     }
 
+    public function beginTransaction(): void
+    {
+        $this->dbh->beginTransaction();
+    }
+
+    public function commit(): void
+    {
+        $this->dbh->commit();
+    }
+
+    public function rollBack(): void
+    {
+        $this->dbh->rollBack();
+    }
+
 }

@@ -7,27 +7,23 @@ use app\Services\BaseService;
 
 class AddCommentService extends BaseService
 {
-    public function add(array $data): void
+    public function add(array $request): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new CommentModel($data['content']);
+            $model = new CommentModel($request['content']);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $_SESSION['default_value']['content'] = $data['content'];
+                $_SESSION['default_value']['content'] = $request['content'];
                 $_SESSION['validate'] = $model->validator->errors;
             } else {
-                $idArticle = $this->repository->add($data);
+                $request['id_user'] = $_SESSION['user']['id'];
 
-                $warning = 'The comment was not delivered, please try again' . "\n";
-                if ($idArticle === 0) {
-                    $_SESSION['warning'] = $warning;
+                $result = $this->repository->add($request);
+                if (!$result) {
+                    $_SESSION['warning'] = 'The comment was not delivered, please try again' . "\n";
                 } else {
-                    if (!$this->repository->addUserComments((int)$_SESSION['user']['id'], $idArticle)) {
-                        $_SESSION['warning'] = $warning;
-                    } else {
-                        $_SESSION['success'] = 'You have successfully left a comment!' . "\n";
-                    }
+                    $_SESSION['success'] = 'You have successfully left a comment!' . "\n";
                 }
             }
             \header("Location: {$_SERVER['HTTP_REFERER']}");

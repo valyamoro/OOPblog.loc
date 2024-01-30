@@ -1,27 +1,36 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Comments\Repositories;
 
 use app\Services\BaseRepository;
+use Exception;
 
 class AddCommentRepository extends BaseRepository
 {
-    public function addUserComments(int $userId, int $articleId): bool
+    public function add(array $data): bool
     {
-        $query = 'insert into users_comments (id_user, id_comment) values (?, ?)';
+        try {
+            $this->connection->beginTransaction();
 
-        $this->connection->prepare($query)->execute([$userId, $articleId]);
+            $query = 'INSERT INTO comments (content, id_article) VALUES (?, ?)';
+            $this->connection->prepare($query);
+            $this->connection->execute([$data['content'], $data['id_article']]);
 
-        return (bool)$this->connection->rowCount();
-    }
+            $commentId = $this->connection->lastInsertId();
 
-    public function add(array $data): int
-    {
-        $query = 'insert into comments (content, id_article) values (?, ?)';
+            $query = 'INSERT INTO users_comments (id_user, id_comment) VALUES (?, ?)';
+            $stmtUsersComments = $this->connection->prepare($query);
+            $stmtUsersComments->execute([$data['id_user'], $commentId]);
 
-        $this->connection->prepare($query)->execute(\array_values($data));
+            $this->connection->commit();
 
-        return $this->connection->lastInsertId();
+            return true;
+        } catch (Exception $e) {
+            // Если что-то пошло не так, откатываем транзакцию
+            $this->connection->rollBack();
+            return false;
+        }
     }
 
 }
