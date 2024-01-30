@@ -8,9 +8,9 @@ use app\Services\BaseService;
 
 class AuthUserService extends BaseService
 {
-    public function auth(array $data): array
+    public function auth(array $request): array
     {
-        $messages = [];
+        $result = [];
 
         if (!empty($_SESSION['user'])) {
             $_SESSION['message'] = 'You are already authorized!' . "\n";
@@ -18,27 +18,16 @@ class AuthUserService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $result = $this->repository->getByEmail($data['email']);
+            $result = $this->repository->getByEmail($request['email']);
 
             if (empty($result)) {
-                $messages['email'] = 'This email doesnt exist!' . "\n";
+                $result['validate']['email'] = 'This email doesnt exist!' . "\n";
             } else {
-                if (!\password_verify($data['password'], $result['password'])) {
-                    $messages['password'] = 'Incorrect password!' . "\n";
+                if (!\password_verify($request['password'], $result['password'])) {
+                    $result['validate']['password'] = 'Incorrect password!' . "\n";
                 } else {
-                    $_SESSION['user'] = [
-                        'id' => $result['id'],
-                        'firstName' => $result['firstName'],
-                        'lastName' => $result['lastName'],
-                        'patronymic' => $result['patronymic'],
-                        'email' => $result['email'],
-                        'phone' => $result['phone'],
-                        'password' => $result['password'],
-                        'is_bann' => $result['is_bann'],
-                        'role' => $result['role'],
-                        'created_at' => $result['created_at'],
-                        'updated_at' => $result['updated_at'],
-                    ];
+                    $userData = $this->formatUserData($result);
+                    $_SESSION['user'] = $userData;
 
                     $_SESSION['success'] = 'You have successfully logged in!' . "\n";
                     \header('Location: /');
@@ -46,7 +35,24 @@ class AuthUserService extends BaseService
             }
         }
 
-        return $messages;
+        return $result;
+    }
+
+    private function formatUserData(array $data): array
+    {
+        return [
+            'id' => $data['id'],
+            'firstName' => $data['firstName'],
+            'lastName' => $data['lastName'],
+            'patronymic' => $data['patronymic'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'password' => $data['password'],
+            'is_bann' => $data['is_bann'],
+            'role' => $data['role'],
+            'created_at' => $data['created_at'],
+            'updated_at' => $data['updated_at'],
+        ];
     }
 
 }

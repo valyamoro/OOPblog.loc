@@ -12,7 +12,7 @@ class UserController extends BaseController
     {
         $data = $this->request->getPost();
 
-        $params['validate'] = $this->service->auth($data);
+        $params = $this->service->auth($data);
 
         return $this->view->render($view, $layout, $params);
     }
@@ -30,7 +30,7 @@ class UserController extends BaseController
     {
         $data = $this->request->getGET();
 
-        $params = $this->service->getProfileData($data);
+        $params = $this->service->getUserData($data);
 
         return $this->view->render($view, $layout, $params);
     }

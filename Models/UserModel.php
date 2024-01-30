@@ -14,8 +14,14 @@ class UserModel extends Model
         private readonly string $phoneNumber,
         private readonly string $password,
         private readonly string $passwordConfirm,
+        private readonly string $role,
     ) {
         parent::__construct();
+    }
+
+    public function getRole(): string
+    {
+        return $this->role;
     }
 
     public function getPatronymic(): string

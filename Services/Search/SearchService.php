@@ -12,7 +12,6 @@ class SearchService extends BaseService
         $result = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $model = new SearchModel($value['search']);
             $model->validator->setRules($model->rules());
 

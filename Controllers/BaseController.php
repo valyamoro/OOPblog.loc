@@ -40,13 +40,13 @@ class BaseController extends Controller
                     $string .= "<li><a href='/articles/category/{$child['title']}'> {$child['title']}</a></li>";
                 }
 
-                $string .= "</ul>";
+                $string .= '</ul>';
             }
 
-            $string .= "</li>";
+            $string .='</li>';
         }
 
-        $string .= "</ul></li></ul></ul>";
+        $string .= '</ul></li></ul></ul>';
         return $string;
     }
 

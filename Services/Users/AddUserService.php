@@ -8,56 +8,65 @@ use app\Services\BaseService;
 
 class AddUserService extends BaseService
 {
-    public function add(array $data): array
+    public function add(array $request): array
     {
-        $messages = [];
+        $result = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $role = \array_pop($data);
-            $model = new UserModel(...$data);
+            $model = new UserModel(...$request);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $messages['validate'] = $model->validator->errors;
+                $result['validate'] = $model->validator->errors;
             } else {
-                if ($this->repository->getByEmail($data['email'])) {
-                    $messages['warning'] = 'This email already exists!' . "\n";
+                if ($this->repository->getByEmail($request['email'])) {
+                    $result['warning'] = 'This email already exists!' . "\n";
                 } else {
-                    $now = \date('Y-m-d H:i:s');
+                    $request['phoneNumber'] = $this->formatPhoneNumber($request['phoneNumber']);
 
-                    $phoneNumber = \str_replace(['+', '8'], '', $data['phoneNumber']);
-                    if (\strlen($phoneNumber) === 10 && !\str_starts_with($phoneNumber, '7')) {
-                        $phoneNumber = '7' . $phoneNumber;
+                    if (!empty($_SESSION['user']) && $_SESSION['user']['role'] !== '1') {
+                        $request['role'] = 0;
                     }
 
-                    if ($_SESSION['user']['role'] !== '1') {
-                        $role = 0;
-                    }
+                    $request['currentDate'] = \date('Y-m-d H:i:s');
 
-                    $data = [
-                        'firstName' => $data['firstName'],
-                        'lastName' => $data['lastName'],
-                        'patronymic' => $data['patronymic'],
-                        'email' => $data['email'],
-                        'phone' => (int)$phoneNumber,
-                        'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
-                        'is_bann' => 0,
-                        'role' => $role,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ];
-
-                    if ($this->repository->add($data)) {
+                    if ($this->repository->add($this->formatUserData($request))) {
                         $_SESSION['success'] = 'You have successfully registered!' . "\n";
                         \header('Location: /');
                     } else {
-                        $messages['warning'] =  'You are not registered! Please try again.' . "\n";
+                        $result['warning'] =  'You are not registered! Please try again.' . "\n";
                     }
                 }
             }
         }
 
-        return $messages;
+        return $result;
+    }
+
+    private function formatUserData(array $data): array
+    {
+        return [
+            'firstName' => $data['firstName'],
+            'lastName' => $data['lastName'],
+            'patronymic' => $data['patronymic'],
+            'email' => $data['email'],
+            'phone' => (int)$data['phoneNumber'],
+            'password' => \password_hash($data['password'], PASSWORD_DEFAULT),
+            'is_bann' => 0,
+            'role' => $data['role'],
+            'created_at' => $data['currentDate'],
+            'updated_at' => $data['currentDate'],
+        ];
+    }
+
+    private function formatPhoneNumber(string $value): string
+    {
+        $value = \str_replace(['+', '8'], '', $value);
+        if (\strlen($value) === 10 && !\str_starts_with($value, '7')) {
+            return ('7' . $value);
+        }
+
+        return $value;
     }
 
 }

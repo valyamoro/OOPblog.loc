@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace app\Controllers;
 
-use app\core\Controller;
-
 class SearchController extends BaseController
 {
     public function search(): string

@@ -19,7 +19,7 @@ class AddUserRepository extends BaseRepository
 
     public function getByEmail(string $value): bool
     {
-        $query = 'select * from users where email=?';
+        $query = 'select id from users where email=?';
 
         $this->connection->prepare($query)->execute([$value]);
 
