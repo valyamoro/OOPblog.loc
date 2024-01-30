@@ -7,19 +7,13 @@ use app\Services\BaseService;
 
 class DeleteAdminService extends BaseService
 {
-    public function delete(int $id): void
+    public function delete(array $request): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] !== '0') {
-            $warning = 'The article was`nt deleted!' . "\n";
-
-            if ($this->repository->delete($id)) {
-                if ($this->repository->deleteUsersArticles($id)) {
-                    $_SESSION['success'] = 'The article has been successfully deleted!' . "\n";
-                } else {
-                    $_SESSION['warning'] = $warning;
-                }
+            if ($this->repository->deleteArticle((int)$request['id'])) {
+                $_SESSION['success'] = 'The article has been successfully deleted!' . "\n";
             } else {
-                $_SESSION['warning'] = $warning;
+                $_SESSION['warning'] = 'The article was not deleted!' . "\n";;
             }
 
             \header("Location: {$_SERVER['HTTP_REFERER']}");

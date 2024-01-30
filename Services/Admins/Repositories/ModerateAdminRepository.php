@@ -9,7 +9,7 @@ class ModerateAdminRepository extends BaseRepository
 {
     public function getAll(string $page): array
     {
-        $query = 'select * from ' . $page . ' where is_active=0';
+        $query = 'select * from ' . $page . ' where is_active=0 or is_blocked=1';
 
         $this->connection->prepare($query)->execute();
 

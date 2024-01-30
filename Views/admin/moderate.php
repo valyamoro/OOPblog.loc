@@ -11,6 +11,12 @@
     <?php unset($warning); ?>
 <?php endif; ?>
 <?php foreach ($items as $item): ?>
+    <?php if ($item['is_blocked'] === 1): ?>
+    Заблокирована:<br>
+    <?php endif; ?>
+    <?php if ($item['is_active'] === 0): ?>
+    Не активна: <br>
+    <?php endif; ?>
     <a href="<?php echo "/articles/show?id={$item['id']}"; ?>"><?php echo $item['title']; ?></a><br>
     <form action="delete?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
         <input type="submit" class="btn btn-danger" value="Delete">

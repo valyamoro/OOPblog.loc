@@ -35,7 +35,7 @@ class DeleteArticleService extends BaseService
                 \unlink(__DIR__ . '\..\\' .  $imagePath);
             }
 
-            if ($this->repository->delete($id)) {
+            if ($this->repository->deleteArticle($id)) {
                 $_SESSION['success'] = 'You are success deleted your article!' . "\n";
             } else {
                 $_SESSION['message'] = 'You are not deleted your article!' . "\n";

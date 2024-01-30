@@ -19,7 +19,8 @@ class AdminController extends BaseController
     public function delete(): void
     {
         $request = $this->request->getGET();
-        $this->service->delete($request['id']);
+
+        $this->service->delete($request);
     }
 
     public function approve(): void

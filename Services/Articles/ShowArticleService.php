@@ -9,7 +9,7 @@ class ShowArticleService extends BaseService
 {
     public function show(array $request): array
     {
-        $id = $request['id'];
+        $id = (int)$request['id'];
 
         $result['article'] = $this->repository->getById($id);
         $result['comments'] = $this->repository->getCommentsById($id);
