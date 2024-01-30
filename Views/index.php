@@ -14,7 +14,6 @@
     <?php if (!empty($_SESSION['message'])): ?>
         <?php echo \nl2br($_SESSION['message']); ?>
         <?php unset($_SESSION['message']); ?>
-        <br><br>
     <?php endif; ?>
     <?php foreach ($articles as $article): ?>
         <?php if (!empty($_SESSION['user']) && ($article['is_blocked'] === 1 && $_SESSION['user']['role'] === '1')): ?>

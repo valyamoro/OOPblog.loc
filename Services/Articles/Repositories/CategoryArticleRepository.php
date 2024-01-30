@@ -30,7 +30,7 @@ class CategoryArticleRepository extends BaseRepository
         return $string;
     }
 
-    public function getAll(): array
+    public function getAllCategories(): array
     {
         $query = 'select * from categories';
 

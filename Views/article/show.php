@@ -28,7 +28,7 @@ Article:<br><?php echo $article['id']; ?> <br>
             <div class="mb-3">
                 <label for="content" class="form-label">Add commentary</label>
                 <textarea name="content" class="form-control" id="content"
-                          rows="2"><?php echo $_SESSION['default_value']['content'] ?? '' ?></textarea>
+                          rows="2"><?php echo $_SESSION['default_value']['comment'] ?? '' ?></textarea>
                 <?php unset($_SESSION['default_value']); ?>
                 <?php if (isset($_SESSION['validate']['content'])): ?>
                     <div id="content"

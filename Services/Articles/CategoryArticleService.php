@@ -14,11 +14,9 @@ class CategoryArticleService extends BaseService
             $_SESSION['warning'] = 'This category doesnt exist!' . "\n";
         }
 
-        $ids = $this->repository->getCategoriesIds($this->repository->getAll(), $id);
-        $ids =  $ids === '' ? (string)$id : \rtrim($ids, ',');
+        $ids = \rtrim($this->repository->getCategoriesIds($this->repository->getAllCategories(), $id), ',');
 
         $result['articles'] = $this->repository->getArticles($ids);
-
         if (empty($result['articles'])) {
             $_SESSION['warning'] = 'Articles with this category doesnt exist!' . "\n";
         }

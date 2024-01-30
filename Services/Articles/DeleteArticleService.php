@@ -15,7 +15,6 @@ class DeleteArticleService extends BaseService
         }
 
         $id = (int)$request['id'];
-
         $result = $this->repository->getArticleById($id);
 
         if ($result['is_active'] === 0) {
@@ -40,7 +39,6 @@ class DeleteArticleService extends BaseService
             } else {
                 $_SESSION['message'] = 'You are not deleted your article!' . "\n";
             }
-
 
             \header('Location: /articles');
         }

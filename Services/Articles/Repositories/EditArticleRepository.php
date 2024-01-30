@@ -7,31 +7,23 @@ use app\Services\BaseRepository;
 
 class EditArticleRepository extends BaseRepository
 {
-    public function getById(int $id): array
+    public function getArticleById(int $id): array
     {
-        $query = 'select is_active, is_blocked from articles where id=?';
+        $query = 'select * from articles
+        join users_articles on articles.id = users_articles.id_article
+        where articles.id=? limit 1';
 
         $this->connection->prepare($query)->execute([$id]);
 
         return $this->connection->fetch();
     }
 
-    public function getAuthorOfArticle(int $id): array
-    {
-        $query = 'select * from users join users_articles on users.id = users_articles.id_user where users_articles.id_article=?';
-
-        $this->connection->prepare($query)->execute([$id]);
-
-        return $this->connection->fetch();
-    }
-
-    public function edit(array $data, int $id): bool
+    public function edit(array $data): bool
     {
         $query = 'update articles set title=?, content=?, is_active=?, image_path=?, updated_at=? where id=?';
 
-        $data = [...$data, $id];
-
-        $this->connection->prepare($query)->execute(array_values($data));
+        print_r($data);
+        $this->connection->prepare($query)->execute($data);
 
         return (bool)$this->connection->rowCount();
     }

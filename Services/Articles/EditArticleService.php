@@ -10,28 +10,29 @@ class EditArticleService extends BaseService
 {
     public function edit(array $request): array
     {
-        $messages = [];
+        $result = [];
 
         if (empty($_SESSION['user'])) {
             $_SESSION['warning'] = 'You are not logged in, please log in.' . "\n";
             \header('Location: /users/auth');
         }
 
-        $result = $this->repository->getById((int)$request['get']['id']);
+        $result['article'] = $this->repository->getArticleById((int)$request['get']['id']);
 
-        if ($result['is_active'] === 0) {
+        if ($result['article']['is_active'] === 0) {
             $_SESSION['message'] = 'This article is under review!' . "\n";
             \header('Location: /articles');
         }
 
-        if ($result['is_blocked'] === 1) {
+        $_SESSION['default_value']['title'] = $result['article']['title'];
+        $_SESSION['default_value']['content'] = $result['article']['content'];
+
+        if ($result['article']['is_blocked'] === 1) {
             $_SESSION['message'] = 'This article is under block!' . "\n";
             \header('Location: /articles');
         }
 
-        $result = $this->repository->getAuthorOfArticle((int)$request['get']['id']);
-
-        if ($_SESSION['user']['id'] !== (int)$result['id_user'] && $_SESSION['user']['role'] !== '1') {
+        if ($_SESSION['user']['id'] !== (int)$result['article']['id_user'] && $_SESSION['user']['role'] !== '1') {
             $_SESSION['message'] = 'This isn`t your article!' . "\n";
             \header('Location: /articles');
         }
@@ -41,25 +42,19 @@ class EditArticleService extends BaseService
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $messages = $model->validator->errors;
+                $result['validate'] = $model->validator->errors;
             } else {
                 $imagePath = $this->repository->getImageById((int)$request['get']['id']);
 
                 if (!empty($imagePath)) {
-                    unlink(__DIR__ . '\..\\' .  $imagePath);
+                    \unlink(__DIR__ . '\..\\' . $imagePath);
                 }
 
-                $imagePath = $this->repository->uploadImage($request['files']['image']);
+                $data = $this->formatArticleData($request);
 
-                $data = [
-                    'title' => $request['post']['title'],
-                    'content' => $request['post']['content'],
-                    'is_active' => 0,
-                    'image_path' => $imagePath,
-                    'updated_at' => \date('Y-m-d H:i:s'),
-                ];
+                $data = [...$data, (int)$request['get']['id']];
 
-                if (!$this->repository->edit($data, (int)$request['get']['id'])) {
+                if (!$this->repository->edit($data)) {
                     $_SESSION['message'] = 'Article was not edited, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was edited!' . "\n";
@@ -68,7 +63,26 @@ class EditArticleService extends BaseService
             }
         }
 
-        return $messages;
+        return $result;
+    }
+
+    private function formatArticleData(array $request): array
+    {
+        if (!\is_null($request['files'])) {
+            $imagePath = $this->repository->uploadImage($request['files']['image']);
+        } else {
+            $imagePath = '';
+        }
+
+        $now = \date('Y-m-d H:i:s');
+
+        return [
+            $request['post']['title'],
+            $request['post']['content'],
+            0,
+            $imagePath,
+            $now,
+        ];
     }
 
 }
