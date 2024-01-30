@@ -18,7 +18,7 @@ class Router
     private function dispatch(): string
     {
         $parts = \parse_url($this->getUri());
-        $segments = $parts['path'] === '/'
+        $segments = ($parts['path'] === '/' || $parts['path'] === '/articles')
             ? 'Home'
             : \explode('/', \trim($parts['path'], '/'));
 

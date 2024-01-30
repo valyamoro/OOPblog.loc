@@ -25,20 +25,20 @@ class AddArticleService extends BaseService
             } else {
                 $now = \date('Y-m-d H:i:s');
                 $data = [
-                    'title' => $data['post']['title'],
-                    'content' => $data['post']['content'],
-                    'is_active' => 0,
-                    'is_blocked' => 0,
-                    'image_path' => $this->repository->uploadImage($data['files']['image']),
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    $data['post']['title'],
+                    $data['post']['content'],
+                    0,
+                    0,
+                    $this->repository->uploadImage($data['files']['image']),
+                    $now,
+                    $now,
                 ];
 
-                if (!$this->repository->addItems($data)) {
+                if (!$this->repository->add($data)) {
                     $_SESSION['message'] = 'Article was not added, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was added!' . "\n";
-                    \header('Location: /');
+                    \header('Location: /articles');
                 }
             }
         }

@@ -25,7 +25,7 @@ class SearchArticleService extends BaseService
                 $result['warning'] = 'There are no such articles!' . "\n";
             }
         } else {
-            \header('Location: /');
+            \header('Location: /articles');
         }
 
         return $result;

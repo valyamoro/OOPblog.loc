@@ -6,14 +6,14 @@ use app\Services\BaseService;
 
 class ShowArticleService extends BaseService
 {
-    public function show(int $id)
+    public function show(int $id): array
     {
         $result['article'] = $this->repository->getById($id);
         $result['comments'] = $this->repository->getCommentsById($id);
 
         if (empty($result['article'])) {
             $_SESSION['message'] = 'This article doesnt exist!' . "\n";
-            \header('Location: /');
+            \header('Location: /articles');
         }
 
         if (empty($result['comments'])) {

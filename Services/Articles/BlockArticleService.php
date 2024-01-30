@@ -16,6 +16,6 @@ class BlockArticleService extends BaseService
                 $_SESSION['warning'] = 'You are not a blocked article!' . "\n";
             }
         }
-        \header('Location: /');
+        \header('Location: /articles');
     }
 }

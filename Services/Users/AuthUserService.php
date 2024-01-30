@@ -14,7 +14,7 @@ class AuthUserService extends BaseService
 
         if (!empty($_SESSION['user'])) {
             $_SESSION['message'] = 'You are already authorized!' . "\n";
-            \header('Location: /');
+            \header('Location: /articles');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,7 +30,7 @@ class AuthUserService extends BaseService
                     $_SESSION['user'] = $userData;
 
                     $_SESSION['success'] = 'You have successfully logged in!' . "\n";
-                    \header('Location: /');
+                    \header('Location: /articles');
                 }
             }
         }

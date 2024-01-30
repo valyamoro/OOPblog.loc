@@ -18,7 +18,7 @@ class ModerateAdminService extends BaseService
 
             return $result;
         } else {
-            \header('Location: /');
+            \header('Location: /articles');
         }
 
     }

@@ -1,29 +1,34 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services\Articles\Repositories;
 
 use app\Services\BaseRepository;
+use Exception;
 
 class AddArticleRepository extends BaseRepository
 {
-    public function addItems(array $data): bool
+    public function add(array $data): bool
     {
-        $query = 'insert into users_articles(id_user, id_article) values (?, ?)';
+        try {
+            $this->connection->beginTransaction();
 
-        $idArticle = $this->addItem($data);
+            $query = 'insert into articles(title, content, is_active, is_blocked, image_path, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?)';
+            $this->connection->prepare($query)->execute($data);
 
-        $this->connection->prepare($query)->execute([$_SESSION['user']['id'], $idArticle]);
+            $articleId = $this->connection->lastInsertId();
 
-        return (bool)$this->connection->rowCount();
-    }
+            $query = 'insert into users_articles (id_user, id_article) values (?, ?)';
+            $this->connection->prepare($query)->execute([$_SESSION['user']['id'], $articleId]);
 
-    public function addItem(array $data): int
-    {
-        $query = 'insert into articles(title, content, is_active, is_blocked, image_path, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?)';
+            $this->connection->commit();
 
-        $this->connection->prepare($query)->execute(\array_values($data));
+            return true;
+        } catch (Exception $e) {
+            $this->connection->rollBack();
 
-        return $this->connection->lastInsertId();
+            return false;
+        }
     }
 
 }

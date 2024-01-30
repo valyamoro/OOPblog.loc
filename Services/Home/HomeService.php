@@ -17,12 +17,12 @@ class HomeService extends BaseService
         $mode = $request['mode'] ?? 'asc';
         $result['paginator']->setOrder($mode);
         if ($currentPage <= 0) {
-            \header("Location: /?page=1&mode={$result['paginator']->getOrder()}");
+            \header("Location: /articles?page=1&mode={$result['paginator']->getOrder()}");
         }
 
         $totalPages = $result['paginator']->calculateTotalPages();
         if ($currentPage > $totalPages) {
-            \header("Location: /?page={$totalPages}&mode={$result['paginator']->getOrder()}");
+            \header("Location: /articles?page={$totalPages}&mode={$result['paginator']->getOrder()}");
         }
 
         $result['articles'] = $this->repository->getAll($itemsPerPage, $result['paginator']->getOffset(), $mode);

@@ -20,13 +20,12 @@ class AddCommentRepository extends BaseRepository
             $commentId = $this->connection->lastInsertId();
 
             $query = 'INSERT INTO users_comments (id_user, id_comment) VALUES (?, ?)';
-            $stmtUsersComments = $this->connection->prepare($query);
-            $stmtUsersComments->execute([$data['id_user'], $commentId]);
+            $this->connection->prepare($query)->execute([$data['id_user'], $commentId]);
 
             $this->connection->commit();
 
             return true;
-        } catch (Exception) {
+        } catch (Exception $e) {
             $this->connection->rollBack();
 
             return false;
