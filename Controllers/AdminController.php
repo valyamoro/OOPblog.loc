@@ -56,4 +56,11 @@ class AdminController extends BaseController
         return $this->view->render($view, $layout, $params);
     }
 
+    public function panel(string $view, string $layout): string
+    {
+        $this->service->panel();
+
+        return $this->view->render($view, $layout, []);
+    }
+
 }

@@ -28,6 +28,11 @@
                 <?php echo $menu; ?>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '1'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admins/panel">Admin panel</a>
+                        </li>
+                    <?php endif; ?>
                     <?php if (empty($_SESSION['user'])): ?>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/users/auth">Login</a>
@@ -46,7 +51,8 @@
                 </ul>
                 <form name="search" method="post" action="/articles/search">
                     <label>
-                        <input type="search" id="search" name="search" placeholder="Поиск" value="<?php echo $_POST['search'] ?? '' ?>">
+                        <input type="search" id="search" name="search" placeholder="Поиск"
+                               value="<?php echo $_POST['search'] ?? '' ?>">
                     </label>
                     <input type="submit" value="Поиск"/>
                     <?php if (!empty($_SESSION['warning']['content'])): ?>
@@ -58,6 +64,7 @@
         </div>
     </div>
 </nav>
+
 <div class="container">
     {{content}}
 </div>
