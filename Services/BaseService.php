@@ -12,25 +12,27 @@ abstract class BaseService
     ) {
     }
 
-    protected function pagination(array $request, int $itemsPerPage, string $item): array
+    protected function pagination(Pagination $pagination, string $item, string $condition): array
     {
-        $totalItems = $this->repository->getCount('articles');
+        if ($pagination->getTotalItems() !== 0 && $pagination->getCurrentPage() <= 0) {
+            \header("Location: /{$item}?page=1&mode={$pagination->getOrder()}");
+        }
+
+        $totalPages = $pagination->calculateTotalPages();
+        if ($pagination->getTotalItems() !== 0 && $pagination->getCurrentPage() > $totalPages) {
+            \header("Location: /{$item}?page={$totalPages}&mode={$pagination->getOrder()}");
+        }
+
+        return $this->repository->getAll($pagination->getItemsPerPage(), $pagination->getOffset(), $pagination->getOrder(), $item, $condition);
+    }
+
+    public function getPaginationObject(array $request, int $itemsPerPage, int $totalItems): Pagination
+    {
         $currentPage = (int)($request['page'] ?? 1);
 
-        $result['paginator'] = new Pagination($totalItems, $itemsPerPage, $currentPage);
-
         $mode = $request['mode'] ?? 'asc';
-        $result['paginator']->setOrder($mode);
-        if ($totalItems !== 0 && $currentPage <= 0) {
-            \header("Location: /articles?page=1&mode={$result['paginator']->getOrder()}");
-        }
-
-        $totalPages = $result['paginator']->calculateTotalPages();
-        if ($totalItems !== 0 && $currentPage > $totalPages) {
-            \header("Location: /articles?page={$totalPages}&mode={$result['paginator']->getOrder()}");
-        }
-
-        $result[$item] = $this->repository->getAll($itemsPerPage, $result['paginator']->getOffset(), $mode, $item);
+        $result = new Pagination($totalItems, $itemsPerPage, $currentPage);
+        $result->setOrder($mode);
 
         return $result;
     }

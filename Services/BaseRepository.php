@@ -87,9 +87,9 @@ abstract class BaseRepository
         return \array_values($this->connection->fetch())[0];
     }
 
-    public function getAll(int $limit, int $offset, string $mode, string $item): array
+    public function getAll(int $limit, int $offset, string $mode, string $item, string $condition): array
     {
-        $query = 'select * from ' . $item . ' where is_active=1 order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
+        $query = 'select * from ' . $item . ' where ' . $condition . ' order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
 
         $this->connection->prepare($query)->execute();
 

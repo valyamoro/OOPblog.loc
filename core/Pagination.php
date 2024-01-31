@@ -36,6 +36,16 @@ class Pagination
         return $this->currentPage;
     }
 
+    public function getTotalItems(): int
+    {
+        return $this->totalItems;
+    }
+
+    public function getItemsPerPage(): int
+    {
+        return $this->itemsPerPage;
+    }
+
     public function calculateTotalPages(): int
     {
         return \ceil($this->totalItems / $this->itemsPerPage);

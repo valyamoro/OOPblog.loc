@@ -11,7 +11,7 @@ class AdminController extends BaseController
     {
         $request = $this->request->getGET();
 
-        $data = $this->service->getAll($request);
+        $data = $this->service->getAll($request, 5);
 
         return $this->view->render($view, $layout, $data);
     }
@@ -50,7 +50,7 @@ class AdminController extends BaseController
     {
         $request = $this->request->getPost();
 
-        $this->service->add($request);
+        $params = $this->service->add($request);
         $params['categories'] = $this->service->getCategories();
 
         return $this->view->render($view, $layout, $params);

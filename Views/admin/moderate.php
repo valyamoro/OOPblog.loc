@@ -18,17 +18,17 @@
     <?php endif; ?>
     <?php if ($item['is_blocked'] === 1): ?>
         Заблокирована:<br>
-        <form action="unBlock?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
+        <form action="unBlock?item=<?php echo $_GET['item']; ?>&id=<?php echo $item['id']; ?>" method="POST">
             <input type="submit" class="btn btn-warning" value="Un block">
         </form>
     <?php endif; ?>
     <?php if ($item['is_active'] === 0): ?>
         Не активна: <br>
-        <form action="approve?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
+        <form action="approve?item=<?php echo $_GET['item']; ?>&id=<?php echo $item['id']; ?>" method="POST">
             <input type="submit" class="btn btn-success" value="Approve">
         </form>
     <?php endif; ?>
-    <form action="delete?page=<?php echo $_GET['page']; ?>&id=<?php echo $item['id']; ?>" method="POST">
+    <form action="delete?item=<?php echo $_GET['item']; ?>&id=<?php echo $item['id']; ?>" method="POST">
         <input type="submit" class="btn btn-danger" value="Delete">
     </form>
 

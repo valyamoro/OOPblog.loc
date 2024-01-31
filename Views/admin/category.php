@@ -1,12 +1,18 @@
-<?php if (!empty($_SESSION['warning'])): ?>
-    <?php echo \nl2br($_SESSION['warning']); ?>
-    <?php unset($_SESSION['warning']); ?>
-<?php endif; ?>
-<?php if (!empty($_SESSION['success'])): ?>
-    <?php echo \nl2br($_SESSION['success']); ?>
-    <?php unset($_SESSION['success']); ?>
-<?php endif; ?>
+<script>
+    (function () {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    })();
+</script>
 
+<?php if (!empty($warning)): ?>
+<?php echo \nl2br($warning); ?>
+<?php endif; ?>
+<?php if (isset($_GET['category_added']) && $_GET['category_added'] === 'true'): ?>
+<div class="уведомление">Category was successful added!</div>
+<?php endif; ?>
+<?php if (isset($_GET['category_added']) && $_GET['category_added'] === 'false'): ?>
+    <div class="уведомление">Category was not added!</div>
+<?php endif; ?>
 <div class="container">
     <h1>Create category</h1>
     <form action="" method="post" enctype="multipart/form-data">

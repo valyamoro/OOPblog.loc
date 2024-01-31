@@ -34,7 +34,7 @@ class AddArticleService extends BaseService
                     if (!$this->repository->add($data, $idCategory)) {
                         $_SESSION['message'] = 'Article was not added, please try more' . "\n";
                     } else {
-                        $_SESSION['success'] = 'Article was added!' . "\n";
+                        $_SESSION['success'] = 'The article was successfully added and appeared on the review page, please wait until it is published' . "\n";
                         \header('Location: /articles');
                     }
                 }
