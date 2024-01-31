@@ -19,13 +19,16 @@ class ShowArticleRepository extends BaseRepository
         return $this->connection->fetch();
     }
 
-    public function getCommentsById(int $id): array
+    public function getCommentsByIds(array $ids): array
     {
-        $query = 'SELECT * FROM comments JOIN
-        users_comments ON comments.id = users_comments.id_comment JOIN
-        users ON users_comments.id_user = users.id WHERE comments.id_article=?;';
+        $placeholders = rtrim(str_repeat('?,', count($ids)), ',');
 
-        $this->connection->prepare($query)->execute([$id]);
+        $query = 'SELECT * FROM comments 
+              JOIN users_comments ON comments.id = users_comments.id_comment 
+              JOIN users ON users_comments.id_user = users.id 
+              WHERE comments.id IN (' . $placeholders . ')';
+
+        $this->connection->prepare($query)->execute([...$ids]);
 
         return $this->connection->fetchAll();
     }

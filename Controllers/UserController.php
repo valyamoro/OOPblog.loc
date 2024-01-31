@@ -28,9 +28,9 @@ class UserController extends BaseController
 
     public function profile(string $view, string $layout = '', array $params = []): string
     {
-        $data = $this->request->getGET();
+        $request = $this->request->getGET();
 
-        $params = $this->service->getUserData($data);
+        $params = $this->service->getUserData($request, 5);
 
         return $this->view->render($view, $layout, $params);
     }

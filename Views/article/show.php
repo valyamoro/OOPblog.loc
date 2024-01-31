@@ -59,3 +59,4 @@ Article:<br><?php echo $article['id']; ?> <br>
     <?php endif; ?>
     <br>
 </div>
+<?php require_once __DIR__ . '/../pagination.php'; ?>

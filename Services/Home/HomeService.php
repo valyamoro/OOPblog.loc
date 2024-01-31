@@ -10,12 +10,15 @@ class HomeService extends BaseService
 {
     public function getAll(array $request, int $itemsPerPage): array
     {
-        $totalItems = $this->repository->getCount('articles');
-        $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
-        $result['articles'] = $this->pagination($result['pagination'], 'articles', 'is_active=1');
+        $totalItems = $this->repository->getCount('articles', 'is_active=1 and is_blocked=0');
 
-        if (empty($result['articles'])) {
+        $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
+        $result['articles_id'] = $this->pagination($result['pagination'], 'articles', 'is_blocked=0 and is_active=1');
+
+        if (empty($result['articles_id'])) {
             $_SESSION['warning'] = 'There are no articles on the site' . "\n";
+        } else {
+            $result['articles'] = $this->repository->getArticlesByIds($result['articles_id']);
         }
 
         return $result;

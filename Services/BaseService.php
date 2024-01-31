@@ -12,18 +12,31 @@ abstract class BaseService
     ) {
     }
 
-    protected function pagination(Pagination $pagination, string $item, string $condition): array
-    {
+    protected function pagination(
+        Pagination $pagination,
+        string $item,
+        string $condition,
+        string $method = 'getAllIds',
+        array $params = [],
+    ): array {
+        $currentUrl = $_SERVER['REQUEST_URI'];
+        $numberPosition = \strpos($currentUrl, '&mode') - 1;
+        $rightSideUrl = \substr($currentUrl, $numberPosition);
+        $numberPage = $rightSideUrl[0];
+
         if ($pagination->getTotalItems() !== 0 && $pagination->getCurrentPage() <= 0) {
-            \header("Location: /{$item}?page=1&mode={$pagination->getOrder()}");
+            $currentUrl[$numberPosition] = $numberPage + 1;
+            \header("Location: {$currentUrl}");
         }
 
         $totalPages = $pagination->calculateTotalPages();
         if ($pagination->getTotalItems() !== 0 && $pagination->getCurrentPage() > $totalPages) {
-            \header("Location: /{$item}?page={$totalPages}&mode={$pagination->getOrder()}");
+            $currentUrl[$numberPosition] = $numberPage - 1;
+            \header("Location: {$currentUrl}");
         }
 
-        return $this->repository->getAll($pagination->getItemsPerPage(), $pagination->getOffset(), $pagination->getOrder(), $item, $condition);
+        return $this->repository->$method($pagination->getItemsPerPage(), $pagination->getOffset(),
+            $pagination->getOrder(), $item, $condition, $params);
     }
 
     public function getPaginationObject(array $request, int $itemsPerPage, int $totalItems): Pagination
@@ -31,10 +44,11 @@ abstract class BaseService
         $currentPage = (int)($request['page'] ?? 1);
 
         $mode = $request['mode'] ?? 'asc';
-        $result = new Pagination($totalItems, $itemsPerPage, $currentPage);
+        $result = new Pagination($totalItems, $itemsPerPage, $currentPage, $request);
         $result->setOrder($mode);
 
         return $result;
     }
+
 
 }

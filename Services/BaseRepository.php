@@ -78,20 +78,38 @@ abstract class BaseRepository
         }
     }
 
-    public function getCount(string $item): int
+    public function getCount(string $item, string $condition): int
     {
-        $query = 'select count(id) from ' . $item . ' where is_active=1';
+        $query = 'select count(id) from ' . $item . ' where ' . $condition;
 
         $this->connection->prepare($query)->execute();
 
         return \array_values($this->connection->fetch())[0];
     }
 
-    public function getAll(int $limit, int $offset, string $mode, string $item, string $condition): array
+    public function getAllIds(int $limit, int $offset, string $mode, string $item, string $condition): array
     {
         $query = 'select id from ' . $item . ' where ' . $condition . ' order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
 
         $this->connection->prepare($query)->execute();
+
+        return $this->formatIds($this->connection->fetchAll());
+    }
+
+    protected function formatIds(array $ids, string $id = 'id'): array
+    {
+        return \array_map(function ($item) use ($id) {
+            return $item[$id];
+        }, $ids);
+    }
+
+    public function getArticlesByIds(array $ids): array
+    {
+        $placeholders = \rtrim(\str_repeat('?,', \count($ids)), ',');
+
+        $query = 'SELECT * FROM articles WHERE id IN (' . $placeholders . ')';
+
+        $this->connection->prepare($query)->execute([...$ids]);
 
         return $this->connection->fetchAll();
     }
