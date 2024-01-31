@@ -89,7 +89,7 @@ abstract class BaseRepository
 
     public function getAll(int $limit, int $offset, string $mode, string $item, string $condition): array
     {
-        $query = 'select * from ' . $item . ' where ' . $condition . ' order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
+        $query = 'select id from ' . $item . ' where ' . $condition . ' order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
 
         $this->connection->prepare($query)->execute();
 

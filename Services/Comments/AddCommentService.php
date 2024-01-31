@@ -19,17 +19,36 @@ class AddCommentService extends BaseService
             } else {
                 $request['id_user'] = $_SESSION['user']['id'];
 
-                $result = $this->repository->add($request);
+                $data = $this->formatCommentData($request);
+
+                $result = $this->repository->add($data);
+
                 if (!$result) {
                     $_SESSION['warning'] = 'The comment was not delivered, please try again' . "\n";
                 } else {
                     $_SESSION['success'] = 'You have successfully left a comment!' . "\n";
                 }
             }
+
             \header("Location: {$_SERVER['HTTP_REFERER']}");
         } else {
             \header('Location: /articles');
         }
+    }
+
+    private function formatCommentData(array $request): array
+    {
+        $now = \date('Y-m-d H:i:s');
+
+        return [
+            'content' => $request['content'],
+            'id_article' => $request['id_article'],
+            'is_active' => 0,
+            'is_blocked' => 0,
+            'id_user' => $request['id_user'],
+            'created_at' => $now,
+            'updated_at' => $now,
+        ];
     }
 
 }

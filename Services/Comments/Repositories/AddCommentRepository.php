@@ -13,8 +13,9 @@ class AddCommentRepository extends BaseRepository
         try {
             $this->connection->beginTransaction();
 
-            $query = 'INSERT INTO comments (content, id_article) VALUES (?, ?)';
-            $this->connection->prepare($query)->execute([$data['content'], $data['id_article']]);
+            dump($data);
+            $query = 'INSERT INTO comments (content, id_article, is_active, is_blocked, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)';
+            $this->connection->prepare($query)->execute([$data['content'], $data['id_article'], $data['is_active'], $data['is_blocked'], $data['created_at'], $data['updated_at']]);
 
             $commentId = $this->connection->lastInsertId();
 
@@ -25,6 +26,7 @@ class AddCommentRepository extends BaseRepository
 
             return true;
         } catch (Exception $e) {
+            echo $e->getMessage();
             $this->connection->rollBack();
 
             return false;

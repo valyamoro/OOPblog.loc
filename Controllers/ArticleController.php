@@ -11,7 +11,7 @@ class ArticleController extends BaseController
     {
         $request = $this->request->getGET();
 
-        $data = $this->service->show($request);
+        $data = $this->service->show($request, 5);
 
         return $this->view->render($view, $layout, $data);
     }

@@ -15,7 +15,7 @@ class ModerateAdminService extends BaseService
             $page = $request['item'];
             $totalItems = $this->repository->getCount($page);
             $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
-            $result['items'] = $this->pagination($result['pagination'], 'articles', 'is_active=0');
+            $result['items'] = $this->pagination($result['pagination'], $page, 'is_active=0');
 
             if (empty($result['items'])) {
                 $result['warning'] = 'There are not have a ' . $page;
