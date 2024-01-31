@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace app\Services;
+use app\core\Pagination;
 use app\Database\PDODriver;
 use Exception;
 
@@ -75,6 +76,24 @@ abstract class BaseRepository
 
             return false;
         }
+    }
+
+    public function getCount(string $item): int
+    {
+        $query = 'select count(id) from ' . $item . ' where is_active=1';
+
+        $this->connection->prepare($query)->execute();
+
+        return \array_values($this->connection->fetch())[0];
+    }
+
+    public function getAll(int $limit, int $offset, string $mode, string $item): array
+    {
+        $query = 'select * from ' . $item . ' where is_active=1 order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
+
+        $this->connection->prepare($query)->execute();
+
+        return $this->connection->fetchAll();
     }
 
 }

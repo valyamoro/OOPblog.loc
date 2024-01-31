@@ -7,7 +7,7 @@ use app\Services\BaseRepository;
 
 class BaseControllerRepository extends BaseRepository
 {
-    public function getAll()
+    public function getAllCategories()
     {
         $query = 'select * from categories';
 

@@ -9,7 +9,7 @@ class BaseControllerService extends BaseService
 {
     public function getAllCategories(): array
     {
-        $categories = $this->repository->getAll();
+        $categories = $this->repository->getAllCategories();
 
         $formattedCategories = [];
         foreach ($categories as $value) {

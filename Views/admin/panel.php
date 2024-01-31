@@ -1,4 +1,4 @@
-<?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === '0'): ?>
+<?php if (empty($_SESSION['user']) || $_SESSION['user']['role'] === '0'): ?>
 <?php \header('Location: /articles'); ?>
 <?php endif; ?>
 
