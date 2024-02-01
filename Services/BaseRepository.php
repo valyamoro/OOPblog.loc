@@ -33,7 +33,7 @@ abstract class BaseRepository
         return $this->connection->fetch()['image_path'];
     }
 
-    public function deleteArticle(string $page, int $id): bool
+    public function deleteArticle(int $id): bool
     {
         try {
             $this->connection->beginTransaction();

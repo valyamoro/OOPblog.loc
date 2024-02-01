@@ -27,4 +27,5 @@ class EditArticleRepository extends BaseRepository
 
         return (bool)$this->connection->rowCount();
     }
+
 }
