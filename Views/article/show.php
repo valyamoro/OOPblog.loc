@@ -15,12 +15,10 @@ Article:<br><?php echo $article['id']; ?> <br>
 <?php echo $article['content']; ?> <br>
 <br>
 <?php if (!empty($_SESSION['success'])): ?>
-    <?php echo \nl2br($_SESSION['success']); ?>
-    <?php unset($_SESSION['success']); ?>
+    <?php displayMessages('success'); ?>
 <?php endif; ?>
 <?php if (!empty($_SESSION['warning'])): ?>
-    <?php echo \nl2br($_SESSION['warning']); ?>
-    <?php unset($_SESSION['warning']); ?>
+    <?php displayMessages('warning'); ?>
 <?php endif; ?>
 <div class="container">
     <?php if (!empty($_SESSION['user'])): ?>
@@ -47,7 +45,6 @@ Article:<br><?php echo $article['id']; ?> <br>
     Comments: <br> <br>
     <?php if (!empty($warning)): ?>
         <?php echo \nl2br($warning); ?>
-        <?php unset($warning); ?>
     <?php else: ?>
         <?php foreach ($comments as $comment): ?>
             Author: <a

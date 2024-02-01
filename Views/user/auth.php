@@ -1,13 +1,13 @@
 <div class="container">
     <?php if (!empty($_SESSION['warning'])): ?>
-        <?php echo '<p class="msg"> ' . \nl2br($_SESSION['warning']) . ' </p>'; ?>
-        <?php unset($_SESSION['warning']); ?>
+        <?php displayMessages('warning'); ?>
     <?php endif; ?>
     <h1>Authentication</h1>
     <form action="" method="post">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value="<?php echo $_POST['email'] ?? ''; ?>" required>
+            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp"
+                   value="<?php echo $_POST['email'] ?? ''; ?>" required>
             <?php if (isset($validate['email'])): ?>
                 <div id="email" class="form-text text-danger"> <?php echo $validate['email']; ?> </div>
             <?php else: ?>

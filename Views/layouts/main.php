@@ -22,9 +22,9 @@
                     <a class="nav-link active" aria-current="page" href="/articles">Main page</a>
                 </li>
                 <?php if (!empty($_SESSION['user'])): ?>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/articles/add">Add article</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/articles/add">Add article</a>
+                    </li>
                 <?php endif; ?>
 
                 <?php echo $menu; ?>
@@ -62,7 +62,6 @@
                         <?php unset($_SESSION['validate']); ?>
                     <?php endif; ?>
                 </form>
-
         </div>
     </div>
 </nav>

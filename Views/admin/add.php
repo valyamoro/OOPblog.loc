@@ -1,7 +1,6 @@
 <div class="container">
     <?php if (!empty($_SESSION['warning'])): ?>
-        <?php echo '<p class="msg"> ' . \nl2br($_SESSION['warning']) . ' </p>'; ?>
-        <?php unset($_SESSION['warning']); ?>
+        <?php displayMessages('warning'); ?>
     <?php endif; ?>
     <?php if (!empty($warning)): ?>
         <?php echo '<p class="msg"> ' . \nl2br($warning) . ' </p>'; ?>
@@ -17,7 +16,8 @@
                     <input type="text" name="firstName" class="form-control" id="firstName"
                            aria-describedby="firstName">
                     <?php if (isset($validate['firstName'])): ?>
-                        <div id="firstName" class="form-text text-danger"> <?php echo $validate['firstName'][0]; ?> </div>
+                        <div id="firstName"
+                             class="form-text text-danger"> <?php echo $validate['firstName'][0]; ?> </div>
                     <?php else: ?>
                         <div id="firstName" class="form-text">We'll never share your firstName with anyone else</div>
                     <?php endif; ?>
@@ -41,7 +41,8 @@
                     <label for="Patronymic" class="form-label">Patronymic</label>
                     <input name="patronymic" class="form-control" id="Patronymic" aria-describedby="patronymic"></input>
                     <?php if (isset($validate['patronymic'])): ?>
-                        <div id="patronymic" class="form-text text-danger"> <?php echo $validate['patronymic'][0]; ?> </div>
+                        <div id="patronymic"
+                             class="form-text text-danger"> <?php echo $validate['patronymic'][0]; ?> </div>
                     <?php else: ?>
                         <div id="patronymic" class="form-text">We'll never share your patronymic with anyone else.</div>
                     <?php endif; ?>

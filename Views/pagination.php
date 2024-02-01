@@ -1,7 +1,9 @@
 <?php if ($pagination->calculateTotalPages() > 1): ?>
     ФИЛЬТР: <br>
-    <a href="<?php echo $pagination->getQueryString() . "page={$pagination->getCurrentPage()}&mode=desc" ?>">Сначала новые</a> <br>
-    <a href="<?php echo $pagination->getQueryString() . "page={$pagination->getCurrentPage()}&mode=asc" ?>">Сначала старые</a> <br>
+    <a href="<?php echo $pagination->getQueryString() . "page={$pagination->getCurrentPage()}&mode=desc" ?>">Сначала
+        новые</a> <br>
+    <a href="<?php echo $pagination->getQueryString() . "page={$pagination->getCurrentPage()}&mode=asc" ?>">Сначала
+        старые</a> <br>
     <br>
     <nav aria-label="navigation">
         <ul class="pagination">

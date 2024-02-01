@@ -1,7 +1,6 @@
 <?php if (!empty($_SESSION['message'])): ?>
-<?php echo \nl2br($_SESSION['message']); ?>
-<?php unset($_SESSION['message']); ?>
-<?php endif;?>
+    <?php displayMessages('message'); ?>
+<?php endif; ?>
 <div class="container">
     <h1>Create article</h1>
     <form action="" method="post" enctype="multipart/form-data">

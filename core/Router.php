@@ -22,7 +22,6 @@ class Router
             ? 'Home'
             : \explode('/', \trim($parts['path'], '/'));
 
-        dump($segments);
         $namespace = 'app\Controllers\\';
         $method = 'index';
         $params = 'index';
@@ -36,10 +35,9 @@ class Router
 
         $connectionDB = $this->connectionDB();
 
-        $namespace = "app\Services\\{$segments[0]}";
-        $segments[0] = \rtrim($segments[0], 's');
-
         if (\is_array($segments)) {
+            $namespace = "app\Services\\{$segments[0]}";
+            $segments[0] = \rtrim($segments[0], 's');
             if (\count($segments) === 1) {
                 $method = $segments[0];
                 $repository = new ("{$namespace}\Repositories\\" . $segments[0] . 'Repository')($connectionDB);
@@ -56,9 +54,11 @@ class Router
                 $params = [$segments[1], $segments[0], $segments[2]];
             }
         } else {
-            $repository = new ("app\Services\\{$segments}\\Repositories\\" . $segments . 'Repository')($connectionDB);
-            $service = new ("app\Services\\{$segments}\\{$segments}" . 'Service')($repository);
+            $namespace = "app\Services\\{$segments}";
+            $repository = new ("{$namespace}\\Repositories\\" . $segments . 'Repository')($connectionDB);
+            $service = new ("{$namespace}\\{$segments}" . 'Service')($repository);
         }
+
 
         $request = new Request();
         $class = (new ($class . 'Controller')($connectionDB, $request, $service));

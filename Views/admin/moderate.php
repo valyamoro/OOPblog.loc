@@ -2,8 +2,7 @@
     <?php echo \nl2br($warning); ?>
 <?php else: ?>
     <?php if (!empty($_SESSION['success'])): ?>
-        <?php echo \nl2br($_SESSION['success']); ?>
-        <?php unset($_SESSION['success']); ?>
+        <?php displayMessages('success'); ?>
     <?php endif; ?>
     <?php foreach ($items as $item): ?>
         <?php if (!empty($item['title'])): ?>

@@ -1,6 +1,5 @@
 <?php if (!empty($_SESSION['warning'])): ?>
-    <?php echo \nl2br($_SESSION['warning']); ?>
-    <?php unset($_SESSION['warning']); ?>
+    <?php displayMessages('warning'); ?>
 <?php else: ?>
     User data: <br>
     <?php echo $user['first_name']; ?> <br>
@@ -9,12 +8,12 @@
     <br>
     Articles user: <br>
     <?php if (!empty($warning)): ?>
-    <?php echo \nl2br($warning); ?>
+        <?php echo \nl2br($warning); ?>
     <?php else: ?>
-    <?php foreach ($articles as $article): ?>
-        <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
-        <br>
-    <?php endforeach; ?>
+        <?php foreach ($articles as $article): ?>
+            <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
+            <br>
+        <?php endforeach; ?>
     <?php endif; ?>
 <?php endif; ?>
 

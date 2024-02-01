@@ -1,5 +1,5 @@
 <?php if (empty($_SESSION['user']) || $_SESSION['user']['role'] === '0'): ?>
-<?php \header('Location: /articles'); ?>
+    <?php \header('Location: /articles'); ?>
 <?php endif; ?>
 
 <a href="/admins/category">Добавить новую категорию</a><br>
