@@ -9,22 +9,25 @@
             <input type="text" value="<?php echo $_SESSION['default_value']['title'] ?>" name="title"
                    class="form-control" id="title"
                    aria-describedby="title">
-            <?php if (isset($_SESSION['validate']['title'])): ?>
-                <div id="title" class="form-text"> <?php echo $_SESSION['validate']['title'][0]; ?> </div>
+            <?php if (!empty($validate['title'])): ?>
+                <div id="content" class="form-text text-danger"> <?php echo $validate['title'][0]; ?> </div>
             <?php endif; ?>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Article Content</label>
             <textarea name="content" class="form-control" id="content"
                       rows="8"><?php echo $_SESSION['default_value']['content']; ?>"</textarea>
-            <?php if (isset($_SESSION['validate']['content'])): ?>
-                <div id="password" class="form-text"> <?php echo $_SESSION['validate']['content'][0]; ?> </div>
+            <?php if (!empty($validate['content'])): ?>
+                <div id="content" class="form-text text-danger"> <?php echo $validate['content'][0]; ?> </div>
             <?php endif; ?>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Изображение</label>
             <input type="file" name="image" class="form-control" id="image">
         </div>
+        <?php if (!empty($validate['image'])): ?>
+            <div id="content" class="form-text text-danger"> <?php echo $validate['image'][0]; ?> </div>
+        <?php endif; ?>
         <button type="submit" class="btn btn-primary">Edit article</button>
     </form>
 </div>

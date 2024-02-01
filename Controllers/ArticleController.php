@@ -31,7 +31,7 @@ class ArticleController extends BaseController
         $request['post'] = $this->request->getPost();
         $request['files'] = $this->request->getFiles();
 
-        $this->service->edit($request);
+        $params = $this->service->edit($request);
 
         return $this->view->render($view, $layout, $params);
     }

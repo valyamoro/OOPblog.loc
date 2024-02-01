@@ -59,13 +59,4 @@ class AddArticleService extends BaseService
         ];
     }
 
-    private function formatArticleDataForModel(array $request): array
-    {
-        return [
-            $request['post']['title'],
-            $request['post']['content'],
-            $request['files']['image'],
-        ];
-    }
-
 }

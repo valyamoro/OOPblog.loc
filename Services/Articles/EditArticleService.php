@@ -38,7 +38,8 @@ class EditArticleService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new ArticleModel(...$request['post']);
+            $dataModel = $this->formatArticleDataForModel($request);
+            $model = new ArticleModel(...$dataModel);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {

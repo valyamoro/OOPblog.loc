@@ -99,7 +99,7 @@ class Validator
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
             self::RULE_LETTERS => 'There should only be letters here',
-            self::RULE_IMAGE_EXTENSION => 'This is not support extension',
+            self::RULE_IMAGE_EXTENSION => 'This extension is not support',
             self::RULE_IMAGE_SIZE => 'This is too big image',
         ];
 
