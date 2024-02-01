@@ -37,9 +37,10 @@ class ArticleController extends BaseController
         return $this->view->render($view, $layout, $params);
     }
 
-    public function category(string $view, string $layout, string $params): string
+    public function category(string $view, string $layout, string $category): string
     {
-        $result = $this->service->getCategoryArticles($params);
+        $request = $this->request->getGET();
+        $result = $this->service->getCategoryArticles($request, $category, 5);
 
         return $this->view->render($view, $layout, $result);
     }

@@ -13,7 +13,8 @@ class CategoryArticleRepository extends BaseRepository
 
         $this->connection->prepare($query)->execute([$category]);
 
-        return (int)$this->connection->fetch()['id'];
+        $result = $this->connection->fetch();
+        return (int)(empty($result) ? 0 : $result['id']);
     }
 
     public function getCategoriesIds(array $data, int $id): string
@@ -39,15 +40,32 @@ class CategoryArticleRepository extends BaseRepository
         return $this->connection->fetchAll();
     }
 
-    public function getArticles(string $ids): array
+    public function getArticles(int $limit, int $offset, string $order, string $item, string $condition, array $ids): array
     {
-        $query = "SELECT * FROM articles
-          JOIN articles_categories ON articles.id = articles_categories.id_article 
-          WHERE articles_categories.id_category IN ({$ids})";
+        $ids = \explode(',', $ids[0]);
+        $placeholders = \rtrim(\str_repeat('?,', \count($ids)), ',');
 
-        $this->connection->prepare($query)->execute();
+        $query = "SELECT * FROM articles
+          JOIN articles_categories ON articles.id = articles_categories.id_article
+          WHERE articles_categories.id_category IN ({$placeholders}) order by created_at {$order} limit {$limit} offset {$offset}";
+
+        $this->connection->prepare($query)->execute([...$ids]);
 
         return $this->connection->fetchAll();
+    }
+
+    public function getCountArticlesByIdCategory(string $ids): int
+    {
+        $ids = \explode(',', $ids[0]);
+        $placeholders = \rtrim(\str_repeat('?,', \count($ids)), ',');
+
+        $query = "SELECT count(articles.id) FROM articles
+          JOIN articles_categories ON articles.id = articles_categories.id_article
+          WHERE articles_categories.id_category IN ({$placeholders})";
+
+        $this->connection->prepare($query)->execute([...$ids]);
+
+        return \array_values($this->connection->fetch())[0];
     }
 
 }

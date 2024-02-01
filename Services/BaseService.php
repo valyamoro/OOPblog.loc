@@ -35,8 +35,7 @@ abstract class BaseService
             \header("Location: {$currentUrl}");
         }
 
-        return $this->repository->$method($pagination->getItemsPerPage(), $pagination->getOffset(),
-            $pagination->getOrder(), $item, $condition, $params);
+        return $this->repository->$method($pagination->getItemsPerPage(), $pagination->getOffset(), $pagination->getOrder(), $item, $condition, $params);
     }
 
     public function getPaginationObject(array $request, int $itemsPerPage, int $totalItems): Pagination

@@ -7,19 +7,24 @@ use app\Services\BaseService;
 
 class CategoryArticleService extends BaseService
 {
-    public function getCategoryArticles(string $category): array
+    public function getCategoryArticles(array $request, string $category, int $itemsPerPage): array
     {
-        $id = (int)$this->repository->getIdByTitle($category);
+        $result['articles'] = [];
+
+        $id = $this->repository->getIdByTitle($category);
+
         if (empty($id)) {
-            $_SESSION['warning'] = 'This category doesnt exist!' . "\n";
-        }
+            $_SESSION['message'] = 'This category doesnt exist!' . "\n";
+        } else {
+            $ids = \rtrim($this->repository->getCategoriesIds($this->repository->getAllCategories(), $id), ',');
+            $page = 'articles';
+            $totalItems = $this->repository->getCountArticlesByIdCategory($ids);
+            $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
 
-        $ids = \rtrim($this->repository->getCategoriesIds($this->repository->getAllCategories(), $id), ',');
-
-        echo $ids;
-        $result['articles'] = $this->repository->getArticles($ids);
-        if (empty($result['articles'])) {
-            $_SESSION['warning'] = 'Articles with this category doesnt exist!' . "\n";
+            $result['articles'] = $this->pagination($result['pagination'], $page, 'is_active=1', 'getArticles', [$ids]);
+            if (empty($result['articles'])) {
+                $_SESSION['message'] = 'Articles with this category doesnt exist!' . "\n";
+            }
         }
 
         return $result;

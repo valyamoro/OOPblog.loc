@@ -14,7 +14,6 @@ class ModerateAdminService extends BaseService
         if (!empty($_SESSION['user']) && $_SESSION['user']['role'] !== '0') {
             $page = $request['item'];
             $totalItems = $this->repository->getCount($page, 'is_active=0');
-
             $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
             $result['items_id'] = $this->pagination($result['pagination'], $page, 'is_active=0');
 
