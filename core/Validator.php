@@ -63,7 +63,7 @@ class Validator
                     $this->addError($attribute, self::RULE_LETTERS, $rule);
                 }
 
-                if ($ruleName === self::RULE_IMAGE_EXTENSION && !\in_array(\pathinfo($value['name'],
+                if ($ruleName === self::RULE_IMAGE_EXTENSION && !empty($value['name']) && !\in_array(\pathinfo($value['name'],
                         PATHINFO_EXTENSION), ['jpeg', 'png', 'webp', 'jpg'])) {
                     $this->addError($attribute, self::RULE_IMAGE_EXTENSION, $rule);
                 }

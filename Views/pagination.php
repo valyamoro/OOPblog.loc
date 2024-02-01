@@ -8,14 +8,14 @@
     <nav aria-label="navigation">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" href="<?php echo "{$pagination->moveLeft()}&mode={$pagination->getOrder()}" ?>"
+                <a class="page-link" href="<?php echo "{$pagination->getQueryString()}{$pagination->moveLeft()}&mode={$pagination->getOrder()}" ?>"
                    aria-label="Prev">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <?php echo $pagination->generatePaginationLinks($_GET); ?>
             <li class="page-item">
-                <a class="page-link" href="<?php echo "{$pagination->moveRight()}&mode={$pagination->getOrder()}" ?>"
+                <a class="page-link" href="<?php echo "{$pagination->getQueryString()}{$pagination->moveRight()}&mode={$pagination->getOrder()}" ?>"
                    aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

@@ -16,10 +16,14 @@ class Pagination
     ) {
         $this->offset = ($currentPage - 1) * $itemsPerPage;
 
-        $currentUri = \strstr($_SERVER['REQUEST_URI'], '?', true);
         if (!empty($request)) {
             $key = \array_keys($request)[0];
+        }
+        
+        if (!empty($request) && ($key !== 'page')) {
+            $currentUri = \strstr($_SERVER['REQUEST_URI'], '?', true);
             $request = \array_values($request);
+
             $this->queryString = "{$currentUri}?{$key}={$request[0]}&";
         } else {
             $this->queryString = '?';
@@ -70,14 +74,14 @@ class Pagination
     {
         $prevPage = $this->currentPage - 1;
 
-        return "{$this->queryString}page={$prevPage}";
+        return "page={$prevPage}";
     }
 
     public function moveRight(): string
     {
         $nextPage = $this->currentPage + 1;
 
-        return "{$this->queryString}page={$nextPage}";
+        return "page={$nextPage}";
     }
 
     public function generatePaginationLinks(): string
