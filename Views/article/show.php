@@ -28,7 +28,7 @@ Article:<br><?php echo $article['id']; ?> <br>
                 <textarea name="content" class="form-control" id="content"
                           rows="2"><?php echo $_SESSION['default_value']['comment'] ?? '' ?></textarea>
                 <?php unset($_SESSION['default_value']); ?>
-                <?php if (isset($_SESSION['validate']['content'])): ?>
+                <?php if (!empty($_SESSION['validate']['content'])): ?>
                     <div id="content"
                          class="form-text text-danger"> <?php echo $_SESSION['validate']['content'][0]; ?> </div>
                     <?php unset($_SESSION['validate']['content']); ?>
@@ -51,7 +51,9 @@ Article:<br><?php echo $article['id']; ?> <br>
                     href="/users/profile?id=<?php echo $comment['id_user']; ?>"><?php echo $comment['first_name']; ?></a>
             <br>
             Comment: <?php echo $comment['content']; ?> <br>
-            <br>
+            <?php if (($_SESSION['user']['id'] === $comment['id_user']) || ($_SESSION['user']['role'] === '1')): ?>
+                <a href="/comments/delete?id=<?php echo $comment['id_comment']; ?>">Delete</a>
+            <?php endif; ?><br><br>
         <?php endforeach; ?>
     <?php endif; ?>
     <br>

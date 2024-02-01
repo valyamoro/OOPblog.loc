@@ -17,7 +17,7 @@ class SearchArticleService extends BaseService
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $_SESSION['validate'] = $model->validator->errors;
+                $_SESSION['validate']['search'] = $model->validator->errors;
             } else {
                 $search = '%' . $request['search'] . '%';
                 $result['articles'] = $this->repository->getAllCategoriesBySearch($search);

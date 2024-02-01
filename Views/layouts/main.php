@@ -57,8 +57,8 @@
                                value="<?php echo $_POST['search'] ?? '' ?>">
                     </label>
                     <input type="submit" value="Поиск"/>
-                    <?php if (!empty($_SESSION['validate'])): ?>
-                        <?php echo \nl2br($_SESSION['validate']['content'][0]); ?>
+                    <?php if (!empty($_SESSION['validate']['search'])): ?>
+                        <?php echo \nl2br($_SESSION['validate']['search']['content'][0]); ?>
                         <?php unset($_SESSION['validate']); ?>
                     <?php endif; ?>
                 </form>

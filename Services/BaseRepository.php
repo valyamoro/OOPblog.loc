@@ -57,7 +57,7 @@ abstract class BaseRepository
         }
     }
 
-    public function deleteComment(string $page, int $id): bool
+    public function deleteComment(int $id): bool
     {
         try {
             $this->connection->beginTransaction();
