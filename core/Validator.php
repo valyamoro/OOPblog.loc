@@ -12,6 +12,8 @@ class Validator
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
     public const RULE_LETTERS = 'letter';
+    public const RULE_IMAGE_EXTENSION = 'image_extension';
+    public const RULE_IMAGE_SIZE = 'image_size';
 
     private array $rules;
     public array $errors = [];
@@ -40,7 +42,8 @@ class Validator
                     $this->addError($attribute, self::RULE_EMAIL);
                 }
 
-                if ($ruleName === self::RULE_PHONE && !preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $value)) {
+                if ($ruleName === self::RULE_PHONE && !preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/',
+                        $value)) {
                     $this->addError($attribute, self::RULE_PHONE);
                 }
 
@@ -59,6 +62,15 @@ class Validator
                 if ($ruleName === self::RULE_LETTERS && !\preg_match('/^[a-zа-яё]+$/ui', $value)) {
                     $this->addError($attribute, self::RULE_LETTERS, $rule);
                 }
+
+                if ($ruleName === self::RULE_IMAGE_EXTENSION && !\in_array(\pathinfo($value['name'],
+                        PATHINFO_EXTENSION), ['jpeg', 'png', 'webp', 'jpg'])) {
+                    $this->addError($attribute, self::RULE_IMAGE_EXTENSION, $rule);
+                }
+
+                if ($rules === self::RULE_IMAGE_SIZE && $value['size'] > $rule['max']) {
+                    $this->addError($attribute, self::RULE_IMAGE_SIZE, $rule);
+                }
             }
 
         }
@@ -66,18 +78,18 @@ class Validator
         return empty($this->errors);
     }
 
-    public function addError(string $attribute, string $rule, $params = []): void
+    private function addError(string $attribute, string $rule, $params = []): void
     {
         $message = $this->errorMessages()[$rule] ?? '';
 
         foreach ($params as $key => $value) {
-            $message = str_replace("{{$key}}", (string)$value, $message);
+            $message = \str_replace("{{$key}}", (string)$value, $message);
         }
 
         $this->errors[$attribute][] = $message;
     }
 
-    public function errorMessages(): array
+    private function errorMessages(): array
     {
         return [
             self::RULE_REQUIRED => 'This field is required',
@@ -87,6 +99,8 @@ class Validator
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
             self::RULE_LETTERS => 'There should only be letters here',
+            self::RULE_IMAGE_EXTENSION => 'This is not support extension',
+            self::RULE_IMAGE_SIZE => 'This is too big image',
         ];
 
     }

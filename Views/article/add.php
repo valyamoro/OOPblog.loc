@@ -33,6 +33,9 @@
             <label for="image" class="form-label">Изображение</label>
             <input type="file" name="image" class="form-control" id="image">
         </div>
+        <?php if (isset($validate['image'])): ?>
+            <div id="content" class="form-text text-danger"> <?php echo $validate['image'][0]; ?> </div>
+        <?php endif; ?>
         <button type="submit" class="btn btn-primary">Create article</button>
     </form>
 </div>

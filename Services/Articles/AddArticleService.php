@@ -23,15 +23,15 @@ class AddArticleService extends BaseService
             if ($request['post']['id_category'] === '0') {
                 $result['validate']['option'] = 'Please make a choice!' . "\n";
             } else {
-                $idCategory = (int)\array_pop($request['post']);
-                $model = new ArticleModel(...$request['post']);
+                $dataModel = $this->formatArticleDataForModel($request);
+                $model = new ArticleModel(...$dataModel);
                 $model->validator->setRules($model->rules());
 
                 if (!$model->validator->validate($model)) {
                     $result['validate'] = $model->validator->errors;
                 } else {
                     $data = $this->formatArticleData($request);
-                    if (!$this->repository->add($data, $idCategory)) {
+                    if (!$this->repository->add($data, (int)$request['post']['id_category'])) {
                         $_SESSION['message'] = 'Article was not added, please try more' . "\n";
                     } else {
                         $_SESSION['success'] = 'The article was successfully added and appeared on the review page, please wait until it is published' . "\n";
@@ -44,18 +44,27 @@ class AddArticleService extends BaseService
         return $result;
     }
 
-    public function formatArticleData(array $data): array
+    private function formatArticleData(array $request): array
     {
         $now = \date('Y-m-d H:i:s');
 
         return [
-            $data['post']['title'],
-            $data['post']['content'],
+            $request['post']['title'],
+            $request['post']['content'],
             0,
             0,
-            $this->repository->uploadImage($data['files']['image']),
+            $this->repository->uploadImage($request['files']['image']),
             $now,
             $now,
+        ];
+    }
+
+    private function formatArticleDataForModel(array $request): array
+    {
+        return [
+            $request['post']['title'],
+            $request['post']['content'],
+            $request['files']['image'],
         ];
     }
 
