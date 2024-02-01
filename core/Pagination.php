@@ -19,7 +19,7 @@ class Pagination
         if (!empty($request)) {
             $key = \array_keys($request)[0];
         }
-        
+
         if (!empty($request) && ($key !== 'page')) {
             $currentUri = \strstr($_SERVER['REQUEST_URI'], '?', true);
             $request = \array_values($request);

@@ -67,7 +67,7 @@ class UserModel extends Model
             'patronymic' => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_MIN, 'min' => 3], [$this->validator::RULE_MAX, 'max' => 48], [$this->validator::RULE_LETTERS]],
             'email' => [$this->validator::RULE_REQUIRED, $this->validator::RULE_EMAIL, [$this->validator::RULE_MIN, 'min' => 3], [$this->validator::RULE_MAX, 'max' => 128]],
             'phoneNumber' => [$this->validator::RULE_REQUIRED, $this->validator::RULE_PHONE],
-            'password' => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_MIN, 'min' => 8], [$this->validator::RULE_MAX, 'max' => 128]],
+            'password' => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_PASSWORD], [$this->validator::RULE_MIN, 'min' => 8], [$this->validator::RULE_MAX, 'max' => 128]],
             'passwordConfirm' => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_MATCH, 'match' => 'password']],
         ];
     }

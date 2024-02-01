@@ -6,6 +6,7 @@ namespace app\core;
 class Validator
 {
     public const RULE_REQUIRED = 'required';
+    public const RULE_PASSWORD = 'password';
     public const RULE_EMAIL = 'email';
     public const RULE_PHONE = 'phoneNumber';
     public const RULE_MIN = 'min';
@@ -68,28 +69,48 @@ class Validator
                     $this->addError($attribute, self::RULE_IMAGE_EXTENSION, $rule);
                 }
 
-                if ($rules === self::RULE_IMAGE_SIZE && $value['size'] > $rule['max']) {
+                if ($ruleName === self::RULE_IMAGE_SIZE && $value['size'] > $rule['max']) {
                     $this->addError($attribute, self::RULE_IMAGE_SIZE, $rule);
                 }
+
+                if ($ruleName === self::RULE_PASSWORD) {
+                    $message = '';
+
+                    if (!\preg_match('/^(?![0-9]+$).+/', $value)) {
+                        $message = 'Password cant have only numbers' . "\n";
+                    } elseif (!\preg_match('/^[^!№;]+$/u', $value)) {
+                        $message = 'Password have incorrect chars' . "\n";
+                    } elseif (!\preg_match('/^(?![A-Za-z]+$).+/', $value)) {
+                        $message = 'Password cant contain only letters!' . "\n";
+                    } elseif (!\preg_match('/[A-Z]/', $value)) {
+                        $message = 'Password must have one upper case letter' . "\n";
+                    }
+
+                    if (!empty($message)) {
+                        $this->addError($attribute, self::RULE_PASSWORD, $rule, $message);
+                    }
+                }
+
             }
 
         }
-
         return empty($this->errors);
     }
 
-    private function addError(string $attribute, string $rule, $params = []): void
+    private function addError(string $attribute, string $rule, $params = [], string $message = ''): void
     {
-        $message = $this->errorMessages()[$rule] ?? '';
-
-        foreach ($params as $key => $value) {
-            $message = \str_replace("{{$key}}", (string)$value, $message);
+        if (empty($message)) {
+            $message = $this->errorMessages()[$rule] ?? '';
+            foreach ($params as $key => $value) {
+                $message = \str_replace("{{$key}}", (string)$value, $message);
+            }
         }
 
         $this->errors[$attribute][] = $message;
     }
 
-    private function errorMessages(): array
+    private
+    function errorMessages(): array
     {
         return [
             self::RULE_REQUIRED => 'This field is required',
@@ -104,5 +125,6 @@ class Validator
         ];
 
     }
+
 
 }
