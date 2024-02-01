@@ -22,5 +22,5 @@ class ApproveAdminService extends BaseService
             \header('Location: /articles');
         }
     }
-}
+
 }

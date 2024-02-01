@@ -7,6 +7,8 @@ use app\core\Http\Request;
 use app\Database\DatabaseConfiguration;
 use app\Database\DatabasePDOConnection;
 use app\Database\PDODriver;
+use Error;
+use Exception;
 
 class Router
 {
@@ -35,6 +37,7 @@ class Router
 
         $connectionDB = $this->connectionDB();
 
+
         if (\is_array($segments)) {
             $namespace = "app\Services\\{$segments[0]}";
             $segments[0] = \rtrim($segments[0], 's');
@@ -58,7 +61,6 @@ class Router
             $repository = new ("{$namespace}\\Repositories\\" . $segments . 'Repository')($connectionDB);
             $service = new ("{$namespace}\\{$segments}" . 'Service')($repository);
         }
-
 
         $request = new Request();
         $class = (new ($class . 'Controller')($connectionDB, $request, $service));

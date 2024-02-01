@@ -46,25 +46,31 @@ class ArticleController extends BaseController
         return $this->view->render($view, $layout, $result);
     }
 
-    public function delete(): void
+    public function delete(): string
     {
         $request = $this->request->getGET();
 
         $this->service->delete($request);
+
+        return '';
     }
 
-    public function block(): void
+    public function block(): string
     {
         $request = $this->request->getGET();
 
         $this->service->block($request);
+
+        return '';
     }
 
-    public function unBlock(): void
+    public function unBlock(): string
     {
         $request = $this->request->getGET();
 
         $this->service->unBlock($request);
+
+        return '';
     }
 
     public function search(string $view, string $layout): string

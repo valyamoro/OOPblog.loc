@@ -1,9 +1,9 @@
+<?php if (!empty($_SESSION['success'])): ?>
+    <?php displayMessages('success'); ?>
+<?php endif; ?>
 <?php if (!empty($warning)): ?>
-    <?php echo \nl2br($warning); ?>
+    <?php echo $warning; ?>
 <?php else: ?>
-    <?php if (!empty($_SESSION['success'])): ?>
-        <?php displayMessages('success'); ?>
-    <?php endif; ?>
     <?php foreach ($items as $item): ?>
         <?php if (!empty($item['title'])): ?>
             <a href="<?php echo "/articles/show?id={$item['id']}"; ?>"><?php echo $item['title']; ?></a><br>

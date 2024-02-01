@@ -9,10 +9,11 @@ class DeleteAdminService extends BaseService
 {
     public function delete(array $request): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] !== '0') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] === '1') {
             $page = \rtrim($request['item'], 's');
             $method = 'delete' . $page;
-            if ($this->repository->$method($request['item'], (int)$request['id'])) {
+            echo $method;
+            if ($this->repository->$method((int)$request['id'])) {
                 $_SESSION['success'] = "The {$page} has been successfully deleted!\n";
             } else {
                 $_SESSION['warning'] = "The {$page} was not deleted!\n";

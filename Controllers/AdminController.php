@@ -15,25 +15,31 @@ class AdminController extends BaseController
         return $this->view->render($view, $layout, $params);
     }
 
-    public function delete(): void
+    public function delete(): string
     {
         $request = $this->request->getGET();
 
         $this->service->delete($request);
+
+        return '';
     }
 
-    public function approve(): void
+    public function approve(): string
     {
         $request = $this->request->getGET();
 
         $this->service->approve($request);
+
+        return '';
     }
 
-    public function unBlock(): void
+    public function unBlock(): string
     {
         $request = $this->request->getGET();
 
         $this->service->unBlock($request);
+
+        return '';
     }
 
     public function add(string $view, string $layout): string

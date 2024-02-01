@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Controllers;
 
@@ -8,4 +9,5 @@ class ErrorController extends BaseController
     {
         return $this->view->render($view, $layout, []);
     }
+
 }

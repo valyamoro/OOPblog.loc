@@ -32,9 +32,11 @@ class UserController extends BaseController
         return $this->view->render($view, $layout, $params);
     }
 
-    public function logout(): void
+    public function logout(): string
     {
         $this->service->logout();
+
+        return '';
     }
 
 }
