@@ -7,7 +7,7 @@ use app\Services\BaseRepository;
 
 class SearchArticleRepository extends BaseRepository
 {
-    public function search(string $value)
+    public function getAllCategoriesBySearch(string $value): array
     {
         $query = 'select id, title from articles where title like :searchValue';
 

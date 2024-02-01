@@ -20,7 +20,7 @@ class SearchModel extends Model
     public function rules(): array
     {
         return [
-            'content' => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_MIN, 'min' => 1], [$this->validator::RULE_MAX, 'max' => 48]],
+            'content' => [$this->validator::RULE_REQUIRED, [$this->validator::RULE_LETTERS], [$this->validator::RULE_MIN, 'min' => 1], [$this->validator::RULE_MAX, 'max' => 48]],
         ];
     }
 

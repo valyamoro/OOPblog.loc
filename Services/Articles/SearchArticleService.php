@@ -8,23 +8,23 @@ use app\Services\BaseService;
 
 class SearchArticleService extends BaseService
 {
-    public function search(array $request): array
+    public function search(array $request, int $itemsPerPage): array
     {
-        $result = [];
+        $result['articles'] = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new SearchModel($request['search']);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $_SESSION['warning'] = $model->validator->errors;
-            }
+                $_SESSION['validate'] = $model->validator->errors;
+            } else {
+                $search = '%' . $request['search'] . '%';
+                $result['articles'] = $this->repository->getAllCategoriesBySearch($search);
 
-            $search = '%' . $request['search'] . '%';
-            $result['articles'] = $this->repository->search($search);
-
-            if (empty($result['articles'])) {
-                $result['warning'] = 'There are no such articles!' . "\n";
+                if (empty($result['articles'])) {
+                    $result['warning'] = 'There are no such articles!' . "\n";
+                }
             }
         } else {
             \header('Location: /articles');

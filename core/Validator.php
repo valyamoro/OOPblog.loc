@@ -56,7 +56,7 @@ class Validator
                     $this->addError($attribute, self::RULE_MATCH, $rule);
                 }
 
-                if ($ruleName === self::RULE_LETTERS && !\preg_match("/^[a-zа-яё]{1}[a-zа-яё\s]*[a-zа-яё]{1}$/ui", $value)) {
+                if ($ruleName === self::RULE_LETTERS && !\preg_match('/^[a-zа-яё]+$/ui', $value)) {
                     $this->addError($attribute, self::RULE_LETTERS, $rule);
                 }
             }

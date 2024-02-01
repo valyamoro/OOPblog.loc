@@ -4,7 +4,7 @@
     <br><br>
 <?php endif; ?>
 <?php if (!empty($_SESSION['message'])): ?>
-    <?php echo nl2br($_SESSION['message']); ?>
+    <?php echo \nl2br($_SESSION['message']); ?>
     <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 <?php if (!empty($_SESSION['warning'])): ?>

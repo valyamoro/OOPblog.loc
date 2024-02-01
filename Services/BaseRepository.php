@@ -78,20 +78,20 @@ abstract class BaseRepository
         }
     }
 
-    public function getCount(string $item, string $condition): int
+    public function getCount(string $item, string $condition, array $params = []): int
     {
         $query = 'select count(id) from ' . $item . ' where ' . $condition;
 
-        $this->connection->prepare($query)->execute();
+        $this->connection->prepare($query)->execute([...\array_values($params)]);
 
         return \array_values($this->connection->fetch())[0];
     }
 
-    public function getAllIds(int $limit, int $offset, string $mode, string $item, string $condition): array
+    public function getAllIds(int $limit, int $offset, string $mode, string $item, string $condition, array $params = []): array
     {
         $query = 'select id from ' . $item . ' where ' . $condition . ' order by created_at ' . $mode . ' limit ' . $limit . ' offset ' . $offset;
 
-        $this->connection->prepare($query)->execute();
+        $this->connection->prepare($query)->execute([...\array_values($params)]);
 
         return $this->formatIds($this->connection->fetchAll());
     }

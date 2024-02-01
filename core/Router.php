@@ -22,6 +22,7 @@ class Router
             ? 'Home'
             : \explode('/', \trim($parts['path'], '/'));
 
+        dump($segments);
         $namespace = 'app\Controllers\\';
         $method = 'index';
         $params = 'index';

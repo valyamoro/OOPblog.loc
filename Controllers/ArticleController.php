@@ -3,20 +3,19 @@ declare(strict_types=1);
 
 namespace app\Controllers;
 
-use app\core\Controller;
-
 class ArticleController extends BaseController
 {
     public function show(string $view, string $layout): string
     {
         $request = $this->request->getGET();
 
-        $data = $this->service->show($request, 5);
+        $itemsPerPage = 5;
+        $data = $this->service->show($request, $itemsPerPage);
 
         return $this->view->render($view, $layout, $data);
     }
 
-    public function add(string $view, string $layout, array $params = []): string
+    public function add(string $view, string $layout): string
     {
         $request['post'] = $this->request->getPost();
         $request['files'] = $this->request->getFiles();
@@ -40,7 +39,9 @@ class ArticleController extends BaseController
     public function category(string $view, string $layout, string $category): string
     {
         $request = $this->request->getGET();
-        $result = $this->service->getCategoryArticles($request, $category, 5);
+        $itemsPerPage = 5;
+
+        $result = $this->service->getCategoryArticles($request, $category, $itemsPerPage);
 
         return $this->view->render($view, $layout, $result);
     }
@@ -70,7 +71,8 @@ class ArticleController extends BaseController
     {
         $request = $this->request->getPost();
 
-        $params = $this->service->search($request);
+        $itemsPerPage = 5;
+        $params = $this->service->search($request, $itemsPerPage);
 
         return $this->view->render($view, $layout, $params);
     }

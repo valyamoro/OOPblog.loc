@@ -13,6 +13,11 @@ class ShowArticleService extends BaseService
 
         $result['article'] = $this->repository->getById($id);
 
+        if (empty($result['article'])) {
+            $_SESSION['message'] = 'This article doesnt exist!' . "\n";
+            \header('Location: /articles');
+        }
+
         $totalItems = $this->repository->getCount('comments', "is_active=1 and is_blocked=0 and id_article={$id}");
         $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
         $result['comments_id'] = $this->pagination($result['pagination'], 'comments',
@@ -22,12 +27,6 @@ class ShowArticleService extends BaseService
             $result['warning'] = 'This article doesnt have a comments!' . "\n";
         } else {
             $result['comments'] = $this->repository->getCommentsByIds($result['comments_id']);
-
-            if (empty($result['article'])) {
-                $_SESSION['message'] = 'This article doesnt exist!' . "\n";
-                \header('Location: /articles');
-            }
-
         }
 
         return $result;

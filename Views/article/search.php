@@ -5,3 +5,4 @@
 <a href="<?php echo "/articles/show?id={$article['id']}"; ?>"><?php echo $article['title']; ?></a><br>
 <?php endforeach; ?>
 <?php endif; ?>
+<br>

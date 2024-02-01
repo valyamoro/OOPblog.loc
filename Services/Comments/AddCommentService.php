@@ -26,7 +26,7 @@ class AddCommentService extends BaseService
                 if (!$result) {
                     $_SESSION['warning'] = 'The comment was not delivered, please try again' . "\n";
                 } else {
-                    $_SESSION['success'] = 'You have successfully left a comment!' . "\n";
+                    $_SESSION['success'] = 'You have successfully left a comment, please wait until it is published' . "\n";
                 }
             }
 

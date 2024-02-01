@@ -16,11 +16,11 @@ class ProfileUserService extends BaseService
         }
 
         $id = $this->getUserId($request);
-
         $result['user'] = $this->repository->getUserById($id);
 
         if (empty($result['user'])) {
-            $_SESSION['warning'] = 'This user doesnt exist!' . "\n";
+            $_SESSION['message'] = 'This user doesnt exist!' . "\n";
+            \header('Location: /articles');
         } else {
             $totalItems = $this->repository->getCountUserArticles($id);
 
