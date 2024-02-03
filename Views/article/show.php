@@ -51,7 +51,7 @@ Article:<br><?php echo $article['id']; ?> <br>
                     href="/users/profile?id=<?php echo $comment['id_user']; ?>"><?php echo $comment['first_name']; ?></a>
             <br>
             Comment: <?php echo $comment['content']; ?> <br>
-            <?php if (($_SESSION['user']['id'] === $comment['id_user']) || ($_SESSION['user']['role'] === '1')): ?>
+            <?php if ((!empty($_SESSION['user'])) && (($_SESSION['user']['id'] === $comment['id_user']) || ($_SESSION['user']['role'] === '1'))): ?>
                 <a href="/comments/delete?id=<?php echo $comment['id_comment']; ?>">Delete</a>
             <?php endif; ?><br><br>
         <?php endforeach; ?>
