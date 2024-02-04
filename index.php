@@ -12,10 +12,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 $request = new Request();
 
-//try {
+try {
     $router = new Router();
     echo $router->dispatch($request);
-//} catch (Error $e) {
-//    echo $e->getMessage() . '<br>' . $e->getFile() . '<br>' . $e->getLine();
-//    ErrorHandler::handle404();
-//}
+} catch (Error $e) {
+    echo $e->getMessage() . '<br>' . $e->getFile() . '<br>' . $e->getLine();
+    ErrorHandler::handle404();
+}

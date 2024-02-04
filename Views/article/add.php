@@ -9,14 +9,14 @@
             <input type="text" name="title" class="form-control" id="title"
                    aria-describedby="title">
             <?php if (isset($validate['title'])): ?>
-                <div id="title" class="form-text text-danger"> <?php echo $validate['title'][0]; ?> </div>
+                <div id="title" class="form-text text-danger"> <?php echo $validate['title']; ?> </div>
             <?php endif; ?>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Article Content</label>
             <textarea name="content" class="form-control" id="content" rows="8"></textarea>
             <?php if (isset($validate['content'])): ?>
-                <div id="content" class="form-text text-danger"> <?php echo $validate['content'][0]; ?> </div>
+                <div id="content" class="form-text text-danger"> <?php echo $validate['content']; ?> </div>
             <?php endif; ?>
         </div>
         <label for="id_category"></label><select name="id_category" id="id_category">
@@ -34,7 +34,7 @@
             <input type="file" name="image" class="form-control" id="image">
         </div>
         <?php if (isset($validate['image'])): ?>
-            <div id="content" class="form-text text-danger"> <?php echo $validate['image'][0]; ?> </div>
+            <div id="content" class="form-text text-danger"> <?php echo $validate['image']; ?> </div>
         <?php endif; ?>
         <button type="submit" class="btn btn-primary">Create article</button>
     </form>

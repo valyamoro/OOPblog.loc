@@ -31,11 +31,11 @@ class Validator
             $value = $model->$getAttribute();
             foreach ($rules as $rule) {
                 $ruleName = $rule;
-                if (!\is_string($ruleName)) {
+                if (\is_array($ruleName)) {
                     $ruleName = $rule[0];
                 }
 
-                if ($ruleName === self::RULE_REQUIRED && !$value) {
+                if ($ruleName === self::RULE_REQUIRED && empty($value)) {
                     $this->addError($attribute, self::RULE_REQUIRED);
                 }
 
@@ -61,16 +61,16 @@ class Validator
                 }
 
                 if ($ruleName === self::RULE_LETTERS && !\preg_match('/^[a-zа-яё]+$/ui', $value)) {
-                    $this->addError($attribute, self::RULE_LETTERS, $rule);
+                    $this->addError($attribute, self::RULE_LETTERS);
                 }
 
                 if ($ruleName === self::RULE_IMAGE_EXTENSION && !empty($value['name']) && !\in_array(\pathinfo($value['name'],
                         PATHINFO_EXTENSION), ['jpeg', 'png', 'webp', 'jpg'])) {
-                    $this->addError($attribute, self::RULE_IMAGE_EXTENSION, $rule);
+                    $this->addError($attribute, self::RULE_IMAGE_EXTENSION);
                 }
 
                 if ($ruleName === self::RULE_IMAGE_SIZE && $value['size'] > $rule['max']) {
-                    $this->addError($attribute, self::RULE_IMAGE_SIZE, $rule);
+                    $this->addError($attribute, self::RULE_IMAGE_SIZE);
                 }
 
                 if ($ruleName === self::RULE_PASSWORD) {
@@ -87,27 +87,28 @@ class Validator
                     }
 
                     if (!empty($message)) {
-                        $this->addError($attribute, self::RULE_PASSWORD, $rule, $message);
+                        $this->addError($attribute, self::RULE_PASSWORD, [], $message);
                     }
                 }
-
             }
-
         }
 
         return empty($this->errors);
     }
 
-    private function addError(string $attribute, string $rule, $params = [], string $message = ''): void
+    private function addError(string $attribute, string $rule, array $params = [], string $message = ''): void
     {
         if (empty($message)) {
             $message = $this->errorMessages()[$rule] ?? '';
+        }
+
+        if (!empty($params)) {
             foreach ($params as $key => $value) {
                 $message = \str_replace("{{$key}}", (string)$value, $message);
             }
         }
 
-        $this->errors[$attribute][] = $message;
+        $this->errors[$attribute] = $message;
     }
 
     private function errorMessages(): array

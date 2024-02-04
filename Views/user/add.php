@@ -17,7 +17,7 @@
                            aria-describedby="firstName" value="<?php echo $_POST['firstName'] ?? '' ?>" required>
                     <?php if (isset($validate['firstName'])): ?>
                         <div id="firstName"
-                             class="form-text text-danger"> <?php echo $validate['firstName'][0]; ?> </div>
+                             class="form-text text-danger"> <?php echo $validate['firstName']; ?> </div>
                     <?php else: ?>
                         <div id="firstName" class="form-text">We'll never share your firstName with anyone else</div>
                     <?php endif; ?>
@@ -31,7 +31,7 @@
                     <input name="lastName" class="form-control" id="lastName" aria-describedby="lastName"
                            value="<?php echo $_POST['lastName'] ?? '' ?>" required>
                     <?php if (isset($validate['lastName'])): ?>
-                        <div id="lastName" class="form-text text-danger"> <?php echo $validate['lastName'][0]; ?> </div>
+                        <div id="lastName" class="form-text text-danger"> <?php echo $validate['lastName']; ?> </div>
                     <?php else: ?>
                         <div id="lastName" class="form-text">We'll never share your lastName with anyone else.</div>
                     <?php endif; ?>
@@ -43,7 +43,7 @@
                     <input name="patronymic" class="form-control" id="Patronymic" aria-describedby="patronymic"
                            value="<?php echo $_POST['patronymic'] ?? '' ?>" required>
                     <?php if (isset($validate['patronymic'])): ?>
-                        <div id="patronymic" class="form-text text-danger"> <?php echo $validate['patronymic'][0]; ?>
+                        <div id="patronymic" class="form-text text-danger"> <?php echo $validate['patronymic']; ?>
                         </div>
                     <?php else: ?>
                         <div id="patronymic" class="form-text">We'll never share your patronymic with anyone else.</div>
@@ -58,7 +58,7 @@
                 <input type="email" name="email" class="form-control" id="email" aria-describedby="email"
                        value="<?php echo $_POST['email'] ?? '' ?>" required>
                 <?php if (isset($validate['email'])): ?>
-                    <div id="email" class="form-text text-danger"> <?php echo $validate['email'][0]; ?> </div>
+                    <div id="email" class="form-text text-danger"> <?php echo $validate['email']; ?> </div>
                 <?php else: ?>
                     <div id="email" class="form-text">We'll never share your email with anyone else.</div>
                 <?php endif; ?>
@@ -69,7 +69,7 @@
                        aria-describedby="phoneNumber"
                        value="<?php echo $_POST['phoneNumber'] ?? '' ?>" required>
                 <?php if (isset($validate['phoneNumber'])): ?>
-                    <div id="password" class="form-text text-danger"> <?php echo $validate['phoneNumber'][0]; ?> </div>
+                    <div id="password" class="form-text text-danger"> <?php echo $validate['phoneNumber']; ?> </div>
                 <?php else: ?>
                     <div id="phoneNumber" class="form-text">We'll never share your phone number with anyone else.</div>
                 <?php endif; ?>
@@ -82,7 +82,7 @@
                 <input type="password" name="password" class="form-control" id="password" aria-describedby="password"
                        required>
                 <?php if (isset($validate['password'])): ?>
-                    <div id="password" class="form-text text-danger"> <?php echo $validate['password'][0]; ?> </div>
+                    <div id="password" class="form-text text-danger"> <?php echo $validate['password']; ?> </div>
                 <?php else: ?>
                     <div id="password" class="form-text">We'll never share your password with anyone else.</div>
                 <?php endif; ?>
@@ -93,7 +93,7 @@
                        aria-describedby="passwordConfirm" required>
                 <?php if (isset($validate['passwordConfirm'])): ?>
                     <div id="passwordConfirm"
-                         class="form-text text-danger"> <?php echo $validate['passwordConfirm'][0]; ?> </div>
+                         class="form-text text-danger"> <?php echo $validate['passwordConfirm']; ?> </div>
                 <?php else: ?>
                     <div id="password" class="form-text">We'll never share your password with anyone else.</div>
                 <?php endif; ?>

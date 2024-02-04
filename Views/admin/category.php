@@ -22,7 +22,7 @@
         </div>
         <?php if (isset($validate['title'])): ?>
             <div id="firstName"
-                 class="form-text text-danger"> <?php echo $validate['title'][0]; ?> </div>
+                 class="form-text text-danger"> <?php echo $validate['title']; ?> </div>
         <?php endif; ?>
         <br>
         Choose a parent category: <br>

@@ -38,6 +38,7 @@ class AddUserService extends BaseService
                     }
                 }
             }
+
         }
 
         return $result;

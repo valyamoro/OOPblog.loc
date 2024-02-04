@@ -30,7 +30,7 @@ Article:<br><?php echo $article['id']; ?> <br>
                 <?php unset($_SESSION['default_value']); ?>
                 <?php if (!empty($_SESSION['validate']['content'])): ?>
                     <div id="content"
-                         class="form-text text-danger"> <?php echo $_SESSION['validate']['content'][0]; ?> </div>
+                         class="form-text text-danger"> <?php echo $_SESSION['validate']['content']; ?> </div>
                     <?php unset($_SESSION['validate']['content']); ?>
                 <?php endif; ?>
             </div>

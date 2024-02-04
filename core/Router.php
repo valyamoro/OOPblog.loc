@@ -45,17 +45,18 @@ class Router
             ? ['Home']
             : \explode('/', \trim($parts['path'], '/'));
     }
+
     public function dispatch(Request $request): ?string
     {
         $segments = $this->createSegmentsOfUri($request);
         $names = $this->getNames($segments);
 
-        $class = 'app\\Controllers\\' . \rtrim($segments[0], 's');
         $connectionDB = $this->connectionDB();
         $namespaceService = "app\Services\\{$segments[0]}";
         $repository = new ("{$namespaceService}\\Repositories\\{$names['repository']}Repository")($connectionDB);
         $service = new ("{$namespaceService}\\{$names['service']}Service")($repository);
 
+        $class = 'app\\Controllers\\' . \rtrim($segments[0], 's');
         $class = new ($class . 'Controller')($connectionDB, $request, $service);
 
         return $class->{$names['method']}();
