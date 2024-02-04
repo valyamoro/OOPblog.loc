@@ -5,14 +5,14 @@ namespace app\Controllers;
 
 class HomeController extends BaseController
 {
-    public function index(string $view): string
+    public function index(): string
     {
         $request = $this->request->getGET();
-        $itemsPerPage = 5;
+        $perPage = 5;
 
-        $result = $this->service->getAll($request, $itemsPerPage);
+        $result = $this->service->getAll($request, $perPage);
 
-        return $this->view->render($view, '', $result);
+        return $this->view->render('index', '', $result);
     }
 
 }

@@ -103,11 +103,11 @@ abstract class BaseRepository
         }, $ids);
     }
 
-    public function getArticlesByIds(array $ids): array
+    public function getArticlesByIds(array $ids, string $mode): array
     {
         $placeholders = \rtrim(\str_repeat('?,', \count($ids)), ',');
 
-        $query = 'SELECT * FROM articles WHERE id IN (' . $placeholders . ')';
+        $query = 'SELECT * FROM articles WHERE id IN (' . $placeholders . ') ORDER BY created_at ' . $mode;
 
         $this->connection->prepare($query)->execute([...$ids]);
 

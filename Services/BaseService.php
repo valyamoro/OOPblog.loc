@@ -35,15 +35,14 @@ abstract class BaseService
             \header("Location: {$currentUrl}");
         }
 
-        return $this->repository->$method($pagination->getItemsPerPage(), $pagination->getOffset(), $pagination->getOrder(), $item, $condition, $params);
+        return $this->repository->$method($pagination->getPerPage(), $pagination->getOffset(), $pagination->getOrder(), $item, $condition, $params);
     }
 
-    public function getPaginationObject(array $request, int $itemsPerPage, int $totalItems): Pagination
+    public function getPaginationObject(array $request, int $perPage, int $totalItems, string $mode): Pagination
     {
         $currentPage = (int)($request['page'] ?? 1);
 
-        $mode = $request['mode'] ?? 'asc';
-        $result = new Pagination($totalItems, $itemsPerPage, $currentPage, $request);
+        $result = new Pagination($totalItems, $perPage, $currentPage, $request);
         $result->setOrder($mode);
 
         return $result;

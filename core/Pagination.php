@@ -60,7 +60,7 @@ class Pagination
         return $this->totalItems;
     }
 
-    public function getItemsPerPage(): int
+    public function getPerPage(): int
     {
         return $this->itemsPerPage;
     }

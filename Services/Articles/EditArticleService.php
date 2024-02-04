@@ -21,7 +21,7 @@ class EditArticleService extends BaseService
 
         if ($result['article']['is_active'] === 0) {
             $_SESSION['message'] = 'This article is under review!' . "\n";
-            \header('Location: /articles');
+            \header('Location: /');
         }
 
         $_SESSION['default_value']['title'] = $result['article']['title'];
@@ -29,12 +29,12 @@ class EditArticleService extends BaseService
 
         if ($result['article']['is_blocked'] === 1) {
             $_SESSION['message'] = 'This article is under block!' . "\n";
-            \header('Location: /articles');
+            \header('Location: /');
         }
 
         if ($_SESSION['user']['id'] !== (int)$result['article']['id_user'] && $_SESSION['user']['role'] !== '1') {
             $_SESSION['message'] = 'This isn`t your article!' . "\n";
-            \header('Location: /articles');
+            \header('Location: /');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -57,7 +57,7 @@ class EditArticleService extends BaseService
                     $_SESSION['message'] = 'Article was not edited, please try more' . "\n";
                 } else {
                     $_SESSION['success'] = 'Article was edited!' . "\n";
-                    \header('Location: /articles');
+                    \header('Location: /');
                 }
             }
         }

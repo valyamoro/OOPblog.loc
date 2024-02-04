@@ -5,27 +5,27 @@ namespace app\Controllers;
 
 class ArticleController extends BaseController
 {
-    public function show(string $view, string $layout): string
+    public function show(): string
     {
         $request = $this->request->getGET();
 
-        $itemsPerPage = 5;
-        $data = $this->service->show($request, $itemsPerPage);
+        $perPage = 5;
+        $data = $this->service->show($request, $perPage);
 
-        return $this->view->render($view, $layout, $data);
+        return $this->view->render('show', 'article', $data);
     }
 
-    public function add(string $view, string $layout): string
+    public function add(): string
     {
         $request['post'] = $this->request->getPost();
         $request['files'] = $this->request->getFiles();
 
         $params = $this->service->add($request);
 
-        return $this->view->render($view, $layout, $params);
+        return $this->view->render('add', 'article', $params);
     }
 
-    public function edit(string $view, string $layout, array $params = []): string
+    public function edit(): string
     {
         $request['get'] = $this->request->getGET();
         $request['post'] = $this->request->getPost();
@@ -33,26 +33,23 @@ class ArticleController extends BaseController
 
         $params = $this->service->edit($request);
 
-        return $this->view->render($view, $layout, $params);
+        return $this->view->render('edit', 'article', $params);
     }
 
-    public function category(string $view, string $layout, string $category): string
+    public function category(): string
     {
-        $request = $this->request->getGET();
-        $itemsPerPage = 5;
+        $perPage = 5;
 
-        $result = $this->service->getCategoryArticles($request, $category, $itemsPerPage);
+        $result = $this->service->getCategoryArticles($this->request, $perPage);
 
-        return $this->view->render($view, $layout, $result);
+        return $this->view->render('category', 'article', $result);
     }
 
-    public function delete(): string
+    public function delete(): void
     {
         $request = $this->request->getGET();
 
         $this->service->delete($request);
-
-        return '';
     }
 
     public function block(): string
@@ -73,14 +70,13 @@ class ArticleController extends BaseController
         return '';
     }
 
-    public function search(string $view, string $layout): string
+    public function search(): string
     {
         $request = $this->request->getPost();
 
-        $itemsPerPage = 5;
-        $params = $this->service->search($request, $itemsPerPage);
+        $params = $this->service->search($request);
 
-        return $this->view->render($view, $layout, $params);
+        return $this->view->render('search', 'article', $params);
     }
 
 }

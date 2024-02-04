@@ -16,13 +16,14 @@ class ModerateAdminService extends BaseService
             $condition = 'is_active=0 or is_blocked=1';
             $totalItems = $this->repository->getCount($page, $condition);
 
-            $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
+            $mode = $request['mode'] ?? 'asc';
+            $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems, $mode);
             $result['items_id'] = $this->pagination($result['pagination'], $page, $condition);
 
             if (empty($result['items_id'])) {
                 $result['warning'] = 'There are not have a ' . $page;
             } else {
-                $result['items'] = $this->repository->getItemsByIds($page, $result['items_id']);
+                $result['items'] = $this->repository->getItemsByIds($page, $result['items_id'], $mode);
             }
 
 

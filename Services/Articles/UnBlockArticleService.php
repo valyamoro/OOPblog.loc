@@ -17,7 +17,7 @@ class UnBlockArticleService extends BaseService
             }
         }
 
-        \header('Location: /articles');
+        \header('Location: /');
     }
 
 }

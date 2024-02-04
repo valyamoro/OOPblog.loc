@@ -4,26 +4,32 @@ namespace app\core\Http;
 
 class Request
 {
+    public function getUri(): string
+    {
+        return $_SERVER['REQUEST_URI'];
+    }
+
+    public function parseUrl(): array
+    {
+        return \parse_url($this->getUri());
+    }
+
+    public function getCategory(): ?string
+    {
+        $data = $this->parseUrl();
+        $parts = \explode('/', $data['path']);
+
+        return $parts[3] ?? null;
+    }
+
     public function getPost(): array
     {
-        $result = [];
-
-        foreach ($_POST as $key => $value) {
-            $result[$key] = \htmlspecialchars(strip_tags(trim($value)));
-        }
-
-        return $result;
+        return $_POST;
     }
 
     public function getGET(): array
     {
-        $result = [];
-
-        foreach ($_GET as $key => $value) {
-            $result[$key] = \htmlspecialchars(strip_tags(trim($value)));
-        }
-
-        return $result;
+        return $_GET;
     }
 
     public function getFiles(): array

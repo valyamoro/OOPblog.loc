@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/articles">Main page</a>
+                    <a class="nav-link active" aria-current="page" href="/">Main page</a>
                 </li>
                 <?php if (!empty($_SESSION['user'])): ?>
                     <li class="nav-item">

@@ -10,7 +10,7 @@ class LogoutUserService extends BaseService
     {
         unset($_SESSION['user']);
         $_SESSION['message'] = 'You logout!' . "\n";
-        \header('Location: /articles');
+        \header('Location: /');
     }
 
 }

@@ -12,65 +12,44 @@ use Exception;
 
 class Router
 {
-    private function getUri(): string
-    {
-        return $_SERVER['REQUEST_URI'];
-    }
 
-    private function dispatch(): string
+    public function dispatch(Request $request): ?string
     {
-        $parts = \parse_url($this->getUri());
-        $segments = ($parts['path'] === '/' || $parts['path'] === '/articles')
-            ? 'Home'
+        $parts = $request->parseUrl();
+        $segments = $parts['path'] === '/'
+            ? ['Home']
             : \explode('/', \trim($parts['path'], '/'));
 
-        $namespace = 'app\Controllers\\';
-        $method = 'index';
-        $params = 'index';
+        $namespaceController = 'app\Controllers\\';
 
-        if ($segments === 'Home') {
-            $class = $namespace . $segments;
-        } else {
-            $params = [$segments[0], $segments[0]];
-            $class = $namespace . \rtrim($segments[0], 's');
+        $class = $namespaceController . \rtrim($segments[0], 's');
+
+        $namespaceService = "app\Services\\{$segments[0]}";
+        $nameRepository = $segments[0];
+        $nameService = $segments[0];
+        $method = 'index';
+
+        $segments[0] = \rtrim($segments[0], 's');
+        if (\count($segments) === 1) {
+            $nameRepository = $segments[0];
+            $nameService = $segments[0];
+        } elseif (\count($segments) === 2) {
+            $method = $segments[1];
+            $nameRepository = $segments[1] . $segments[0];
+            $nameService = $segments[1] . $segments[0];
+        } elseif (\count($segments) === 3) {
+            $method = $segments[1];
+            $nameRepository = $segments[1] . $segments[0];
+            $nameService = $segments[1] . $segments[0];
         }
 
         $connectionDB = $this->connectionDB();
+        $repository = new ("{$namespaceService}\\Repositories\\{$nameRepository}Repository")($connectionDB);
+        $service = new ("{$namespaceService}\\{$nameService}Service")($repository);
 
-
-        if (\is_array($segments)) {
-            $namespace = "app\Services\\{$segments[0]}";
-            $segments[0] = \rtrim($segments[0], 's');
-            if (\count($segments) === 1) {
-                $method = $segments[0];
-                $repository = new ("{$namespace}\Repositories\\" . $segments[0] . 'Repository')($connectionDB);
-                $service = new ("{$namespace}\\" . $segments[0] . 'Service')($repository);
-            } elseif (\count($segments) === 2) {
-                $method = $segments[1];
-                $repository = new ("{$namespace}\Repositories\\" . $segments[1] . $segments[0] . 'Repository')($connectionDB);
-                $service = new ("{$namespace}\\{$segments[1]}" . $segments[0] . 'Service')($repository);
-                $params = [$segments[1], $segments[0]];
-            } elseif (\count($segments) === 3) {
-                $repository = new ("{$namespace}\Repositories\\" . $segments[1] . $segments[0] . 'Repository')($connectionDB);
-                $service = new ("{$namespace}\\{$segments[1]}" . $segments[0] . 'Service')($repository);
-                $method = $segments[1];
-                $params = [$segments[1], $segments[0], $segments[2]];
-            }
-        } else {
-            $namespace = "app\Services\\{$segments}";
-            $repository = new ("{$namespace}\\Repositories\\" . $segments . 'Repository')($connectionDB);
-            $service = new ("{$namespace}\\{$segments}" . 'Service')($repository);
-        }
-
-        $request = new Request();
         $class = (new ($class . 'Controller')($connectionDB, $request, $service));
 
-        if (\is_array($params)) {
-            return $class->{$method}(...$params);
-        } else {
-            return $class->{$method}($params);
-        }
-
+        return $class->{$method}();
     }
 
     private function connectionDB(): PDODriver
@@ -81,11 +60,6 @@ class Router
         $dataBasePDOConnection = new DatabasePDOConnection($dataBaseConfiguration);
 
         return new PDODriver($dataBasePDOConnection->connection());
-    }
-
-    public function resolve(): void
-    {
-        echo $this->dispatch();
     }
 
 }

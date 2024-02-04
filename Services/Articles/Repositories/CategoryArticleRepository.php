@@ -7,7 +7,7 @@ use app\Services\BaseRepository;
 
 class CategoryArticleRepository extends BaseRepository
 {
-    public function getIdByTitle(string $category): int
+    public function getIdByCategory(string $category): int
     {
         $query = 'select id from categories where title=?';
 
@@ -19,7 +19,7 @@ class CategoryArticleRepository extends BaseRepository
 
     public function getCategoriesIds(array $data, int $id): string
     {
-        $string = "{$id},";
+        $string = '';
 
         foreach ($data as $item) {
             if ((int)$item['id_parent'] === $id) {
@@ -56,7 +56,7 @@ class CategoryArticleRepository extends BaseRepository
 
     public function getCountArticlesByIdCategory(string $ids): int
     {
-        $ids = \explode(',', $ids[0]);
+        $ids = \explode(',', $ids);
         $placeholders = \rtrim(\str_repeat('?,', \count($ids)), ',');
 
         $query = "SELECT count(articles.id) FROM articles

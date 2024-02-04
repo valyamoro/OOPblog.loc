@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class SearchArticleService extends BaseService
 {
-    public function search(array $request, int $itemsPerPage): array
+    public function search(array $request): array
     {
         $result['articles'] = [];
 
@@ -27,7 +27,7 @@ class SearchArticleService extends BaseService
                 }
             }
         } else {
-            \header('Location: /articles');
+            \header('Location: /');
         }
 
         return $result;

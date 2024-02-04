@@ -20,14 +20,14 @@ class DeleteArticleService extends BaseService
 
         if ($result['is_active'] === 0) {
             $_SESSION['message'] = 'This article is under review!' . "\n";
-            \header('Location: /articles');
+            \header('Location: /');
         }
 
         $result = $this->repository->getAuthorOfArticle($id);
 
         if ($_SESSION['user']['id'] !== (int)$result['id_user'] && $_SESSION['user']['role'] !== '1') {
             $_SESSION['message'] = 'This isn`t your article!' . "\n";
-            \header('Location: /articles');
+            \header('Location: /');
         } else {
             $imagePath = $this->repository->getImageById($id);
 
@@ -41,7 +41,7 @@ class DeleteArticleService extends BaseService
                 $_SESSION['message'] = 'You are not deleted your article!' . "\n";
             }
 
-            \header('Location: /articles');
+            \header('Location: /');
         }
     }
 

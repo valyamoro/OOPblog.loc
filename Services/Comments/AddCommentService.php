@@ -32,7 +32,7 @@ class AddCommentService extends BaseService
 
             \header("Location: {$_SERVER['HTTP_REFERER']}");
         } else {
-            \header('Location: /articles');
+            \header('Location: /');
         }
     }
 

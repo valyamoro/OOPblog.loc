@@ -18,4 +18,3 @@
     <?php endforeach; ?>
 <?php endif; ?>
 <?php require __DIR__ . '/../pagination.php'; ?>
-

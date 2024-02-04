@@ -7,10 +7,10 @@ use app\Services\BaseRepository;
 
 class ModerateAdminRepository extends BaseRepository
 {
-    public function getItemsByIds(string $page, array $ids)
+    public function getItemsByIds(string $page, array $ids, string $mode)
     {
         $placeholders = \rtrim(\str_repeat('?,', \count($ids)), ',');
-        $query = 'SELECT * FROM ' . $page . ' WHERE id IN (' . $placeholders . ')';
+        $query = 'SELECT * FROM ' . $page . ' WHERE id IN (' . $placeholders . ') ORDER BY created_at ' . $mode;
 
         $this->connection->prepare($query)->execute([...$ids]);
 

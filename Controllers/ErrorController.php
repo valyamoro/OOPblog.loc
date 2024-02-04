@@ -5,9 +5,9 @@ namespace app\Controllers;
 
 class ErrorController extends BaseController
 {
-    public function _404(string $view, string $layout): string
+    public function _404(): string
     {
-        return $this->view->render($view, $layout, []);
+        return $this->view->render('_404', 'error', []);
     }
 
 }

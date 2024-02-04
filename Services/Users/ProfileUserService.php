@@ -20,17 +20,18 @@ class ProfileUserService extends BaseService
 
         if (empty($result['user'])) {
             $_SESSION['message'] = 'This user doesnt exist!' . "\n";
-            \header('Location: /articles');
+            \header('Location: /');
         } else {
             $totalItems = $this->repository->getCountUserArticles($id);
 
-            $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems);
+            $mode = $request['mode'] ?? 'asc';
+            $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems, $mode);
             $result['articles_id'] = $this->pagination($result['pagination'], 'articles', 'is_blocked=0 and is_active=1', 'getUserArticlesIds', [$id]);
 
             if (empty($result['articles_id'])) {
                 $result['warning'] = 'There are no articles on the site' . "\n";
             } else {
-                $result['articles'] = $this->repository->getArticlesByIds($result['articles_id']);
+                $result['articles'] = $this->repository->getArticlesByIds($result['articles_id'], $mode);
             }
         }
 
