@@ -10,7 +10,6 @@ class DeleteCommentService extends BaseService
     public function delete(array $request): void
     {
         if (!empty($_SESSION['user'])) {
-            dump($request);
             $result = $this->repository->getCommentById((int)$request['id']);
 
             $userId = $_SESSION['user']['id'];

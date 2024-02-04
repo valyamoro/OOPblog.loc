@@ -8,12 +8,12 @@ use app\Services\BaseService;
 
 class HomeService extends BaseService
 {
-    public function getAll(array $request, int $itemsPerPage): array
+    public function getAll(array $request, int $perPage): array
     {
         $totalItems = $this->repository->getCount('articles', 'is_active=1 and is_blocked=0');
 
         $mode = $request['mode'] ?? 'asc';
-        $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems, $mode);
+        $result['pagination'] = $this->getPaginationObject($request, $perPage, $totalItems, $mode);
         $result['articles_id'] = $this->pagination($result['pagination'], 'articles', 'is_blocked=0 and is_active=1');
 
         if (empty($result['articles_id'])) {

@@ -34,7 +34,7 @@ class AddUserService extends BaseService
                         $_SESSION['success'] = 'You have successfully registered!' . "\n";
                         \header('Location: /');
                     } else {
-                        $result['warning'] =  'You are not registered! Please try again.' . "\n";
+                        $result['warning'] = 'You are not registered! Please try again.' . "\n";
                     }
                 }
             }

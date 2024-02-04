@@ -26,7 +26,6 @@ class AddCommentRepository extends BaseRepository
 
             return true;
         } catch (Exception $e) {
-            echo $e->getMessage();
             $this->connection->rollBack();
 
             return false;

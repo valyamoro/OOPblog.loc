@@ -22,7 +22,6 @@ class UserTest extends TestCase
     private UserModel $user;
     private PDODriver $connection;
     private array $data;
-    private Request $request;
 
     public function setUp(): void
     {
@@ -34,6 +33,7 @@ class UserTest extends TestCase
             '793332312332',
             'heeewqqwD123rfd',
             'heeewqqwD123rfd',
+            1
         ];
 
         $this->data = $data;

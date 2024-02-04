@@ -41,11 +41,9 @@ class BaseController extends Controller
                 $string .= "<ul class='menu'>";
                 $string .= $this->createMenu($value['child']);
             }
-
         }
 
-        $string .= '</ul>';
-        return $string;
+        return ($string . '</ul>');
     }
 
 }

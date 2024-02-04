@@ -20,7 +20,6 @@ class AddCommentService extends BaseService
                 $request['id_user'] = $_SESSION['user']['id'];
 
                 $data = $this->formatCommentData($request);
-
                 $result = $this->repository->add($data);
 
                 if (!$result) {
@@ -39,7 +38,6 @@ class AddCommentService extends BaseService
     private function formatCommentData(array $request): array
     {
         $now = \date('Y-m-d H:i:s');
-
         return [
             'content' => $request['content'],
             'id_article' => $request['id_article'],

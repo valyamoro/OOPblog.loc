@@ -12,7 +12,6 @@ use Exception;
 
 class Router
 {
-
     public function dispatch(Request $request): ?string
     {
         $parts = $request->parseUrl();
@@ -47,7 +46,7 @@ class Router
         $repository = new ("{$namespaceService}\\Repositories\\{$nameRepository}Repository")($connectionDB);
         $service = new ("{$namespaceService}\\{$nameService}Service")($repository);
 
-        $class = (new ($class . 'Controller')($connectionDB, $request, $service));
+        $class = new ($class . 'Controller')($connectionDB, $request, $service);
 
         return $class->{$method}();
     }

@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class CategoryArticleService extends BaseService
 {
-    public function getCategoryArticles(Request $request, int $itemsPerPage): array
+    public function getCategoryArticles(Request $request, int $perPage): array
     {
         $result['articles'] = [];
 
@@ -21,7 +21,7 @@ class CategoryArticleService extends BaseService
 
             $params = $request->getGET();
             $mode = $params['mode'] ?? 'asc';
-            $result['pagination'] = $this->getPaginationObject($params, $itemsPerPage, $totalItems, $mode);
+            $result['pagination'] = $this->getPaginationObject($params, $perPage, $totalItems, $mode);
             $result['articles'] = $this->pagination($result['pagination'], 'articles', 'is_active=1', 'getArticles', [$ids]);
             if (empty($result['articles'])) {
                 $_SESSION['message'] = 'Articles with this category doesnt exist!' . "\n";

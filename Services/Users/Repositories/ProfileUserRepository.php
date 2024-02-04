@@ -9,13 +9,13 @@ class ProfileUserRepository extends BaseRepository
 {
     public function getUserArticlesIds(int $limit, int $offset, string $mode, string $item, string $condition, array $params = []): array
     {
-        $query = "SELECT id_article FROM users_articles 
-        JOIN articles ON users_articles.id_article = articles.id
-        WHERE users_articles.id_user=? order by created_at {$mode} limit {$limit} offset {$offset}";
+        $query = "SELECT * FROM articles 
+        JOIN users_articles ON users_articles.id_article = articles.id
+        WHERE {$condition} order by created_at {$mode} limit {$limit} offset {$offset}";
 
         $this->connection->prepare($query)->execute([$params[0]]);
 
-        return $this->formatIds($this->connection->fetchAll(), 'id_article');
+        return $this->connection->fetchAll();
     }
 
     public function getUserById(int $id): array

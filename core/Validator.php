@@ -94,6 +94,7 @@ class Validator
             }
 
         }
+
         return empty($this->errors);
     }
 
@@ -109,8 +110,7 @@ class Validator
         $this->errors[$attribute][] = $message;
     }
 
-    private
-    function errorMessages(): array
+    private function errorMessages(): array
     {
         return [
             self::RULE_REQUIRED => 'This field is required',
@@ -123,8 +123,6 @@ class Validator
             self::RULE_IMAGE_EXTENSION => 'This extension is not support',
             self::RULE_IMAGE_SIZE => 'This is too big image',
         ];
-
     }
-
 
 }

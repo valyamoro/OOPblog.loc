@@ -6,7 +6,7 @@ use app\Services\BaseService;
 
 class ProfileUserService extends BaseService
 {
-    public function getUserData(array $request, int $itemsPerPage): array
+    public function getUserData(array $request, int $perPage): array
     {
         $result['articles'] = [];
 
@@ -25,13 +25,12 @@ class ProfileUserService extends BaseService
             $totalItems = $this->repository->getCountUserArticles($id);
 
             $mode = $request['mode'] ?? 'asc';
-            $result['pagination'] = $this->getPaginationObject($request, $itemsPerPage, $totalItems, $mode);
-            $result['articles_id'] = $this->pagination($result['pagination'], 'articles', 'is_blocked=0 and is_active=1', 'getUserArticlesIds', [$id]);
+            $result['pagination'] = $this->getPaginationObject($request, $perPage, $totalItems, $mode);
+            $condition = 'users_articles.id_user=? and is_active=1 and is_blocked=0';
+            $result['articles'] = $this->pagination($result['pagination'], 'articles', $condition, 'getUserArticlesIds', [$id]);
 
-            if (empty($result['articles_id'])) {
+            if (empty($result['articles'])) {
                 $result['warning'] = 'There are no articles on the site' . "\n";
-            } else {
-                $result['articles'] = $this->repository->getArticlesByIds($result['articles_id'], $mode);
             }
         }
 

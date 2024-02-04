@@ -5,11 +5,9 @@ namespace app\core;
 
 class ErrorHandler
 {
-    public static function handle404(): never
+    public static function handle404(): void
     {
-        header("HTTP/1.0 404 Not Found");
         \header('Location: /errors/_404');
-        exit();
     }
 
 }

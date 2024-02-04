@@ -20,7 +20,7 @@ class Pagination
             $key = \array_keys($request)[0];
         }
 
-        if (!empty($request) && ($key !== 'page')) {
+        if (!empty($request) && $key !== 'page') {
             $currentUri = \strstr($_SERVER['REQUEST_URI'], '?', true);
             $request = \array_values($request);
 
@@ -72,14 +72,14 @@ class Pagination
 
     public function moveLeft(): string
     {
-        $prevPage = $this->currentPage - 1;
+        $prevPage = $this->getCurrentPage() - 1;
 
         return "page={$prevPage}";
     }
 
     public function moveRight(): string
     {
-        $nextPage = $this->currentPage + 1;
+        $nextPage = $this->getCurrentPage() + 1;
 
         return "page={$nextPage}";
     }
@@ -90,7 +90,7 @@ class Pagination
         $links = '';
 
         for ($i = 1; $i <= $totalPages; $i++) {
-            $links .= "<li class='page-item'><a class='page-link' href={$this->queryString}page={$i}&mode={$this->getOrder()}>{$i}</a></li>";
+            $links .= "<li class='page-item'><a class='page-link' href={$this->getQueryString()}page={$i}&mode={$this->getOrder()}>{$i}</a></li>";
         }
 
         return $links;
