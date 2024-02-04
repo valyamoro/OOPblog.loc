@@ -12,23 +12,12 @@ use Exception;
 
 class Router
 {
-    public function dispatch(Request $request): ?string
+    private function getNames(array $segments): array
     {
-        $parts = $request->parseUrl();
-        $segments = $parts['path'] === '/'
-            ? ['Home']
-            : \explode('/', \trim($parts['path'], '/'));
-
-        $namespaceController = 'app\Controllers\\';
-
-        $class = $namespaceController . \rtrim($segments[0], 's');
-
-        $namespaceService = "app\Services\\{$segments[0]}";
         $nameRepository = $segments[0];
         $nameService = $segments[0];
-        $method = 'index';
-
         $segments[0] = \rtrim($segments[0], 's');
+        $method = 'index';
         if (\count($segments) === 1) {
             $nameRepository = $segments[0];
             $nameService = $segments[0];
@@ -42,13 +31,34 @@ class Router
             $nameService = $segments[1] . $segments[0];
         }
 
+        return [
+            'repository' => $nameRepository,
+            'service' => $nameService,
+            'method' => $method
+        ];
+    }
+
+    private function createSegmentsOfUri(Request $request): array
+    {
+        $parts = $request->parseUri();
+        return $parts['path'] === '/'
+            ? ['Home']
+            : \explode('/', \trim($parts['path'], '/'));
+    }
+    public function dispatch(Request $request): ?string
+    {
+        $segments = $this->createSegmentsOfUri($request);
+        $names = $this->getNames($segments);
+
+        $class = 'app\\Controllers\\' . \rtrim($segments[0], 's');
         $connectionDB = $this->connectionDB();
-        $repository = new ("{$namespaceService}\\Repositories\\{$nameRepository}Repository")($connectionDB);
-        $service = new ("{$namespaceService}\\{$nameService}Service")($repository);
+        $namespaceService = "app\Services\\{$segments[0]}";
+        $repository = new ("{$namespaceService}\\Repositories\\{$names['repository']}Repository")($connectionDB);
+        $service = new ("{$namespaceService}\\{$names['service']}Service")($repository);
 
         $class = new ($class . 'Controller')($connectionDB, $request, $service);
 
-        return $class->{$method}();
+        return $class->{$names['method']}();
     }
 
     private function connectionDB(): PDODriver

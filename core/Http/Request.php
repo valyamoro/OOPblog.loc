@@ -4,19 +4,19 @@ namespace app\core\Http;
 
 class Request
 {
-    public function getUri(): string
+    private function getUri(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
 
-    public function parseUrl(): array
+    public function parseUri(): array
     {
         return \parse_url($this->getUri());
     }
 
     public function getCategory(): ?string
     {
-        $data = $this->parseUrl();
+        $data = $this->parseUri();
         $parts = \explode('/', $data['path']);
 
         return $parts[3] ?? null;
