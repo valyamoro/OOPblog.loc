@@ -73,22 +73,8 @@ class Validator
                     $this->addError($attribute, self::RULE_IMAGE_SIZE);
                 }
 
-                if ($ruleName === self::RULE_PASSWORD) {
-                    $message = '';
-
-                    if (!\preg_match('/^(?![0-9]+$).+/', $value)) {
-                        $message = 'Password cant have only numbers' . "\n";
-                    } elseif (!\preg_match('/^[^!№;]+$/u', $value)) {
-                        $message = 'Password have incorrect chars' . "\n";
-                    } elseif (!\preg_match('/^(?![A-Za-z]+$).+/', $value)) {
-                        $message = 'Password cant contain only letters!' . "\n";
-                    } elseif (!\preg_match('/[A-Z]/', $value)) {
-                        $message = 'Password must have one upper case letter' . "\n";
-                    }
-
-                    if (!empty($message)) {
-                        $this->addError($attribute, self::RULE_PASSWORD, [], $message);
-                    }
+                if ($ruleName === self::RULE_PASSWORD && !empty($this->passwordCheck($value))) {
+                    $this->addError($attribute, self::RULE_PASSWORD, [], $this->passwordCheck($value));
                 }
             }
         }
@@ -124,6 +110,23 @@ class Validator
             self::RULE_IMAGE_EXTENSION => 'This extension is not support',
             self::RULE_IMAGE_SIZE => 'This is too big image',
         ];
+    }
+
+    private function passwordCheck($value): string
+    {
+        $message = '';
+
+        if (!\preg_match('/^(?![0-9]+$).+/', $value)) {
+            $message = 'Password cant have only numbers' . "\n";
+        } elseif (!\preg_match('/^[^!№;]+$/u', $value)) {
+            $message = 'Password have incorrect chars' . "\n";
+        } elseif (!\preg_match('/^(?![A-Za-z]+$).+/', $value)) {
+            $message = 'Password cant contain only letters!' . "\n";
+        } elseif (!\preg_match('/[A-Z]/', $value)) {
+            $message = 'Password must have one upper case letter' . "\n";
+        }
+
+        return $message;
     }
 
 }
