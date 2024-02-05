@@ -6,16 +6,16 @@ use app\Services\BaseService;
 
 class ProfileUserService extends BaseService
 {
-    public function getUserData(array $request, int $perPage): array
+    public function getUserData(array $get, int $perPage): array
     {
         $result['articles'] = [];
 
-        if (empty($request['id']) && empty($_SESSION['user'])) {
+        if (empty($get['id']) && empty($_SESSION['user'])) {
             $_SESSION['warning'] = 'You are not authorized!' . "\n";
             \header('Location: /users/auth');
         }
 
-        $id = $this->getUserId($request);
+        $id = $this->getUserId($get);
         $result['user'] = $this->repository->getUserById($id);
 
         if (empty($result['user'])) {
@@ -24,8 +24,8 @@ class ProfileUserService extends BaseService
         } else {
             $totalItems = $this->repository->getCountUserArticles($id);
 
-            $mode = $request['mode'] ?? 'asc';
-            $result['pagination'] = $this->getPaginationObject($request, $perPage, $totalItems, $mode);
+            $mode = $get['mode'] ?? 'asc';
+            $result['pagination'] = $this->getPaginationObject($get, $perPage, $totalItems, $mode);
             $condition = 'users_articles.id_user=? and is_active=1 and is_blocked=0';
             $result['articles'] = $this->pagination($result['pagination'], 'articles', $condition, 'getUserArticlesIds', [$id]);
 

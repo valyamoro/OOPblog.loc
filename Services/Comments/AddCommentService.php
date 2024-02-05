@@ -7,19 +7,19 @@ use app\Services\BaseService;
 
 class AddCommentService extends BaseService
 {
-    public function add(array $request): void
+    public function add(array $post): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new CommentModel($request['content']);
+            $model = new CommentModel($post['content']);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
-                $_SESSION['default_value']['comment'] = $request['content'];
+                $_SESSION['default_value']['comment'] = $post['content'];
                 $_SESSION['validate'] = $model->validator->errors;
             } else {
-                $request['id_user'] = $_SESSION['user']['id'];
+                $post['id_user'] = $_SESSION['user']['id'];
 
-                $data = $this->formatCommentData($request);
+                $data = $this->formatCommentData($post);
                 $result = $this->repository->add($data);
 
                 if (!$result) {
@@ -35,15 +35,15 @@ class AddCommentService extends BaseService
         }
     }
 
-    private function formatCommentData(array $request): array
+    private function formatCommentData(array $post): array
     {
         $now = \date('Y-m-d H:i:s');
         return [
-            'content' => $request['content'],
-            'id_article' => $request['id_article'],
+            'content' => $post['content'],
+            'id_article' => $post['id_article'],
             'is_active' => 0,
             'is_blocked' => 0,
-            'id_user' => $request['id_user'],
+            'id_user' => $post['id_user'],
             'created_at' => $now,
             'updated_at' => $now,
         ];

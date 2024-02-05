@@ -7,18 +7,18 @@ class CommentController extends BaseController
 {
     public function add(): string
     {
-        $request = $this->request->getPost();
+        $post = $this->request->getPost();
 
-        $this->service->add($request);
+        $this->service->add($post);
 
         return '';
     }
 
     public function delete(): string
     {
-        $request = $this->request->getGet();
+        $get = $this->request->getGet();
 
-        $this->service->delete($request);
+        $this->service->delete($get);
 
         return '';
     }

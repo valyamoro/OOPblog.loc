@@ -7,55 +7,55 @@ class AdminController extends BaseController
 {
     public function moderate(): string
     {
-        $request = $this->request->getGET();
+        $get = $this->request->getGET();
 
         $perPage = 5;
-        $params = $this->service->getAll($request, $perPage);
+        $params = $this->service->getAll($get, $perPage);
 
         return $this->view->render('moderate', 'admin', $params);
     }
 
     public function delete(): string
     {
-        $request = $this->request->getGET();
+        $get = $this->request->getGET();
 
-        $this->service->delete($request);
+        $this->service->delete($get);
 
         return '';
     }
 
     public function approve(): string
     {
-        $request = $this->request->getGET();
+        $get = $this->request->getGET();
 
-        $this->service->approve($request);
+        $this->service->approve($get);
 
         return '';
     }
 
     public function unBlock(): string
     {
-        $request = $this->request->getGET();
+        $get = $this->request->getGET();
 
-        $this->service->unBlock($request);
+        $this->service->unBlock($get);
 
         return '';
     }
 
     public function add(): string
     {
-        $request = $this->request->getPost();
+        $post = $this->request->getPost();
 
-        $params = $this->service->add($request);
+        $params = $this->service->add($post);
 
         return $this->view->render('add', 'admin', $params);
     }
 
     public function category(): string
     {
-        $request = $this->request->getPost();
+        $post = $this->request->getPost();
 
-        $params = $this->service->add($request);
+        $params = $this->service->add($post);
         $params['categories'] = $this->service->getCategories();
 
         return $this->view->render('category', 'admin', $params);

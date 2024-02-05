@@ -7,12 +7,12 @@ use app\Services\BaseService;
 
 class CategoryAdminService extends BaseService
 {
-    public function add(array $request): array
+    public function add(array $post): array
     {
         $result = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new CategoryModel($request['title']);
+            $model = new CategoryModel($post['title']);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
@@ -21,14 +21,14 @@ class CategoryAdminService extends BaseService
                 $allCategories = $this->repository->getCategories();
 
                 foreach ($allCategories as $item) {
-                    if ($item['title'] === $request['title']) {
+                    if ($item['title'] === $post['title']) {
                         $result['warning'] = 'This category already exist!' . "\n";
                         break;
                     }
                 }
 
                 if (empty($result['warning'])) {
-                    if (!$this->repository->add($request)) {
+                    if (!$this->repository->add($post)) {
                         \header('Location: /admins/category?category_added=false');
                     } else {
                         \header('Location: /admins/category?category_added=true');

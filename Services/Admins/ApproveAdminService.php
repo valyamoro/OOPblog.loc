@@ -7,11 +7,11 @@ use app\Services\BaseService;
 
 class ApproveAdminService extends BaseService
 {
-    public function approve(array $request): void
+    public function approve(array $get): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] !== '0') {
-            $page = \rtrim($request['item'], 's');
-            if ($this->repository->approve($request['item'], (int)$request['id'])) {
+            $page = \rtrim($get['item'], 's');
+            if ($this->repository->approve($get['item'], (int)$get['id'])) {
                 $_SESSION['success'] = "The {$page} successfully approved!\n";
             } else {
                 $_SESSION['warning'] = "The {$page} was not approved!\n";

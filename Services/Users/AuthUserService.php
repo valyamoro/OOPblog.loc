@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class AuthUserService extends BaseService
 {
-    public function auth(array $request): array
+    public function auth(array $post): array
     {
         $result = [];
 
@@ -18,12 +18,12 @@ class AuthUserService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $result = $this->repository->getByEmail($request['email']);
+            $result = $this->repository->getByEmail($post['email']);
 
             if (empty($result)) {
                 $result['validate']['email'] = 'This email doesnt exist!' . "\n";
             } else {
-                if (!\password_verify($request['password'], $result['password'])) {
+                if (!\password_verify($post['password'], $result['password'])) {
                     $result['validate']['password'] = 'Incorrect password!' . "\n";
                 } else {
                     $userData = $this->formatUserData($result);

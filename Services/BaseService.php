@@ -48,12 +48,12 @@ abstract class BaseService
         return $result;
     }
 
-    protected function formatArticleDataForModel(array $request): array
+    protected function formatArticleDataForModel(array $post, array $files): array
     {
         return [
-            $request['post']['title'],
-            $request['post']['content'],
-            $request['files']['image'],
+            $post['title'],
+            $post['content'],
+            $files['image'],
         ];
     }
 

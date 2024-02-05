@@ -8,18 +8,18 @@ use app\Services\BaseService;
 
 class SearchArticleService extends BaseService
 {
-    public function search(array $request): array
+    public function search(array $post): array
     {
         $result['articles'] = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new SearchModel($request['search']);
+            $model = new SearchModel($post['search']);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
                 $_SESSION['validate']['search'] = $model->validator->errors;
             } else {
-                $search = '%' . $request['search'] . '%';
+                $search = '%' . $post['search'] . '%';
                 $result['articles'] = $this->repository->getAllCategoriesBySearch($search);
 
                 if (empty($result['articles'])) {

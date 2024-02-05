@@ -7,10 +7,10 @@ use app\Services\BaseService;
 
 class UnBlockAdminService extends BaseService
 {
-    public function unBlock(array $request): void
+    public function unBlock(array $get): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] !== '0') {
-            if ($this->repository->unBlock((int)$request['id'])) {
+            if ($this->repository->unBlock((int)$get['id'])) {
                 $_SESSION['success'] = 'The article has been successfully unblocked!' . "\n";
             } else {
                 $_SESSION['warning'] = 'The article was not unblocked!' . "\n";

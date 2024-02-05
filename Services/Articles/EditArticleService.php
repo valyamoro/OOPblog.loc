@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class EditArticleService extends BaseService
 {
-    public function edit(array $request): array
+    public function edit(array $get, array $post, array $files): array
     {
         $result = [];
 
@@ -17,7 +17,7 @@ class EditArticleService extends BaseService
             \header('Location: /users/auth');
         }
 
-        $result['article'] = $this->repository->getArticleById((int)$request['get']['id']);
+        $result['article'] = $this->repository->getArticleById((int)$get['id']);
 
         if ($result['article']['is_active'] === 0) {
             $_SESSION['message'] = 'This article is under review!' . "\n";
@@ -38,21 +38,21 @@ class EditArticleService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $dataModel = $this->formatArticleDataForModel($request);
+            $dataModel = $this->formatArticleDataForModel($post, $files);
             $model = new ArticleModel(...$dataModel);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
                 $result['validate'] = $model->validator->errors;
             } else {
-                $data = $this->formatArticleData($request);
+                $data = $this->formatArticleData($post, $get, $files);
 
-                $imagePath = $this->repository->getImageById((int)$request['get']['id']);
+                $imagePath = $this->repository->getImageById((int)$get['id']);
                 if (!empty($request['files']['image']['tmp_name'])) {
                     \unlink(__DIR__ . '\..\\' . $imagePath);
                 }
 
-                $data = [...$data, (int)$request['get']['id']];
+                $data = [...$data, (int)$get['id']];
                 if (!$this->repository->edit($data)) {
                     $_SESSION['message'] = 'Article was not edited, please try more' . "\n";
                 } else {
@@ -65,19 +65,19 @@ class EditArticleService extends BaseService
         return $result;
     }
 
-    private function formatArticleData(array $request): array
+    private function formatArticleData(array $get, array $post, array $files): array
     {
         if (!empty($request['files']['image']['tmp_name'])) {
-            $imagePath = $this->repository->uploadImage($request['files']['image']);
+            $imagePath = $this->repository->uploadImage($files['image']);
         } else {
-            $imagePath = $this->repository->getImageById((int)$request['get']['id']);
+            $imagePath = $this->repository->getImageById((int)$get['id']);
         }
 
         $now = \date('Y-m-d H:i:s');
 
         return [
-            $request['post']['title'],
-            $request['post']['content'],
+            $post['title'],
+            $post['content'],
             0,
             $imagePath,
             $now,

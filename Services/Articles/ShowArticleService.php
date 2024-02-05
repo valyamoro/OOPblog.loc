@@ -7,9 +7,9 @@ use app\Services\BaseService;
 
 class ShowArticleService extends BaseService
 {
-    public function show(array $request, int $perPage): array
+    public function show(array $get, int $perPage): array
     {
-        $id = (int)$request['id'];
+        $id = (int)$get['id'];
 
         $result['article'] = $this->repository->getById($id);
 
@@ -20,8 +20,8 @@ class ShowArticleService extends BaseService
 
         $totalItems = $this->repository->getCount('comments', "is_active=1 and is_blocked=0 and id_article={$id}");
 
-        $mode = $request['mode'] ?? 'asc';
-        $result['pagination'] = $this->getPaginationObject($request, $perPage, $totalItems, $mode);
+        $mode = $get['mode'] ?? 'asc';
+        $result['pagination'] = $this->getPaginationObject($get, $perPage, $totalItems, $mode);
         $result['comments_id'] = $this->pagination($result['pagination'], 'comments',
             "is_active=1 and id_article={$id}");
 

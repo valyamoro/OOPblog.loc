@@ -8,29 +8,29 @@ use app\Services\BaseService;
 
 class AddUserService extends BaseService
 {
-    public function add(array $request): array
+    public function add(array $post): array
     {
         $result = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new UserModel(...$request);
+            $model = new UserModel(...$post);
             $model->validator->setRules($model->rules());
 
             if (!$model->validator->validate($model)) {
                 $result['validate'] = $model->validator->errors;
             } else {
-                if ($this->repository->getByEmail($request['email'])) {
+                if ($this->repository->getByEmail($post['email'])) {
                     $result['warning'] = 'This email already exists!' . "\n";
                 } else {
-                    $request['phoneNumber'] = $this->formatPhoneNumber($request['phoneNumber']);
+                    $post['phoneNumber'] = $this->formatPhoneNumber($post['phoneNumber']);
 
                     if (!empty($_SESSION['user']) && $_SESSION['user']['role'] !== '1') {
-                        $request['role'] = 0;
+                        $post['role'] = 0;
                     }
 
-                    $request['currentDate'] = \date('Y-m-d H:i:s');
+                    $post['currentDate'] = \date('Y-m-d H:i:s');
 
-                    if ($this->repository->add($this->formatUserData($request))) {
+                    if ($this->repository->add($this->formatUserData($post))) {
                         $_SESSION['success'] = 'You have successfully registered!' . "\n";
                         \header('Location: /');
                     } else {
