@@ -46,30 +46,19 @@ class Router
             : \explode('/', \trim($parts['path'], '/'));
     }
 
-    public function dispatch(Request $request): ?string
+    public function dispatch(Request $request): string
     {
         $segments = $this->createSegmentsOfUri($request);
         $names = $this->getNames($segments);
 
-        $connectionDB = $this->connectionDB();
         $namespaceService = "app\Services\\{$segments[0]}";
-        $repository = new ("{$namespaceService}\\Repositories\\{$names['repository']}Repository")($connectionDB);
+        $repository = new ("{$namespaceService}\\Repositories\\{$names['repository']}Repository")();
         $service = new ("{$namespaceService}\\{$names['service']}Service")($repository);
 
         $class = 'app\\Controllers\\' . \rtrim($segments[0], 's');
-        $class = new ($class . 'Controller')($connectionDB, $request, $service);
+        $class = new ($class . 'Controller')($request, $service);
 
         return $class->{$names['method']}();
-    }
-
-    private function connectionDB(): PDODriver
-    {
-        $configuration = require __DIR__ . '/../config/db.php';
-
-        $dataBaseConfiguration = new DatabaseConfiguration(...$configuration);
-        $dataBasePDOConnection = new DatabasePDOConnection($dataBaseConfiguration);
-
-        return new PDODriver($dataBasePDOConnection->connection());
     }
 
 }

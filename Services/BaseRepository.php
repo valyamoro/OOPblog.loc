@@ -3,16 +3,28 @@ declare(strict_types=1);
 
 namespace app\Services;
 use app\core\Pagination;
+use app\Database\DatabaseConfiguration;
+use app\Database\DatabasePDOConnection;
 use app\Database\PDODriver;
 use Exception;
 
 abstract class BaseRepository
 {
-    protected const TABLE_NAME = '';
-
+    protected PDODriver $connection;
     public function __construct(
-        protected PDODriver $connection,
     ) {
+        $this->connection = $this->connectionDB();
+    }
+
+
+    private function connectionDB(): PDODriver
+    {
+        $configuration = require __DIR__ . '/../config/db.php';
+
+        $dataBaseConfiguration = new DatabaseConfiguration(...$configuration);
+        $dataBasePDOConnection = new DatabasePDOConnection($dataBaseConfiguration);
+
+        return new PDODriver($dataBasePDOConnection->connection());
     }
 
     public function uploadImage(array $data): string

@@ -12,18 +12,18 @@ use app\Services\BaseService;
 
 class BaseController extends Controller
 {
-    public function __construct(PDODriver $PDODriver, Request $request, BaseService $service)
+    public function __construct(Request $request, BaseService $service)
     {
-        parent::__construct($PDODriver, $request, $service);
+        parent::__construct($request, $service);
         $this->view->setData($this->getMenuCategories());
     }
 
     private function getMenuCategories(): array
     {
-        $repository = new BaseControllerRepository($this->PDODriver);
+        $repository = new BaseControllerRepository();
         $service = new BaseControllerService($repository);
 
-        $menu = '<ul class="menu"><li><a href="#">Categories</a><ul class="sub-menu">';
+        $menu = '<ul class="menu"><li><a href="/">All categories</a><ul class="sub-menu">';
         $menu .= $this->createMenu($service->getAllCategories());
         $menu .= '</ul></ul></ul>';
 

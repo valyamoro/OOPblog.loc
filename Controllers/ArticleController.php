@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace app\Controllers;
 
+use app\Services\Base\BaseControllerService;
+use app\Services\Base\Repositories\BaseControllerRepository;
+
 class ArticleController extends BaseController
 {
     public function show(): string

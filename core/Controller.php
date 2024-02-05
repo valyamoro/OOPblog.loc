@@ -12,7 +12,6 @@ abstract class Controller
     protected View $view;
 
     public function __construct(
-        protected PDODriver $PDODriver,
         protected Request $request,
         protected BaseService $service,
     ) {
