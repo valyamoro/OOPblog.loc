@@ -8,9 +8,8 @@ class HomeController extends BaseController
     public function index(): string
     {
         $get = $this->request->getGET();
-        $perPage = 5;
 
-        $result = $this->service->getAll($get, $perPage);
+        $result = $this->service->getAll($get, self::PER_PAGE);
 
         return $this->view->render('index', '', $result);
     }

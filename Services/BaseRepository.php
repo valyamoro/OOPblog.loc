@@ -16,7 +16,6 @@ abstract class BaseRepository
         $this->connection = $this->connectionDB();
     }
 
-
     private function connectionDB(): PDODriver
     {
         $configuration = require __DIR__ . '/../config/db.php';

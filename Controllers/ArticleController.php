@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace app\Controllers;
 
-use app\Services\Base\BaseControllerService;
-use app\Services\Base\Repositories\BaseControllerRepository;
+use app\Services\BaseController\BaseControllerService;
+use app\Services\BaseController\Repositories\BaseControllerRepository;
 
 class ArticleController extends BaseController
 {

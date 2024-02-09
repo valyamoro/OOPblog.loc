@@ -7,14 +7,14 @@ use app\Database\DatabaseConfiguration;
 use app\Database\DatabasePDOConnection;
 use app\Database\PDODriver;
 use app\Models\UserModel;
-use app\Services\Comments\AddCommentService;
-use app\Services\Comments\Repositories\AddCommentRepository;
-use app\Services\Users\AddUserService;
-use app\Services\Users\AuthUserService;
-use app\Services\Users\ProfileUserService;
-use app\Services\Users\Repositories\AddUserRepository;
-use app\Services\Users\Repositories\AuthUserRepository;
-use app\Services\Users\Repositories\ProfileUserRepository;
+use app\Services\Comment\AddCommentService;
+use app\Services\Comment\Repositories\AddCommentRepository;
+use app\Services\User\AddUserService;
+use app\Services\User\AuthUserService;
+use app\Services\User\ProfileUserService;
+use app\Services\User\Repositories\AddUserRepository;
+use app\Services\User\Repositories\AuthUserRepository;
+use app\Services\User\Repositories\ProfileUserRepository;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase

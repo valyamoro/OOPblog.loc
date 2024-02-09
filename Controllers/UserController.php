@@ -9,28 +9,27 @@ class UserController extends BaseController
     {
         $post = $this->request->getPost();
 
-        $params = $this->service->auth($post);
+        $result = $this->service->auth($post);
 
-        return $this->view->render('auth', 'user', $params);
+        return $this->view->render('auth', 'user', $result);
     }
 
     public function add(): string
     {
         $post = $this->request->getPost();
 
-        $params = $this->service->add($post);
+        $result = $this->service->add($post);
 
-        return $this->view->render('add', 'user', $params);
+        return $this->view->render('add', 'user', $result);
     }
 
     public function profile(): string
     {
         $get = $this->request->getGET();
 
-        $perPage = 5;
-        $params = $this->service->getUserData($get, $perPage);
+        $result = $this->service->getUserData($get, self::PER_PAGE);
 
-        return $this->view->render('profile', 'user', $params);
+        return $this->view->render('profile', 'user', $result);
     }
 
     public function logout(): void

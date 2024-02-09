@@ -37,4 +37,12 @@ class Request
         return $_FILES;
     }
 
+    public function createSegmentsOfUri(Request $request): array
+    {
+        $parts = $request->parseUri();
+        return $parts['path'] === '/'
+            ? ['Home']
+            : \explode('/', \trim($parts['path'], '/'));
+    }
+
 }
