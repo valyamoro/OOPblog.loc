@@ -9,15 +9,15 @@ class Request
         return $_SERVER['REQUEST_URI'];
     }
 
-    public function parseUri(): array
+    public function parseUri(): string
     {
-        return \parse_url($this->getUri());
+        return \parse_url($this->getUri(), PHP_URL_PATH);
     }
 
     public function getCategory(): ?string
     {
-        $data = $this->parseUri();
-        $parts = \explode('/', $data['path']);
+        $path = $this->parseUri();
+        $parts = \explode('/', $path);
 
         return $parts[3] ?? null;
     }
@@ -39,10 +39,10 @@ class Request
 
     public function createSegmentsOfUri(Request $request): array
     {
-        $parts = $request->parseUri();
-        return $parts['path'] === '/'
+        $path = $request->parseUri();
+        return $path === '/'
             ? ['Home']
-            : \explode('/', \trim($parts['path'], '/'));
+            : \explode('/', \trim($path, '/'));
     }
 
 }

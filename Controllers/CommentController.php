@@ -14,13 +14,11 @@ class CommentController extends BaseController
         return '';
     }
 
-    public function delete(): string
+    public function delete(): void
     {
         $get = $this->request->getGet();
 
         $this->service->delete($get);
-
-        return '';
     }
 
 }

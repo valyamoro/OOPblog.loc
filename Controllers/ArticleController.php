@@ -12,8 +12,7 @@ class ArticleController extends BaseController
     {
         $get = $this->request->getGET();
 
-        $perPage = 5;
-        $data = $this->service->show($get, $perPage);
+        $data = $this->service->show($get, self::PER_PAGE);
 
         return $this->view->render('show', 'article', $data);
     }
@@ -23,9 +22,9 @@ class ArticleController extends BaseController
         $post = $this->request->getPost();
         $files = $this->request->getFiles();
 
-        $params = $this->service->add($post, $files);
+        $result = $this->service->add($post, $files);
 
-        return $this->view->render('add', 'article', $params);
+        return $this->view->render('add', 'article', $result);
     }
 
     public function edit(): string
@@ -34,15 +33,14 @@ class ArticleController extends BaseController
         $post = $this->request->getPost();
         $files = $this->request->getFiles();
 
-        $params = $this->service->edit($get, $post, $files);
+        $result = $this->service->edit($get, $post, $files);
 
-        return $this->view->render('edit', 'article', $params);
+        return $this->view->render('edit', 'article', $result);
     }
 
     public function category(): string
     {
-        $perPage = 5;
-        $result = $this->service->getCategoryArticles($this->request, $perPage);
+        $result = $this->service->getCategoryArticles($this->request, self::PER_PAGE);
 
         return $this->view->render('category', 'article', $result);
     }
@@ -54,31 +52,27 @@ class ArticleController extends BaseController
         $this->service->delete($get);
     }
 
-    public function block(): string
+    public function block(): void
     {
         $get = $this->request->getGET();
 
         $this->service->block($get);
-
-        return '';
     }
 
-    public function unBlock(): string
+    public function unBlock(): void
     {
         $get = $this->request->getGET();
 
         $this->service->unBlock($get);
-
-        return '';
     }
 
     public function search(): string
     {
         $post = $this->request->getPost();
 
-        $params = $this->service->search($post);
+        $result = $this->service->search($post);
 
-        return $this->view->render('search', 'article', $params);
+        return $this->view->render('search', 'article', $result);
     }
 
 }

@@ -14,7 +14,6 @@ use app\Services\BaseService;
 
 class BaseController extends Controller
 {
-    protected BaseService $service;
     protected const PER_PAGE = 5;
     public function __construct(
         Request $request,

@@ -12,4 +12,10 @@ require __DIR__ . '/vendor/autoload.php';
 $router = new Router();
 
 $request = new Request();
-echo $router->dispatch($request);
+
+try {
+    echo $router->dispatch($request);
+} catch (\Throwable $e) {
+    echo $e->getMessage();
+    \header('Location: /errors/_404');
+}

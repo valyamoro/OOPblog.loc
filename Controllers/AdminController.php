@@ -9,56 +9,49 @@ class AdminController extends BaseController
     {
         $get = $this->request->getGET();
 
-        $perPage = 5;
-        $params = $this->service->getAll($get, $perPage);
+        $result = $this->service->getAll($get, self::PER_PAGE);
 
-        return $this->view->render('moderate', 'admin', $params);
+        return $this->view->render('moderate', 'admin', $result);
     }
 
-    public function delete(): string
+    public function delete(): void
     {
         $get = $this->request->getGET();
 
         $this->service->delete($get);
-
-        return '';
     }
 
-    public function approve(): string
+    public function approve(): void
     {
         $get = $this->request->getGET();
 
         $this->service->approve($get);
-
-        return '';
     }
 
-    public function unBlock(): string
+    public function unBlock(): void
     {
         $get = $this->request->getGET();
 
         $this->service->unBlock($get);
-
-        return '';
     }
 
     public function add(): string
     {
         $post = $this->request->getPost();
 
-        $params = $this->service->add($post);
+        $result = $this->service->add($post);
 
-        return $this->view->render('add', 'admin', $params);
+        return $this->view->render('add', 'admin', $result);
     }
 
     public function category(): string
     {
         $post = $this->request->getPost();
 
-        $params = $this->service->add($post);
-        $params['categories'] = $this->service->getCategories();
+        $result = $this->service->add($post);
+        $result['categories'] = $this->service->getCategories();
 
-        return $this->view->render('category', 'admin', $params);
+        return $this->view->render('category', 'admin', $result);
     }
 
     public function panel(): string
