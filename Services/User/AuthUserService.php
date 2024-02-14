@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class AuthUserService extends BaseService
 {
-    public function auth(array $post): array
+    public function auth(): array
     {
         $result = [];
 
@@ -18,6 +18,7 @@ class AuthUserService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $post = $this->request->getPost();
             $result = $this->repository->getByEmail($post['email']);
 
             if (empty($result)) {

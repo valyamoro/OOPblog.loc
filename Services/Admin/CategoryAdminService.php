@@ -7,11 +7,13 @@ use app\Services\BaseService;
 
 class CategoryAdminService extends BaseService
 {
-    public function add(array $post): array
+    public function add(): array
     {
         $result = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $post = $this->request->getPost();
+
             $model = new CategoryModel($post['title']);
             $model->validator->setRules($model->rules());
 

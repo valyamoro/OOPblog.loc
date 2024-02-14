@@ -7,9 +7,7 @@ class HomeController extends BaseController
 {
     public function index(): string
     {
-        $get = $this->request->getGET();
-
-        $result = $this->service->getAll($get, self::PER_PAGE);
+        $result = $this->service->getAll(self::PER_PAGE);
 
         return $this->view->render('index', '', $result);
     }

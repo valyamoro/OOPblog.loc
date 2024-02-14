@@ -8,14 +8,14 @@ use app\Services\BaseService;
 
 class DeleteArticleService extends BaseService
 {
-    public function delete(array $get): void
+    public function delete(): void
     {
         if (empty($_SESSION['user'])) {
             $_SESSION['warning'] = 'You are not logged in, please log in.' . "\n";
             \header('Location: /users/auth');
         }
 
-        $id = (int)$get['id'];
+        $id = (int)$this->request->getGET()['id'];
         $result = $this->repository->getArticleById($id);
 
         if ($result['is_active'] === 0) {

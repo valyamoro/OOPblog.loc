@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class AddArticleService extends BaseService
 {
-    public function add(array $post, array $files): array
+    public function add(): array
     {
         $result = [];
 
@@ -20,9 +20,11 @@ class AddArticleService extends BaseService
         $result['categories'] = $this->repository->getCategories();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $post = $this->request->getPost();
             if ($post['id_category'] === '0') {
                 $result['validate']['option'] = 'Please make a choice!' . "\n";
             } else {
+                $files = $this->request->getFiles();
                 $dataModel = $this->formatArticleDataForModel($post, $files);
                 $model = new ArticleModel(...$dataModel);
                 $model->validator->setRules($model->rules());

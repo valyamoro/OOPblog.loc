@@ -8,8 +8,9 @@ use app\Services\BaseService;
 
 class HomeService extends BaseService
 {
-    public function getAll(array $get, int $perPage): array
+    public function getAll(int $perPage): array
     {
+        $get = $this->request->getGET();
         $totalItems = $this->repository->getCount('articles', 'is_active=1 and is_blocked=0');
 
         $mode = $get['mode'] ?? 'asc';

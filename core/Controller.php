@@ -25,7 +25,7 @@ abstract class Controller
     protected function getServiceObject(string $repositoryServiceName, string $action = ''): BaseService
     {
         $repository = RepositoryFactory::createRepository($repositoryServiceName, $action);
-        return ServiceFactory::createService($repository, $repositoryServiceName, $action);
+        return ServiceFactory::createService($repository, $this->request, $repositoryServiceName, $action);
     }
 
 }

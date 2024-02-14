@@ -7,9 +7,10 @@ use app\Services\BaseService;
 
 class AddCommentService extends BaseService
 {
-    public function add(array $post): void
+    public function add(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $post = $this->request->getPost();
             $model = new CommentModel($post['content']);
             $model->validator->setRules($model->rules());
 

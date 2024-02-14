@@ -7,9 +7,10 @@ use app\Services\BaseService;
 
 class DeleteAdminService extends BaseService
 {
-    public function delete(array $get): void
+    public function delete(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['user']['role'] === '1') {
+            $get = $this->request->getGET();
             $page = \rtrim($get['item'], 's');
             $method = 'delete' . $page;
             echo $method;

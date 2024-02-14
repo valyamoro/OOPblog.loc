@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace app\Services;
 
+use app\core\Http\Request;
 use app\core\Pagination;
 
 abstract class BaseService
 {
     public function __construct(
         protected BaseRepository $repository,
+        protected Request $request,
     ) {
     }
 
@@ -38,11 +40,11 @@ abstract class BaseService
         return $this->repository->$method($pagination->getPerPage(), $pagination->getOffset(), $pagination->getOrder(), $item, $condition, $params);
     }
 
-    public function getPaginationObject(array $request, int $perPage, int $totalItems, string $mode): Pagination
+    public function getPaginationObject(array $get, int $perPage, int $totalItems, string $mode): Pagination
     {
-        $currentPage = (int)($request['page'] ?? 1);
+        $currentPage = (int)($get['page'] ?? 1);
 
-        $result = new Pagination($totalItems, $perPage, $currentPage, $request);
+        $result = new Pagination($totalItems, $perPage, $currentPage, $get);
         $result->setOrder($mode);
 
         return $result;

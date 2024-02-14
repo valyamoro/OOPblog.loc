@@ -8,7 +8,7 @@ use app\Services\BaseService;
 
 class EditArticleService extends BaseService
 {
-    public function edit(array $get, array $post, array $files): array
+    public function edit(): array
     {
         $result = [];
 
@@ -17,6 +17,7 @@ class EditArticleService extends BaseService
             \header('Location: /users/auth');
         }
 
+        $get = $this->request->getGET();
         $result['article'] = $this->repository->getArticleById((int)$get['id']);
 
         if ($result['article']['is_active'] === 0) {
@@ -38,6 +39,8 @@ class EditArticleService extends BaseService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $post = $this->request->getPost();
+            $files = $this->request->getFiles();
             $dataModel = $this->formatArticleDataForModel($post, $files);
             $model = new ArticleModel(...$dataModel);
             $model->validator->setRules($model->rules());
@@ -45,7 +48,7 @@ class EditArticleService extends BaseService
             if (!$model->validator->validate($model)) {
                 $result['validate'] = $model->validator->errors;
             } else {
-                $data = $this->formatArticleData($post, $get, $files);
+                $data = $this->formatArticleData($get, $post, $files);
 
                 $imagePath = $this->repository->getImageById((int)$get['id']);
                 if (!empty($request['files']['image']['tmp_name'])) {

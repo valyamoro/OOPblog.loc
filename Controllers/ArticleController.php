@@ -10,67 +10,50 @@ class ArticleController extends BaseController
 {
     public function show(): string
     {
-        $get = $this->request->getGET();
-
-        $data = $this->service->show($get, self::PER_PAGE);
+        $data = $this->service->show(self::PER_PAGE);
 
         return $this->view->render('show', 'article', $data);
     }
 
     public function add(): string
     {
-        $post = $this->request->getPost();
-        $files = $this->request->getFiles();
-
-        $result = $this->service->add($post, $files);
+        $result = $this->service->add();
 
         return $this->view->render('add', 'article', $result);
     }
 
     public function edit(): string
     {
-        $get = $this->request->getGET();
-        $post = $this->request->getPost();
-        $files = $this->request->getFiles();
-
-        $result = $this->service->edit($get, $post, $files);
+        $result = $this->service->edit();
 
         return $this->view->render('edit', 'article', $result);
     }
 
     public function category(): string
     {
-        $result = $this->service->getCategoryArticles($this->request, self::PER_PAGE);
+        $result = $this->service->getCategoryArticles(self::PER_PAGE);
 
         return $this->view->render('category', 'article', $result);
     }
 
     public function delete(): void
     {
-        $get = $this->request->getGET();
-
-        $this->service->delete($get);
+        $this->service->delete();
     }
 
     public function block(): void
     {
-        $get = $this->request->getGET();
-
-        $this->service->block($get);
+        $this->service->block();
     }
 
     public function unBlock(): void
     {
-        $get = $this->request->getGET();
-
-        $this->service->unBlock($get);
+        $this->service->unBlock();
     }
 
     public function search(): string
     {
-        $post = $this->request->getPost();
-
-        $result = $this->service->search($post);
+        $result = $this->service->search();
 
         return $this->view->render('search', 'article', $result);
     }

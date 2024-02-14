@@ -6,7 +6,7 @@ use app\Services\BaseService;
 
 class ProfileUserService extends BaseService
 {
-    public function getUserData(array $get, int $perPage): array
+    public function getUserData(int $perPage): array
     {
         $result['articles'] = [];
 
@@ -15,6 +15,7 @@ class ProfileUserService extends BaseService
             \header('Location: /users/auth');
         }
 
+        $get = $this->request->getGET();
         $id = $this->getUserId($get);
         $result['user'] = $this->repository->getUserById($id);
 

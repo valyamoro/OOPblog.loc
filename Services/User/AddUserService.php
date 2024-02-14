@@ -8,11 +8,12 @@ use app\Services\BaseService;
 
 class AddUserService extends BaseService
 {
-    public function add(array $post): array
+    public function add(): array
     {
         $result = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $post = $this->request->getPost();
             $model = new UserModel(...$post);
             $model->validator->setRules($model->rules());
 

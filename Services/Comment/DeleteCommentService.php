@@ -7,9 +7,10 @@ use app\Services\BaseService;
 
 class DeleteCommentService extends BaseService
 {
-    public function delete(array $get): void
+    public function delete(): void
     {
         if (!empty($_SESSION['user'])) {
+            $get = $this->request->getGET();
             $result = $this->repository->getCommentById((int)$get['id']);
 
             $userId = $_SESSION['user']['id'];

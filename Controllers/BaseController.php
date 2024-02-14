@@ -27,7 +27,7 @@ class BaseController extends Controller
     private function getMenuCategories(): array
     {
         $repository = new BaseControllerRepository();
-        $service = new BaseControllerService($repository);
+        $service = new BaseControllerService($repository, $this->request);
         $menu = '<ul class="menu"><li><a href="/">All categories</a><ul class="sub-menu">';
         $menu .= $this->createMenu($service->getAllCategories());
         $menu .= '</ul></ul></ul>';

@@ -7,27 +7,21 @@ class UserController extends BaseController
 {
     public function auth(): string
     {
-        $post = $this->request->getPost();
-
-        $result = $this->service->auth($post);
+        $result = $this->service->auth();
 
         return $this->view->render('auth', 'user', $result);
     }
 
     public function add(): string
     {
-        $post = $this->request->getPost();
-
-        $result = $this->service->add($post);
+        $result = $this->service->add();
 
         return $this->view->render('add', 'user', $result);
     }
 
     public function profile(): string
     {
-        $get = $this->request->getGET();
-
-        $result = $this->service->getUserData($get, self::PER_PAGE);
+        $result = $this->service->getUserData(self::PER_PAGE);
 
         return $this->view->render('profile', 'user', $result);
     }

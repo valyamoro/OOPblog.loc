@@ -7,8 +7,9 @@ use app\Services\BaseService;
 
 class ShowArticleService extends BaseService
 {
-    public function show(array $get, int $perPage): array
+    public function show(int $perPage): array
     {
+        $get = $this->request->getGET();
         $id = (int)$get['id'];
 
         $result['article'] = $this->repository->getById($id);
